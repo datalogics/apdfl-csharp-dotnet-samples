@@ -7,10 +7,7 @@ using Datalogics.PDFL;
  * prompts the user to enter the names of two PDF files, and then inserts the content 
  * of the second PDF file into the first PDF file and saves the result in a third PDF file.
  *
- * Copyright (c) 2007-2021, Datalogics, Inc. All rights reserved.
- *
- * For complete copyright information, refer to:
- * http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+ * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
  */
 

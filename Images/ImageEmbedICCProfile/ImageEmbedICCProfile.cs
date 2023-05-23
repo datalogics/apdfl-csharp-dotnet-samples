@@ -8,14 +8,7 @@ using Datalogics.PDFL;
  * The program sets up how the output will be rendered and generates a TIF image file or
  * series of TIF files as output.
  * 
- * For more detail see the description of the ImageEmbedICCProfile sample program on our Developer’s site, 
- * http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/net-core-sample-programs/exporting-images-from-pdf-files/#imageembediccprofile
- * 
  * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
- *
- * For complete copyright information, refer to:
- * http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
- *
  */
 namespace ImageEmbedICCProfile
 {

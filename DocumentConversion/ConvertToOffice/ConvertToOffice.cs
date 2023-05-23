@@ -5,13 +5,7 @@ using Datalogics.PDFL;
  * 
  * ConvertToOffice converts sample PDF documents to Office Documents.
  *
- * For more detail see the description of the ConvertToOffice sample program on our Developer’s site, 
- * http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/net-core-sample-programs/converting-and-merging-pdf-content
- * 
  * Copyright (c) 2023, Datalogics, Inc. All rights reserved.
- *
- * For complete copyright information, refer to:
- * http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
  *
  */
 namespace ConvertToOffice

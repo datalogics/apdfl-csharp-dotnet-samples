@@ -8,13 +8,7 @@ using System.Xml;
  * This sample shows how to view and edit metadata for a PDF document. The metadata values appear on the Properties
  * window in Adobe Reader and Adobe Acrobat. Click File/Properties, and then click Additional Metadata.
  *
- * For more detail see the description of the Metadata sample on our Developer’s site, 
- * http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/net-core-sample-programs/listing-information-about-values-and-objects-in-pdf-files#metadata
- * 
- * Copyright (c) 2007-2020, Datalogics, Inc. All rights reserved.
- *
- * For complete copyright information, refer to:
- * http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+ * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
  */
 

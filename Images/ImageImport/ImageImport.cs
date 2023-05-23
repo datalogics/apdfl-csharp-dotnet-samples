@@ -7,10 +7,7 @@ using Datalogics.PDFL;
  * prompting you, and creates two PDF files, demonstrating how to import graphics from image files
  * into a PDF file. One of the PDF output files is the result of graphics imported from a multi-page TIF file.
  * 
- * Copyright (c) 2007-2020, Datalogics, Inc. All rights reserved.
- *
- * For complete copyright information, refer to:
- * http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+ * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
  */
 

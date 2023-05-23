@@ -11,10 +11,7 @@ using Datalogics.PDFL;
  * PDF file is tagged or untagged. Tagging is used to make PDF files accessible
  * to the blind or to people with vision problems. 
  * 
- * Copyright (c) 2007-2020, Datalogics, Inc. All rights reserved.
- *
- * For complete copyright information, refer to:
- * http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+ * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
  */
 namespace TextExtract

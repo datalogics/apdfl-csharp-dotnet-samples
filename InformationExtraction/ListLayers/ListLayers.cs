@@ -3,15 +3,9 @@ using System.Collections.Generic;
 using Datalogics.PDFL;
 
 /*
- * This sample searches for and lists the names of the color layers found in a PDF document. 
+ * This sample searches for and lists the names of the color layers found in a PDF document.
  *  
- * For more detail see the description of the List sample programs, and ListLayers, on our Developer's site, 
- * http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/net-core-sample-programs/listing-information-about-values-and-objects-in-pdf-files
- * 
- * Copyright (c) 2007-2020, Datalogics, Inc. All rights reserved.
- *
- * For complete copyright information, refer to:
- * http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+ * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
  */
 

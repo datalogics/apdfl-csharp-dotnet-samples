@@ -7,10 +7,7 @@ using Datalogics.PDFL;
  * document that match a user-supplied regular expression. When the sample finds the text it
  * highlights each match and saves the file as an output document.
  * 
- * Copyright (c) 2007-2021, Datalogics, Inc. All rights reserved.
- *
- * For complete copyright information, refer to:
- * http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+ * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
  */
 namespace RegexTextSearch
