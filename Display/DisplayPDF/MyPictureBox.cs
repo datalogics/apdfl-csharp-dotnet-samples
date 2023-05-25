@@ -9,12 +9,8 @@ using System.Drawing.Drawing2D;
 using Datalogics.PDFL;
 
 /*
-Copyright (c) 2007-2020, Datalogics, Inc. All rights reserved. 
-
-The information and code in this sample is for the exclusive use of Datalogics
-customers and evaluation users only.  Datalogics permits you to use, modify and
-distribute this file in accordance with the terms of your license agreement.
-Sample code is for demonstrative purposes only and is not intended for production use.
+Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved. 
+*
  */
 
 namespace DisplayPDF

@@ -6,14 +6,8 @@ using Datalogics.PDFL;
  * This sample demonstrates working with data objects in a PDF document. It examines the Objects and displays
  * information about them.  The sample extracts the dictionary for an object called URIAction and updates it using PDFObjects.
  * 
- * For more detail see the description of the PDFObject sample on our Developer's site, 
- * http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/net-core-sample-programs/listing-information-about-values-and-objects-in-pdf-files#pdfobject
- * 
- * Copyright (c) 2007-2020, Datalogics, Inc. All rights reserved.
+ * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
- * For complete copyright information, refer to:
- * http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
- * 
  * Suggested input file: Library.ResourceDirectory + "Sample_Input/sample_links.pdf"
  * Input file properties: First page must have an annotation with a URI link
  */

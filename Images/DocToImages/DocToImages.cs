@@ -8,14 +8,7 @@ using Datalogics.PDFL;
  * one per page. You can also create a mult-page TIFF file. This program requires that you enter 
  * formatting values manually at the command line. 
  *
- * For more detail, and information about the command line parameters, see the description of the DocToImages
- * sample program on our Developer's site,
- * http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/net-core-sample-programs/converting-pdf-pages-to-images/#doctoimages
- * 
- * Copyright (c) 2007-2020, Datalogics, Inc. All rights reserved.
- *
- * For complete copyright information, refer to:
- * http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+ * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
  */
 

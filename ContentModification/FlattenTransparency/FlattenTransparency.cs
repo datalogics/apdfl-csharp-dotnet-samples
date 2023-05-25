@@ -11,14 +11,8 @@ using Datalogics.PDFL;
  * appears on the page. The process to flatten a set of transparencies merges them
  * into a single image on the page.
  *
- * For more detail see the description of the FlattenTransparency sample program on our Developer’s site, 
- * http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/net-core-sample-programs/layers_and_transparencies#flattentransparency
  * 
- * 
- * Copyright (c) 2007-2020, Datalogics, Inc. All rights reserved.
- *
- * For complete copyright information, refer to:
- * http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+ * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
  */
 

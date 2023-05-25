@@ -7,10 +7,7 @@ using Datalogics.PDFL;
  * This sample shows how to open a PDF document, search for text in the pages and highlight
  * the text.
  * 
- * Copyright (c) 2007-2020, Datalogics, Inc. All rights reserved.
- *
- * For complete copyright information, refer to:
- * http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+ * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
  */
 

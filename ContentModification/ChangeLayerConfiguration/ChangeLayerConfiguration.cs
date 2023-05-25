@@ -6,19 +6,13 @@ using Datalogics.PDFL;
  * This sample changes the On/Off configuration for a set of Optional Content Groups,
  * or layers, within a PDF document. By changing the On or Off state in the default
  * configuration, the sample makes the layers visible or invisible when opened in a 
- * viewer like Adobe Acrobat.
+ * PDF viewer.
  * 
  * The sample changes the states of the layers in the document called Layers.pdf and
  * saves the result to a new PDF document.
  * 
- * For more detail see the description of the ChangeLayerConfiguration sample program on our Developer's site, 
- * http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/net-core-sample-programs/layers-and-transparencies/ 
  * 
- * 
- * Copyright (c) 2007-2020, Datalogics, Inc. All rights reserved.
- *
- * For complete copyright information, refer to:
- * http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+ * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
  */
 namespace ChangeLayerConfiguration

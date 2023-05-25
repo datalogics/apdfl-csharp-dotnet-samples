@@ -8,14 +8,9 @@ using Datalogics.PDFL;
  * The related ChangeLayerConfiguration program makes layers visible or invisible.
  * 
  * You can toggle back and forth to make the layer (the duck image) visible or invisible
- * in the PDF file. Open the output PDF document in Adobe Acrobat, click View and select
- * Show/Hide. Select Navigation Panes and Layers to display the layers in the PDF file. 
- * Click on the box next to the name of the layer.
+ * in the PDF file.
  *
- * Copyright (c) 2007-2020, Datalogics, Inc. All rights reserved.
- *
- * For complete copyright information, refer to:
- * http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+ * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
  */
 namespace CreateLayer

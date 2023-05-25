@@ -8,15 +8,9 @@ using Datalogics.PDFL;
  * The program works by identifying text in a PDF file that is associated with hyperlinks.
  * Each link appears as a rectangle layer in the PDF file; ChangeLinkColors identifies these
  * rectangles, and then finds the text that lines up within these rectangles and changes the
- * color of each character that is a part of the hyperlink.  
+ * color of each character that is a part of the hyperlink.
  * 
- * For more detail see the description of the ChangeLinkColors sample program on our Developer’s site, 
- * http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/net-core-sample-programs/working-with-annotations#changelinkcolors
- * 
- * Copyright (c) 2007-2020, Datalogics, Inc. All rights reserved.
- *
- * For complete copyright information, refer to:
- * http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+ * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
  */
 namespace ChangeLinkColors

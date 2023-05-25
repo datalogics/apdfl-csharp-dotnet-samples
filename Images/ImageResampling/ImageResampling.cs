@@ -10,13 +10,7 @@ using Datalogics.PDFL;
  * used to reduce the resolution of an image or series of images, to make them smaller. As a result
  * the process makes the PDF document smaller.
  *
- * For more detail see the description of the ImageResampling sample program on our Developer’s site, 
- * http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/net-core-sample-programs/entering-or-generating-graphics-from-pdf-files
- * 
- * Copyright (c) 2007-2020, Datalogics, Inc. All rights reserved.
- *
- * For complete copyright information, refer to:
- * http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+ * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
  */
 
