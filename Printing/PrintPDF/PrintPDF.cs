@@ -277,8 +277,6 @@ namespace PrintPDF
                         // Consult the PostScript Language Document Structuring Conventions
                         // for more information about the conformance / structure of the
                         // exported PostScript.
-                        //
-                        // https://partners.adobe.com/public/developer/en/ps/5001.DSC_Spec.pdf
 
                         using (PrintUserParams userParams = new PrintUserParams())
                         {

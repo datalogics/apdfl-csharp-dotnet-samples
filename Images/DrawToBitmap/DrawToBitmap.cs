@@ -8,9 +8,6 @@ using System.IO;
  *
  * This program sample converts a PDF file to a series of image files.
  * 
- * For more detail see the description of the DrawtoBitmap sample program on our Developer’s site,
- * http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/net-core-sample-programs/converting-pdf-pages-to-images/#drawtobitmap
- * 
  * 
  * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  */

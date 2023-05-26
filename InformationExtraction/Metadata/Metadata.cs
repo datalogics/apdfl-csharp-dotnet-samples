@@ -6,7 +6,7 @@ using System.Xml;
 /*
  *
  * This sample shows how to view and edit metadata for a PDF document. The metadata values appear on the Properties
- * window in Adobe Reader and Adobe Acrobat. Click File/Properties, and then click Additional Metadata.
+ * window in a PDF Viwer. Click File/Properties, and then click Additional Metadata.
  *
  * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
