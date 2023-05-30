@@ -7,9 +7,6 @@ using System.IO;
 /*
  * This sample demonstrates for drawing a list of grayscale separations from a PDF file.
  *
- * For more detail see the description of the DrawSeparations sample program on our Developer’s site, 
- * http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/net-core-sample-programs/manipulating-graphics-and-separating-colors-for-images
- * 
  * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
  */
