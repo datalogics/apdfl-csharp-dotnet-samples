@@ -42,4 +42,4 @@ Run the application by specifying the .dll file *(Note: the .dll file extension 
 
 ```dotnet ./RasterizePage.dll```
 
-**Note**: Samples are setup to write their output files their program's executable directory along with any other dependencies, such as SkiaSharp for Graphics.
+**Note**: Samples are setup to write their output files to their program's executable directory along with any other dependencies, such as SkiaSharp for Graphics.
