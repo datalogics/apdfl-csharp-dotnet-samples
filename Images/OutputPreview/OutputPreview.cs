@@ -14,6 +14,20 @@ namespace OutputPreview
 {
     class OutputPreview
     {
+        static string CreateOutputFileName(List<string> colorants)
+        {
+            string outputFileName = "OutputPreview_";
+
+            foreach(string colorant in colorants)
+            {
+                outputFileName += colorant + "_";
+            }
+
+            outputFileName += ".tiff";
+
+            return outputFileName;
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("OutputPreview Sample:");
@@ -69,11 +83,11 @@ namespace OutputPreview
                         // Create Output Preview images using the Specified Colorants
                         Datalogics.PDFL.Image image = pg.GetOutputPreviewImage(pg.CropBox, pip, colorants);
 
-                        image.Save(String.Format("OutputPreview_{0}_{1}.tiff", colorantsToUse[0], colorantsToUse[1]), ImageType.TIFF);
+                        image.Save(CreateOutputFileName(colorantsToUse), ImageType.TIFF);
 
                         Datalogics.PDFL.Image image2 = pg.GetOutputPreviewImage(pg.CropBox, pip, colorants2);
 
-                        image2.Save(String.Format("OutputPreview_{0}_{1}.tiff", colorantsToUse2[0], colorantsToUse2[1]), ImageType.TIFF);
+                        image2.Save(CreateOutputFileName(colorantsToUse2), ImageType.TIFF);
                     }
                 }
             }
