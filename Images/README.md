@@ -34,5 +34,8 @@ Explores the content of PDF pages and when images are found they are resampled t
 ## ***ImageSoftMask***
 Adds an image file to be placed on a PDF page and adds another image file to use as its SoftMask image.
 
+## ***OutputPreview***
+Creates an Output Preview Image which is used during Soft Proofing prior to printing to visualize combining different Colorants.
+
 ## ***RasterizePage***
 Rasterizes the first page of a PDF document.
