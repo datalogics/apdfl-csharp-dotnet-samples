@@ -3,7 +3,7 @@ using Datalogics.PDFL;
 
 /*
  * 
- * This program creates a PDF file with an embedded hyperlink, which takes the reader to the second page of the document.
+ * This program creates a PDF file with an embedded hyperlink, which takes the viewer to the second page of the document.
  *
  * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
@@ -38,7 +38,7 @@ namespace LinkAnnotations
 
                 Page docpage = doc.GetPage(0);
 
-                LinkAnnotation newLink = new LinkAnnotation(docpage, new Rect(1.0, 2.0, 3.0, 4.0));
+                LinkAnnotation newLink = new LinkAnnotation(docpage, new Rect(100, docpage.CropBox.Top - 25, 200, docpage.CropBox.Top - 50));
 
                 // Test some link features
                 newLink.NormalAppearance = newLink.GenerateAppearance();

@@ -3,8 +3,8 @@ using Datalogics.PDFL;
 
 /*
  * This sample creates a PDF document with a single page, featuring a rectangle.
- * An action is added to the rectangle in the form of a hyperlink; if the reader
- * clicks on the rectangle, the system opens a Datalogics web page.
+ * An action is added to the rectangle in the form of a hyperlink; if the viewer
+ * clicks on the rectangle, it opens a Datalogics web page.
  *
  * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
  *
@@ -15,13 +15,13 @@ namespace Action
     {
         static void Main()
         {
-            Console.WriteLine("Actions Sample:");
+            Console.WriteLine("Action Sample:");
 
 
             // ReSharper disable once UnusedVariable
             using (Library lib = new Library())
             {
-                String sOutput = "Actions-out.pdf";
+                String sOutput = "Action-out.pdf";
 
                 Console.WriteLine("Initialized the library.");
 
@@ -31,8 +31,7 @@ namespace Action
                 {
                     // Create a PDF page which is the same size of the image.
                     Rect pageRect = new Rect(0, 0, 100, 100);
-                    Page docpage = doc.CreatePage(Document.BeforeFirstPage,
-                        pageRect);
+                    Page docpage = doc.CreatePage(Document.BeforeFirstPage, pageRect);
                     Console.WriteLine("Created page.");
 
                     // Create our first link with a URI action
@@ -40,7 +39,7 @@ namespace Action
                     Console.WriteLine(newLink.ToString());
 
                     doc.BaseURI = "http://www.datalogics.com";
-                    URIAction uri = new URIAction("/products/pdf/pdflibrary/", false);
+                    URIAction uri = new URIAction("/adobe-pdf-library/", false);
                     Console.WriteLine("Action data: " + uri);
 
                     newLink.Action = uri;
@@ -75,7 +74,6 @@ namespace Action
                     else
                         Console.WriteLine("Don't send mouse coordinates");
 
-                    // Testing gta
                     Console.WriteLine("Fit type of destination: " + gta.Destination.FitType);
                     Console.WriteLine("Rectangle of destination: " + gta.Destination.DestRect);
                     Console.WriteLine("Zoom of destination: " + gta.Destination.Zoom);

@@ -87,34 +87,35 @@ namespace ChangeLayerConfiguration
 
                 Console.WriteLine("Input file: " + sInput + ", writing to " + sOutput);
 
-                Document doc = new Document(sInput);
+                using (Document doc = new Document(sInput))
+                {
+                    // Get the default OptionalContentConfig and OptionalContentGroups
+                    OptionalContentConfig config = doc.DefaultOptionalContentConfig;
+                    IList<OptionalContentGroup> ocgs = doc.OptionalContentGroups;
 
-                // Get the default OptionalContentConfig and OptionalContentGroups
-                OptionalContentConfig config = doc.DefaultOptionalContentConfig;
-                IList<OptionalContentGroup> ocgs = doc.OptionalContentGroups;
+                    // Create a 'working' array
+                    List<OptionalContentGroup> worklist = new List<OptionalContentGroup>();
 
-                // Create a 'working' array
-                List<OptionalContentGroup> worklist = new List<OptionalContentGroup>();
+                    // Set the BaseState to Off
+                    config.BaseState = OptionalContentBaseState.BaseStateOff;
 
-                // Set the BaseState to Off
-                config.BaseState = OptionalContentBaseState.BaseStateOff;
+                    // Add 'Layer 3' and 'Guides and Grids' to the ON array
+                    foreach (OptionalContentGroup layer in ocgs)
+                        if (layer.Name == "Layer 3" || layer.Name == "Guides and Grids")
+                            worklist.Add(layer);
 
-                // Add 'Layer 3' and 'Guides and Grids' to the ON array
-                foreach (OptionalContentGroup layer in ocgs)
-                    if (layer.Name == "Layer 3" || layer.Name == "Guides and Grids")
-                        worklist.Add(layer);
+                    // Now set the ON array to our new set of layers, and the OFF array
+                    // to empty.  
+                    // NOTE: clearing the OFF array is IMPORTANT!  When we opened the
+                    // Layers.pdf, it had the 'Guides and Grids' layer in the OFF
+                    // array; if we leave it in there, it will appear in BOTH
+                    // the ON and OFF arrays and cause unpredictable behavior.
+                    config.OnArray = worklist;
+                    config.OffArray = new List<OptionalContentGroup>();
 
-                // Now set the ON array to our new set of layers, and the OFF array
-                // to empty.  
-                // NOTE: clearing the OFF array is IMPORTANT!  When we opened the
-                // Layers.pdf, it had the 'Guides and Grids' layer in the OFF
-                // array; if we leave it in there, it will appear in BOTH
-                // the ON and OFF arrays and cause unpredictable behavior.
-                config.OnArray = worklist;
-                config.OffArray = new List<OptionalContentGroup>();
-
-                // Save the new document
-                doc.Save(SaveFlags.Full, sOutput);
+                    // Save the new document
+                    doc.Save(SaveFlags.Full, sOutput);
+                }
             }
         }
     }
