@@ -1,0 +1,47 @@
+name: test-nuget-samples
+
+on:
+    pull_request:
+        branches: [ develop, main, action ]
+    push:
+        branches: [ develop, main ]
+
+env:
+    DOTNET_VERSION: '6.x'
+
+jobs:
+    build-and-run-samples:
+        runs-on: windows-2022
+        strategy:
+          matrix: { dir: ['Annotations'] }
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v3
+              with:
+                dotnet-version: ${{ env.DOTNET_VERSION }}
+            - name: Build samples
+              working-directory: ${{ matrix.dir }}
+              run: dotnet build --configuration Release
+            - name: Run samples
+              working-directory: ${{ matrix.dir }}
+              run: dotnet run --configuration Release
+            - name: List files
+              run: |
+                ls ${{matrix.dir}}
+            - name: Save artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                name: sample-output
+                path: |
+                  ${{matrix.dir}}\*.jpg
+                  ${{matrix.dir}}\*.jpeg
+                  ${{matrix.dir}}\*.eps
+                  ${{matrix.dir}}\*.tiff
+                  ${{matrix.dir}}\*.tif
+                  ${{matrix.dir}}\*.bmp
+                  ${{matrix.dir}}\*.png
+                  ${{matrix.dir}}\*.raw
+                  ${{matrix.dir}}\*.pdf
+                  ${{matrix.dir}}\*.gif
