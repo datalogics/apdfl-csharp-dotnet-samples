@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using Datalogics.PDFL;
 using SkiaSharp;
 
@@ -84,35 +85,68 @@ namespace RasterizePage
                 // CropBox as the exportRect.  The default ColorSpace is DeviceRGB, 
                 // so the image will be DeviceRGB.
                 Datalogics.PDFL.Image inputImage = pg.GetImage(pg.CropBox, pip);
-                inputImage.Save(sOutput + "-400pixel-width.jpg", ImageType.JPEG);
-                Console.WriteLine("Created " + sOutput + "-400pixel-width.jpg...");
 
-                /////////////////////////////////////////////////////////
-                //
-                //  Next, we'll make a grayscale image that is half the 
-                //  physical size of the page at 96 DPI.
-                //  
-                ////////////////////////////////////////////////////////
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    inputImage.Save(sOutput + "-400pixel-width.jpg", ImageType.JPEG);
+                    Console.WriteLine("Created " + sOutput + "-400pixel-width.jpg...");
 
-                CreatePageImageBasedOnPhysicalSize(pg, sOutput + "-grayscale-halfsize.jpg", ImageType.JPEG,
-                    ColorSpace.DeviceGray);
+                    /////////////////////////////////////////////////////////
+                    //
+                    //  Next, we'll make a grayscale image that is half the 
+                    //  physical size of the page at 96 DPI.
+                    //  
+                    ////////////////////////////////////////////////////////
+
+                    CreatePageImageBasedOnPhysicalSize(pg, sOutput + "-grayscale-halfsize.jpg", ImageType.JPEG,
+                        ColorSpace.DeviceGray);
 
 
-                /////////////////////////////////////////////////////////
-                //
-                //  Next, we'll make an image that contains just the
-                //  top half of the page at a resolution of 300 DPI.
-                //
-                ////////////////////////////////////////////////////////
+                    /////////////////////////////////////////////////////////
+                    //
+                    //  Next, we'll make an image that contains just the
+                    //  top half of the page at a resolution of 300 DPI.
+                    //
+                    ////////////////////////////////////////////////////////
 
-                // ReSharper disable once UnusedVariable
-                SKBitmap halfImage = CreateBitmapWithTopHalfOfPage(pg, sOutput + "-tophalf.jpg",
-                    SKEncodedImageFormat.Jpeg, ColorSpace.DeviceRGBA);
+                    // ReSharper disable once UnusedVariable
+                    SKBitmap halfImage = CreateBitmapWithTopHalfOfPage(pg, sOutput + "-tophalf.jpg",
+                        SKEncodedImageFormat.Jpeg, ColorSpace.DeviceRGBA);
+                }
+                else
+                {
+                    //Known issue in JPEG encoding in SkiaSharp v2.88.6: https://github.com/mono/SkiaSharp/issues/2643
+                    //Previous versions have known vulnerability, so use PNG instead.
+                    inputImage.Save(sOutput + "-400pixel-width.png", ImageType.PNG);
+                    Console.WriteLine("Created " + sOutput + "-400pixel-width.png...");
+
+                    /////////////////////////////////////////////////////////
+                    //
+                    //  Next, we'll make a grayscale image that is half the 
+                    //  physical size of the page at 96 DPI.
+                    //  
+                    ////////////////////////////////////////////////////////
+
+                    CreatePageImageBasedOnPhysicalSize(pg, sOutput + "-grayscale-halfsize.png", ImageType.Png,
+                        ColorSpace.DeviceGray);
+
+
+                    /////////////////////////////////////////////////////////
+                    //
+                    //  Next, we'll make an image that contains just the
+                    //  top half of the page at a resolution of 300 DPI.
+                    //
+                    ////////////////////////////////////////////////////////
+
+                    // ReSharper disable once UnusedVariable
+                    SKBitmap halfImage = CreateBitmapWithTopHalfOfPage(pg, sOutput + "-tophalf.png",
+                        SKEncodedImageFormat.Png, ColorSpace.DeviceRGBA);
+                }
             }
         }
 
         public static void CreatePageImageBasedOnPhysicalSize(Page pg, string filename, ImageType imgtype,
-            ColorSpace cspace)
+        ColorSpace cspace)
         {
             // Get the dimensions, in pixels, of an image that is 
             // half the physical size of the page at a resolution of 96 DPI.

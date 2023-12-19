@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SkiaSharp;
 using Datalogics.PDFL;
 using System.IO;
+using System.Runtime.InteropServices;
 
 /*
  *
@@ -91,8 +92,14 @@ namespace DrawToBitmap
         /// <param name="nameSuffix">the suffix for saved file.</param>
         private static void SaveBitmap(SKBitmap sKBitmap, string nameSuffix)
         {
-            using (FileStream f = File.OpenWrite(String.Format("DrawTo{0}.jpg", nameSuffix)))
-                sKBitmap.Encode(SKEncodedImageFormat.Jpeg, 100).SaveTo(f);
+            //Known issue in JPEG encoding in SkiaSharp v2.88.6: https://github.com/mono/SkiaSharp/issues/2643 on non-Windows.
+            //Previous versions have known vulnerability.
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                using (FileStream f = File.OpenWrite(String.Format("DrawTo{0}.jpg", nameSuffix)))
+                    sKBitmap.Encode(SKEncodedImageFormat.Jpeg, 100).SaveTo(f);
+            }
+
             using (FileStream f = File.OpenWrite(String.Format("DrawTo{0}.png", nameSuffix)))
                 sKBitmap.Encode(SKEncodedImageFormat.Png, 100).SaveTo(f);
         }
