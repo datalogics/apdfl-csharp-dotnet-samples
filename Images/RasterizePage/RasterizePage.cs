@@ -127,7 +127,7 @@ namespace RasterizePage
                     //  
                     ////////////////////////////////////////////////////////
 
-                    CreatePageImageBasedOnPhysicalSize(pg, sOutput + "-grayscale-halfsize.png", ImageType.Png,
+                    CreatePageImageBasedOnPhysicalSize(pg, sOutput + "-grayscale-halfsize.png", ImageType.PNG,
                         ColorSpace.DeviceGray);
 
 
