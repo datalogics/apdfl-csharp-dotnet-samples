@@ -29,4 +29,6 @@ jobs:
                 dotnet-version: ${{ env.DOTNET_VERSION }}
             - name: Build samples
               working-directory: ${{ matrix.dir }}
-              run: dotnet build -c Release ${{ matrix.dir }}/*.csproj
+              run: |
+                ls ${{matrix.dir}}
+                dotnet build -c Release ${{ matrix.dir }}/*.csproj
