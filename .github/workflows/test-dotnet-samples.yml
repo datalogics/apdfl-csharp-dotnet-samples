@@ -1,0 +1,20 @@
+name: test-samples
+
+on:
+    pull_request:
+    push:
+        branches: [ develop, main ]
+
+env:
+    DOTNET_VERSION: '6.x'
+
+jobs:
+    run-samples:
+        runs-on: ${{ matrix.os }}
+        defaults:
+          run:
+            shell: bash
+        strategy:
+          matrix:
+            os: [windows-latest, ubuntu-latest, macos-14]
+            dir: []
