@@ -37,7 +37,7 @@ jobs:
               run: |
                 ls ${{matrix.dir}}
             - name: Run samples
-              working-directory: ${{ matrix.dir }}
+              working-directory: ${{matrix.dir}}
               run: |
-                ls ${{ github.workspace }}/${{ matrix.dir }}/bin/Release/net6.0/${{ matrix.dll}}
-                dotnet ${{ github.workspace }}/${{ matrix.dir }}/bin/Release/net6.0/${{ matrix.dll}}
+                ls bin/Release/net6.0/
+                dotnet bin/Release/net6.0/${{ matrix.dlls}}
