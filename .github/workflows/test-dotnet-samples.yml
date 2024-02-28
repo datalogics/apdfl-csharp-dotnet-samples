@@ -33,4 +33,4 @@ jobs:
             - name: Build samples
               working-directory: ${{ matrix.dir }}
               run: |
-                dotnet build -c Release ${{ matrix.dir }}*.csproj
+                dotnet build -c Release ${{ matrix.dir }}**/*.csproj
