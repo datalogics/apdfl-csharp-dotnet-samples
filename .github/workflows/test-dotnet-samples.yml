@@ -18,7 +18,7 @@ jobs:
           matrix:
             os: [windows-latest, ubuntu-latest]
             dir: [
-              'Annotations/Annotations'
+              'Annotations/Annotations/'
               ]
         steps:
             - name: Checkout
@@ -27,8 +27,10 @@ jobs:
               uses: actions/setup-dotnet@v4
               with:
                 dotnet-version: ${{ env.DOTNET_VERSION }}
+            - name: List files
+              run: |
+                ls ${{matrix.dir}}
             - name: Build samples
               working-directory: ${{ matrix.dir }}
               run: |
-                ls ${{matrix.dir}}
-                dotnet build -c Release ${{ matrix.dir }}/*.csproj
+                dotnet build -c Release ${{ matrix.dir }}*.csproj
