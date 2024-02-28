@@ -20,6 +20,9 @@ jobs:
             dir: [
               'Annotations/Annotations/'
               ]
+            dlls: [
+              'Annotations.dll'
+            ]
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -27,10 +30,14 @@ jobs:
               uses: actions/setup-dotnet@v4
               with:
                 dotnet-version: ${{ env.DOTNET_VERSION }}
+            - name: Build samples
+              working-directory: ${{ matrix.dir }}
+              run: dotnet build -c Release *.csproj
             - name: List files
               run: |
                 ls ${{matrix.dir}}
-            - name: Build samples
+            - name: Run samples
               working-directory: ${{ matrix.dir }}
               run: |
-                dotnet build -c Release *.csproj
+                ls ${{ github.workspace }}/${{ matrix.dir }}/bin/Release/net6.0/${{ matrix.dll}}
+                dotnet ${{ github.workspace }}/${{ matrix.dir }}/bin/Release/net6.0/${{ matrix.dll}}
