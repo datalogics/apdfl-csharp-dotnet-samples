@@ -24,13 +24,6 @@ jobs:
               'Annotations/PolygonAnnotations/',
               'Annotations/PolyLineAnnotations/'
               ]
-            dlls: [
-              'Annotations.dll',
-              'InkAnnotations.dll',
-              'LinkAnnotation.dll',
-              'PolygonAnnotations.dll',
-              'PolyLineAnnotations.dll'
-            ]
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -47,4 +40,5 @@ jobs:
             - name: Run samples
               working-directory: ${{matrix.dir}}
               run: |
-                dotnet bin/Release/net6.0/${{ matrix.dlls}}
+                dll_name=$(basename "$PWD")
+                dotnet bin/Release/net6.0/$dll_name.dll
