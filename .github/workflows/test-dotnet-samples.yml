@@ -18,10 +18,18 @@ jobs:
           matrix:
             os: [windows-latest, ubuntu-latest]
             dir: [
-              'Annotations/Annotations/'
+              'Annotations/Annotations/',
+              'Annotations/InkAnnotations/',
+              'Annotations/LinkAnnotation/',
+              'Annotations/PolygonAnnotations/',
+              'Annotations/PolyLineAnnotations/'
               ]
             dlls: [
-              'Annotations.dll'
+              'Annotations.dll',
+              'InkAnnotations.dll',
+              'LinkAnnotation.dll',
+              'PolygonAnnotations.dll',
+              'PolyLineAnnotations.dll'
             ]
         steps:
             - name: Checkout
@@ -39,5 +47,4 @@ jobs:
             - name: Run samples
               working-directory: ${{matrix.dir}}
               run: |
-                ls bin/Release/net6.0/
                 dotnet bin/Release/net6.0/${{ matrix.dlls}}
