@@ -22,7 +22,23 @@ jobs:
               'Annotations/InkAnnotations/',
               'Annotations/LinkAnnotation/',
               'Annotations/PolygonAnnotations/',
-              'Annotations/PolyLineAnnotations/'
+              'Annotations/PolyLineAnnotations/',
+              'ContentCreation/AddElements/',
+              'ContentCreation/AddHeaderFooter/',
+              'ContentCreation/Clips/',
+              'ContentCreation/CreateBookmarks/',
+              'ContentCreation/GradientShade/',
+              'ContentCreation/MakeDocWithCalGrayColorSpace/',
+              'ContentCreation/MakeDocWithCalRGBColorSpace/',
+              'ContentCreation/MakeDocWithDeviceNColorSpace/',
+              'ContentCreation/MakeDocWithICCBasedColorSpace/',
+              'ContentCreation/MakeDocWithIndexedColorSpace/',
+              'ContentCreation/MakeDocWithLabColorSpace/',
+              'ContentCreation/MakeDocWithSeparationColorSpace/',
+              'ContentCreation/NameTrees/',
+              'ContentCreation/NumberTrees/',
+              'ContentCreation/RemoteGoToActions/',
+              'ContentCreation/WriteNChannelTiff/'
               ]
         steps:
             - name: Checkout
