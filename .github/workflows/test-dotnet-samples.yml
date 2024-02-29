@@ -16,7 +16,7 @@ jobs:
             shell: bash
         strategy:
           matrix:
-            os: [windows-latest, ubuntu-latest]
+            os: [windows-latest, ubuntu-latest, macos-14]
             dir: [
               'Annotations/Annotations/',
               'Annotations/InkAnnotations/',
