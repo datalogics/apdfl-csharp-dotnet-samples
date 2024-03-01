@@ -53,7 +53,14 @@ jobs:
               'ContentModification/PageLabels/',
               'ContentModification/PDFObject/',
               'ContentModification/UnderlinesAndHighlights/',
-              'ContentModification/Watermark/'
+              'ContentModification/Watermark/',
+              'DocumentConversion/ColorConvertDocument/',
+              'DocumentConversion/ConvertToOffice/',
+              'DocumentConversion/CreateDocFromXPS/',
+              'DocumentConversion/Factur-XConverter/',
+              'DocumentConversion/PDFAConverter/',
+              'DocumentConversion/PDFXConverter/',
+              'DocumentConversion/ZUGFeRDConverter/'
               ]
         steps:
             - name: Checkout
