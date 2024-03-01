@@ -18,6 +18,7 @@ jobs:
           matrix:
             os: [windows-latest, ubuntu-latest, macos-14]
             # TODO: AddHeaderFooter won't run due to Times-Roman font not present on runner.
+            # TODO: Some of the ContentCreation samples require Microsoft Core Fonts to be installed.
             dir: [
               'Annotations/Annotations/',
               'Annotations/InkAnnotations/',
@@ -39,7 +40,20 @@ jobs:
               'ContentCreation/NameTrees/',
               'ContentCreation/NumberTrees/',
               'ContentCreation/RemoteGoToActions/',
-              'ContentCreation/WriteNChannelTiff/'
+              'ContentCreation/WriteNChannelTiff/',
+              'ContentModification/Action/',
+              'ContentModification/AddCollection/',
+              'ContentModification/ChangeLayerConfiguration/',
+              'ContentModification/ChangeLinkColors/',
+              'ContentModification/CreateLayer/',
+              'ContentModification/ExtendedGraphicStates/',
+              'ContentModification/FlattenTransparency/',
+              'ContentModification/LaunchActions/',
+              'ContentModification/MergePDF/',
+              'ContentModification/PageLabels/',
+              'ContentModification/PDFObject/',
+              'ContentModification/UnderlinesAndHighlights/',
+              'ContentModification/Watermark/'
               ]
         steps:
             - name: Checkout
