@@ -22,6 +22,7 @@ jobs:
             # TODO: Some of the ContentCreation samples require Microsoft Core Fonts to be installed on Linux.
             # TODO: Factur-XConverter sample needs input PDF specified as command-line argument.
             # TODO: ZUGFeRDConverter sample requires that input PDF and an input ZUGFeRD Invoice XML file be provided as command-line arguments.
+            # TODO: DocToImages sample requires input PDF as command line argument.
             dir: [
               'Annotations/Annotations/',
               'Annotations/InkAnnotations/',
@@ -65,7 +66,7 @@ jobs:
               'DocumentConversion/PDFXConverter/',
               'DocumentConversion/ZUGFeRDConverter/',
               'DocumentOptimization/PDFOptimize/',
-              'Images/DocToImages/',
+              #'Images/DocToImages/',
               'Images/DrawSeparations/',
               'Images/DrawToBitmap/',
               'Images/EPSSeparations/',
@@ -78,7 +79,12 @@ jobs:
               'Images/ImageResampling/',
               'Images/ImageSoftMask/',
               'Images/OutputPreview/',
-              'Images/RasterizePage/'
+              'Images/RasterizePage/',
+              'InformationExtraction/ListBookmarks/',
+              'InformationExtraction/ListInfo/',
+              'InformationExtraction/ListLayers/',
+              'InformationExtraction/ListPaths/',
+              'InformationExtraction/Metadata/'
               ]
         steps:
             - name: Checkout
