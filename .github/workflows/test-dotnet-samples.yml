@@ -64,7 +64,21 @@ jobs:
               'DocumentConversion/PDFAConverter/',
               'DocumentConversion/PDFXConverter/',
               'DocumentConversion/ZUGFeRDConverter/',
-              'DocumentOptimization/PDFOptimize/'
+              'DocumentOptimization/PDFOptimize/',
+              'Images/DocToImages/',
+              'Images/DrawSeparations/',
+              'Images/DrawToBitmap/',
+              'Images/EPSSeparations/',
+              'Images/GetSeparatedImages/',
+              'Images/ImageEmbedICCProfile/',
+              'Images/ImageExport/',
+              'Images/ImageExtraction/',
+              'Images/ImageFromStream/',
+              'Images/ImageImport/',
+              'Images/ImageResampling/',
+              'Images/ImageSoftMask/',
+              'Images/OutputPreview/',
+              'Images/RasterizePage/'
               ]
         steps:
             - name: Checkout
