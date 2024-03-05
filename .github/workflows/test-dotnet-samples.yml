@@ -73,9 +73,9 @@ jobs:
             - name: Build samples
               working-directory: ${{ matrix.dir }}
               run: |
-                dll_name=$(basename "$PWD")
+                sample_name=$(basename "$PWD")
 
-                if { [ "$dll_name" != "ConvertToOffice" ] && [ "$dll_name" != "CreateDocFromXPS" ]; } || [ "${{ matrix.os }}" != 'macos-14' ]; then
+                if { [ "$sample_name" != "ConvertToOffice" ] && [ "$sample_name" != "CreateDocFromXPS" ]; } || [ "${{ matrix.os }}" != 'macos-14' ]; then
                   dotnet build -c Release *.csproj
                 else
                   echo "Not available on this os"
@@ -86,10 +86,14 @@ jobs:
             - name: Run samples
               working-directory: ${{matrix.dir}}
               run: |
-                dll_name=$(basename "$PWD")
+                sample_name=$(basename "$PWD")
 
-                if { [ "$dll_name" != "ConvertToOffice" ] && [ "$dll_name" != "CreateDocFromXPS" ]; } || [ "${{ matrix.os }}" != 'macos-14' ]; then
-                  dotnet bin/Release/net6.0/$dll_name.dll
+                if { [ "$sample_name" != "ConvertToOffice" ] && [ "$sample_name" != "CreateDocFromXPS" ]; } || [ "${{ matrix.os }}" != 'macos-14' ]; then
+                  if [ "${{ matrix.os }}" == 'windows-latest' ]; then
+                    bin/Release/net6.0/$sample_name.exe
+                  else
+                    dotnet bin/Release/net6.0/$sample_name.dll
+                  fi
                 else
                   echo "Not available on this os"
                 fi
