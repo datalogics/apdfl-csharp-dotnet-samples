@@ -88,7 +88,9 @@ jobs:
               'OpticalCharacterRecognition/AddTextToDocument/',
               'OpticalCharacterRecognition/AddTextToImage/',
               'Other/MemoryFileSystem/',
-              'Other/StreamIO/'
+              'Other/StreamIO/',
+              'Security/AddRegexRedaction/',
+              'Security/Redactions/'
               ]
         steps:
             - name: Checkout
