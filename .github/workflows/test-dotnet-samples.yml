@@ -19,7 +19,7 @@ jobs:
           matrix:
             os: [windows-latest, ubuntu-latest, macos-14]
             # TODO: AddHeaderFooter won't run due to Times-Roman font not present on runner.
-            # TODO: Some of the ContentCreation samples require Microsoft Core Fonts to be installed on Linux.
+            # TODO: Some of the ContentCreation and Text samples require Microsoft Core Fonts to be installed on Linux.
             # TODO: Factur-XConverter sample needs input PDF specified as command-line argument.
             # TODO: ZUGFeRDConverter sample requires that input PDF and an input ZUGFeRD Invoice XML file be provided as command-line arguments.
             # TODO: DocToImages sample requires input PDF as command line argument.
@@ -30,7 +30,7 @@ jobs:
               'Annotations/PolygonAnnotations/',
               'Annotations/PolyLineAnnotations/',
               'ContentCreation/AddElements/',
-              #'ContentCreation/AddHeaderFooter/',
+              'ContentCreation/AddHeaderFooter/',
               'ContentCreation/Clips/',
               'ContentCreation/CreateBookmarks/',
               'ContentCreation/GradientShade/',
@@ -61,10 +61,10 @@ jobs:
               'DocumentConversion/ColorConvertDocument/',
               'DocumentConversion/ConvertToOffice/',
               'DocumentConversion/CreateDocFromXPS/',
-              'DocumentConversion/Factur-XConverter/',
+              #'DocumentConversion/Factur-XConverter/',
               'DocumentConversion/PDFAConverter/',
               'DocumentConversion/PDFXConverter/',
-              'DocumentConversion/ZUGFeRDConverter/',
+              #'DocumentConversion/ZUGFeRDConverter/',
               'DocumentOptimization/PDFOptimize/',
               #'Images/DocToImages/',
               'Images/DrawSeparations/',
@@ -113,6 +113,11 @@ jobs:
               uses: actions/setup-dotnet@v4
               with:
                 dotnet-version: ${{ env.DOTNET_VERSION }}
+            - name: Setup Microsoft Core Fonts
+              run: |
+                if [ "${{ matrix.os }}" == 'ubuntu-latest' ]; then
+                  sudo apt install ttf-mscorefonts-installer
+                fi
             - name: Build samples
               working-directory: ${{ matrix.dir }}
               run: |
