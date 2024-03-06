@@ -90,7 +90,21 @@ jobs:
               'Other/MemoryFileSystem/',
               'Other/StreamIO/',
               'Security/AddRegexRedaction/',
-              'Security/Redactions/'
+              'Security/Redactions/',
+              'Text/AddGlyphs/',
+              'Text/AddUnicodeText/',
+              'Text/AddVerticalText/',
+              'Text/ExtractAcroFormFieldData/',
+              'Text/ExtractCJKTextByPatternMatch/',
+              'Text/ExtractTextByPatternMatch/',
+              'Text/ExtractTextByRegion/',
+              'Text/ExtractTextFromAnnotations/',
+              'Text/ExtractTextFromMultiRegions/',
+              'Text/ExtractTextPreservingStyleAndPositionInfo/',
+              'Text/ListWords/',
+              'Text/RegexExtractText/',
+              'Text/RegexTextSearch/',
+              'Text/TextExtract/'
               ]
         steps:
             - name: Checkout
