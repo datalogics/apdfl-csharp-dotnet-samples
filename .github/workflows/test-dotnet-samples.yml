@@ -86,7 +86,9 @@ jobs:
               'InformationExtraction/ListPaths/',
               'InformationExtraction/Metadata/',
               'OpticalCharacterRecognition/AddTextToDocument/',
-              'OpticalCharacterRecognition/AddTextToImage/'
+              'OpticalCharacterRecognition/AddTextToImage/',
+              'Other/MemoryFileSystem/',
+              'Other/StreamIO/'
               ]
         steps:
             - name: Checkout
