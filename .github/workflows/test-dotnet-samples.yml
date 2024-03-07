@@ -118,6 +118,7 @@ jobs:
                 if [ "${{ matrix.os }}" == 'ubuntu-latest' ]; then
                   sudo dpkg-reconfigure debconf -f noninteractive -p critical
                   sudo apt-get -y install ttf-mscorefonts-installer
+                  fc-list
                 fi
             - name: Build samples
               working-directory: ${{ matrix.dir }}
