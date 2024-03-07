@@ -116,7 +116,7 @@ jobs:
             - name: Setup Microsoft Core Fonts
               run: |
                 if [ "${{ matrix.os }}" == 'ubuntu-latest' ]; then
-                  sudo apt install ttf-mscorefonts-installer
+                  sudo DEBIAN_FRONTEND=noninteractive apt-get -y install ttf-mscorefonts-installer
                 fi
             - name: Build samples
               working-directory: ${{ matrix.dir }}
