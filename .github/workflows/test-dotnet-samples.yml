@@ -114,11 +114,16 @@ jobs:
               with:
                 dotnet-version: ${{ env.DOTNET_VERSION }}
             - name: Setup Microsoft Core Fonts
+              working-directory: ${{ matrix.dir }}
               run: |
+                sample_name=$(basename "$PWD")
+
                 if [ "${{ matrix.os }}" == 'ubuntu-latest' ]; then
-                  echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
-                  sudo apt-get install ttf-mscorefonts-installer
-                  fc-list
+                  case "$sample_name" in "AddHeaderFooter" | "AddElements" | "MakeDocWithCalGrayColorSpace" | "MakeDocWithCalRGBColorSpace" | "MakeDocWithDeviceNColorSpace" | "MakeDocWithICCBasedColorSpace" | "MakeDocWithIndexedColorSpace" | "MakeDocWithLabColorSpace" | "MakeDocWithSeparationColorSpace" | "ExtendedGraphicStates" | "AddGlyphs" | "AddUnicodeText")
+                      echo 'ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true' | sudo debconf-set-selections
+                      sudo apt-get install ttf-mscorefonts-installer
+                      ;;
+                  esac
                 fi
             - name: Build samples
               working-directory: ${{ matrix.dir }}
