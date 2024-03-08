@@ -18,8 +18,6 @@ jobs:
           fail-fast: false
           matrix:
             os: [windows-latest, ubuntu-latest, macos-14]
-            # TODO: AddHeaderFooter won't run due to Times-Roman font not present on runner.
-            # TODO: Some of the ContentCreation and Text samples require Microsoft Core Fonts to be installed on Linux.
             # TODO: Factur-XConverter sample needs input PDF specified as command-line argument.
             # TODO: ZUGFeRDConverter sample requires that input PDF and an input ZUGFeRD Invoice XML file be provided as command-line arguments.
             # TODO: DocToImages sample requires input PDF as command line argument.
@@ -61,12 +59,12 @@ jobs:
               'DocumentConversion/ColorConvertDocument/',
               'DocumentConversion/ConvertToOffice/',
               'DocumentConversion/CreateDocFromXPS/',
-              #'DocumentConversion/Factur-XConverter/',
+              'DocumentConversion/Factur-XConverter/',
               'DocumentConversion/PDFAConverter/',
               'DocumentConversion/PDFXConverter/',
-              #'DocumentConversion/ZUGFeRDConverter/',
+              'DocumentConversion/ZUGFeRDConverter/',
               'DocumentOptimization/PDFOptimize/',
-              #'Images/DocToImages/',
+              'Images/DocToImages/',
               'Images/DrawSeparations/',
               'Images/DrawToBitmap/',
               'Images/EPSSeparations/',
