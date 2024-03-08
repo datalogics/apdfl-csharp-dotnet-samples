@@ -138,6 +138,8 @@ jobs:
               run: |
                 sample_name=$(basename "$PWD")
 
+                ls -la $HOME
+
                 if { [ "$sample_name" != "ConvertToOffice" ] && [ "$sample_name" != "CreateDocFromXPS" ]; } || [ "${{matrix.os}}" != 'macos-14' ]; then
                   if [ "${{matrix.os}}" == 'windows-latest' ]; then
                     if [ "$sample_name" == "DocToImages" ]; then
