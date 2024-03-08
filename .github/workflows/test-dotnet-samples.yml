@@ -138,18 +138,18 @@ jobs:
               run: |
                 sample_name=$(basename "$PWD")
 
-                ls -la $HOME
+                ls -la $HOME/.nuget/packages/adobe.pdf.library.sampleinput/1.0.0/build/Resources/Sample_Input
 
                 if { [ "$sample_name" != "ConvertToOffice" ] && [ "$sample_name" != "CreateDocFromXPS" ]; } || [ "${{matrix.os}}" != 'macos-14' ]; then
                   if [ "${{matrix.os}}" == 'windows-latest' ]; then
                     if [ "$sample_name" == "DocToImages" ]; then
-                      bin/Release/net6.0/$sample_name.exe -format=png ~/.nuget/packages/adobe.pdf.library.sampleinput/1.0.0/build/Resources/ducky.pdf
+                      bin/Release/net6.0/$sample_name.exe -format=png $HOME/.nuget/packages/adobe.pdf.library.sampleinput/1.0.0/build/Resources/Sample_Input/ducky.pdf
                     else
                         bin/Release/net6.0/$sample_name.exe
                     fi
                   else
                     if [ "$sample_name" == "DocToImages" ]; then
-                      dotnet bin/Release/net6.0/$sample_name.dll -format=png ~/.nuget/packages/adobe.pdf.library.sampleinput/1.0.0/build/Resources/ducky.pdf
+                      dotnet bin/Release/net6.0/$sample_name.dll -format=png  $HOME/.nuget/packages/adobe.pdf.library.sampleinput/1.0.0/build/Resources/Sample_Input/ducky.pdf
                     else
                       dotnet bin/Release/net6.0/$sample_name.dll
                     fi
