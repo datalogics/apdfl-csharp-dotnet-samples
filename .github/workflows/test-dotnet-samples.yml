@@ -18,9 +18,6 @@ jobs:
           fail-fast: false
           matrix:
             os: [windows-latest, ubuntu-latest, macos-14]
-            # TODO: Factur-XConverter sample needs input PDF specified as command-line argument.
-            # TODO: ZUGFeRDConverter sample requires that input PDF and an input ZUGFeRD Invoice XML file be provided as command-line arguments.
-            # TODO: DocToImages sample requires input PDF as command line argument.
             dir: [
               'Annotations/Annotations/',
               'Annotations/InkAnnotations/',
@@ -141,11 +138,19 @@ jobs:
               run: |
                 sample_name=$(basename "$PWD")
 
-                if { [ "$sample_name" != "ConvertToOffice" ] && [ "$sample_name" != "CreateDocFromXPS" ]; } || [ "${{ matrix.os }}" != 'macos-14' ]; then
-                  if [ "${{ matrix.os }}" == 'windows-latest' ]; then
-                    bin/Release/net6.0/$sample_name.exe
+                if { [ "$sample_name" != "ConvertToOffice" ] && [ "$sample_name" != "CreateDocFromXPS" ]; } || [ "${{matrix.os}}" != 'macos-14' ]; then
+                  if [ "${{matrix.os}}" == 'windows-latest' ]; then
+                    if [ "$sample_name" == "DocToImages" ]; then
+                      bin/Release/net6.0/$sample_name.exe -format=png ~/.nuget/packages/adobe.pdf.library.sampleinput/1.0.0/build/Resources/ducky.pdf
+                    else
+                        bin/Release/net6.0/$sample_name.exe
+                    fi
                   else
-                    dotnet bin/Release/net6.0/$sample_name.dll
+                    if [ "$sample_name" == "DocToImages" ]; then
+                      dotnet bin/Release/net6.0/$sample_name.dll -format=png ~/.nuget/packages/adobe.pdf.library.sampleinput/1.0.0/build/Resources/ducky.pdf
+                    else
+                      dotnet bin/Release/net6.0/$sample_name.dll
+                    fi
                   fi
                 else
                   echo "Not available on this os"
