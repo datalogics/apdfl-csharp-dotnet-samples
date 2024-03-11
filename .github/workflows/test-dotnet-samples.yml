@@ -138,20 +138,24 @@ jobs:
               run: |
                 sample_name=$(basename "$PWD")
 
-                if { [ "$sample_name" != "ConvertToOffice" ] && [ "$sample_name" != "CreateDocFromXPS" ]; } || [ "${{matrix.os}}" != 'macos-14' ]; then
-                  if [ "${{matrix.os}}" == 'windows-latest' ]; then
-                    if [ "$sample_name" == "DocToImages" ]; then
-                      bin/Release/net6.0/$sample_name.exe -format=png $HOME/.nuget/packages/adobe.pdf.library.sampleinput/1.0.0/build/Resources/Sample_Input/ducky.pdf
+                if [ "$sample_name" == "Redactions" ] && [ "${{matrix.os}}" == 'ubuntu-latest' ]; then
+                  echo "Not available on this os"
+                else
+                  if { [ "$sample_name" != "ConvertToOffice" ] && [ "$sample_name" != "CreateDocFromXPS" ]; } || [ "${{matrix.os}}" != 'macos-14' ]; then
+                    if [ "${{matrix.os}}" == 'windows-latest' ]; then
+                      if [ "$sample_name" == "DocToImages" ]; then
+                        bin/Release/net6.0/$sample_name.exe -format=png $HOME/.nuget/packages/adobe.pdf.library.sampleinput/1.0.0/build/Resources/Sample_Input/ducky.pdf
+                      else
+                          bin/Release/net6.0/$sample_name.exe
+                      fi
                     else
-                        bin/Release/net6.0/$sample_name.exe
+                      if [ "$sample_name" == "DocToImages" ]; then
+                        dotnet bin/Release/net6.0/$sample_name.dll -format=png  $HOME/.nuget/packages/adobe.pdf.library.sampleinput/1.0.0/build/Resources/Sample_Input/ducky.pdf
+                      else
+                        dotnet bin/Release/net6.0/$sample_name.dll
+                      fi
                     fi
                   else
-                    if [ "$sample_name" == "DocToImages" ]; then
-                      dotnet bin/Release/net6.0/$sample_name.dll -format=png  $HOME/.nuget/packages/adobe.pdf.library.sampleinput/1.0.0/build/Resources/Sample_Input/ducky.pdf
-                    else
-                      dotnet bin/Release/net6.0/$sample_name.dll
-                    fi
+                    echo "Not available on this os"
                   fi
-                else
-                  echo "Not available on this os"
                 fi
