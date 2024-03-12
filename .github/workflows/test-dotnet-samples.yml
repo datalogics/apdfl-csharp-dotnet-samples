@@ -159,3 +159,21 @@ jobs:
                     echo "Not available on this os"
                   fi
                 fi
+            - name: Save artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                name: output-${{ runner.os }}-${{matrix.dir}}
+                path: |
+                  **.docx
+                  **.xslx
+                  **.pptx
+                  **.pdf
+                  **.tif
+                  **.png
+                  **.jpg
+                  **.eps
+                  **.tiff
+                  **.bmp
+                  **.gif
+                  **.json
+                  **.txt
