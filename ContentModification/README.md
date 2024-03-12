@@ -4,6 +4,9 @@ Creates an action associated with a link annotation on a PDF page.
 ## ***AddCollection***
 Adds a collection to a PDF document to turn that document into a PDF Portfolio.
 
+## ***AddQRCode***
+Adds a QR barcode to the Page of a PDF document.
+
 ## ***ChangeLayerConfiguration***
 Sets the on/off states for Optional Content Groups (Layers) within a PDF document.
 
