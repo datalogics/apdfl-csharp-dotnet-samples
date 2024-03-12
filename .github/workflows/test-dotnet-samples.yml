@@ -159,24 +159,27 @@ jobs:
                     echo "Not available on this os"
                   fi
                 fi
-            - name: List sample output files
+            - name: Set output variable
+              id: set-sample-name
+              working-directory: ${{matrix.dir}}
               run: |
-                ls ${{ github.workspace}}/
+                sample_name=$(basename "$PWD")
+                echo "::set-output name=sample_name::$sample_name"
             - name: Save artifacts
               uses: actions/upload-artifact@v4
               with:
-                name: output-${{ runner.os }}-${{matrix.dir}}
+                name: output-${{ runner.os }}-${{ steps.set-sample-name.outputs.sample_name }}
                 path: |
-                  **.docx
-                  **.xslx
-                  **.pptx
-                  **.pdf
-                  **.tif
-                  **.png
-                  **.jpg
-                  **.eps
-                  **.tiff
-                  **.bmp
-                  **.gif
-                  **.json
-                  **.txt
+                  **/*.docx
+                  **/*.xslx
+                  **/*.pptx
+                  **/*.pdf
+                  **/*.tif
+                  **/*.png
+                  **/*.jpg
+                  **/*.eps
+                  **/*.tiff
+                  **/*.bmp
+                  **/*.gif
+                  **/*.json
+                  **/*.txt
