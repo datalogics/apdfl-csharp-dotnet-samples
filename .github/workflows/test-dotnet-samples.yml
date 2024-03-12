@@ -170,16 +170,16 @@ jobs:
               with:
                 name: output-${{ runner.os }}-${{ steps.set-sample-name.outputs.sample_name }}
                 path: |
-                  **/*.docx
-                  **/*.xslx
-                  **/*.pptx
-                  **/*.pdf
-                  **/*.tif
-                  **/*.png
-                  **/*.jpg
-                  **/*.eps
-                  **/*.tiff
-                  **/*.bmp
-                  **/*.gif
-                  **/*.json
-                  **/*.txt
+                  ${{matrix.dir}}*.docx
+                  ${{matrix.dir}}*.xslx
+                  ${{matrix.dir}}*.pptx
+                  ${{matrix.dir}}*.pdf
+                  ${{matrix.dir}}*.tif
+                  ${{matrix.dir}}*.png
+                  ${{matrix.dir}}*.jpg
+                  ${{matrix.dir}}*.eps
+                  ${{matrix.dir}}*.tiff
+                  ${{matrix.dir}}*.bmp
+                  ${{matrix.dir}}*.gif
+                  ${{matrix.dir}}*.json
+                  ${{matrix.dir}}*.txt
