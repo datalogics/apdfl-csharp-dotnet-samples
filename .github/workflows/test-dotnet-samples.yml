@@ -159,6 +159,9 @@ jobs:
                     echo "Not available on this os"
                   fi
                 fi
+            - name: List sample output files
+              run: |
+                ls ${{ github.workspace}}/
             - name: Save artifacts
               uses: actions/upload-artifact@v4
               with:
