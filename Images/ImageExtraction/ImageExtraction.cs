@@ -32,14 +32,14 @@ namespace ImageExtraction
                     Datalogics.PDFL.Image img = (Datalogics.PDFL.Image)e;
                     using (SKBitmap sKBitmap = img.SKBitmap)
                     {
-                        using (FileStream f = File.OpenWrite("ImageExtraction-extract-out" + (next) + ".Png"))
+                        using (FileStream f = File.OpenWrite("ImageExtraction-extract-out" + (next) + ".png"))
                             sKBitmap.Encode(SKEncodedImageFormat.Png, 100).SaveTo(f);
                     }
 
                     Datalogics.PDFL.Image newimg = img.ChangeResolution(500);
                     using (SKBitmap sKBitmap = newimg.SKBitmap)
                     {
-                        using (FileStream f = File.OpenWrite("ImageExtraction-extract-Resolution-500-out" + (next) + ".Png"))
+                        using (FileStream f = File.OpenWrite("ImageExtraction-extract-Resolution-500-out" + (next) + ".png"))
                             sKBitmap.Encode(SKEncodedImageFormat.Png, 100).SaveTo(f);
                     }
                     next++;
