@@ -183,17 +183,7 @@ jobs:
                   ${{matrix.dir}}*.gif
                   ${{matrix.dir}}*.json
                   ${{matrix.dir}}*.txt
-                  ${{matrix.dir}}*.csv
-            - name: List files again
-              run: |
-                ls -la ..
-                echo "Test"
-                ls -la ../..
-                echo "Test2"
-                ls -la ../../../
-                echo "Test3"
-                ls ${{matrix.dir}}
-                echo "Test4"
-                ls ${{matrix.dir}}/..
-                echo "Test5"
-                ls ${{matrix.dir}}/../..
+                  ${{matrix.dir}}../*.pdf
+                  ${{matrix.dir}}../*.json
+                  ${{matrix.dir}}../*.txt
+                  ${{matrix.dir}}../*.csv
