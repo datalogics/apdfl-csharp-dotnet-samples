@@ -159,16 +159,16 @@ jobs:
                     echo "Not available on this os"
                   fi
                 fi
-            - name: Set output variable
+            - name: Set sample_name variable
               id: set-sample-name
               working-directory: ${{matrix.dir}}
               run: |
                 sample_name=$(basename "$PWD")
-                echo "::set-output name=sample_name::$sample_name"
+                echo "SAMPLE_NAME=$sample_name" >> "$GITHUB_ENV"
             - name: Save artifacts
               uses: actions/upload-artifact@v4
               with:
-                name: output-${{ runner.os }}-${{ steps.set-sample-name.outputs.sample_name }}
+                name: output-${{ runner.os }}-${{ env.SAMPLE_NAME }}
                 path: |
                   ${{matrix.dir}}*.docx
                   ${{matrix.dir}}*.xslx
