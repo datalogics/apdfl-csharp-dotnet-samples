@@ -166,10 +166,6 @@ jobs:
                 sample_name=$(basename "$PWD")
                 echo "SAMPLE_NAME=$sample_name" >> "$GITHUB_ENV"
                 echo "Set $sample_name as SAMPLE_NAME environment variable"
-
-                sample_parent_dir_path=$(realpath ..)
-                echo "SAMPLE_PARENT_DIR_PATH=$sample_parent_dir_path" >> "$GITHUB_ENV"
-                echo "Set $sample_parent_dir_path as SAMPLE_PARENT_DIR_PATH environment variable"
             - name: Save artifacts
               uses: actions/upload-artifact@v4
               with:
@@ -188,7 +184,4 @@ jobs:
                   ${{matrix.dir}}*.gif
                   ${{matrix.dir}}*.json
                   ${{matrix.dir}}*.txt
-                  ${{env.SAMPLE_PARENT_DIR_PATH}}*.pdf
-                  ${{env.SAMPLE_PARENT_DIR_PATH}}*.json
-                  ${{env.SAMPLE_PARENT_DIR_PATH}}*.txt
-                  ${{env.SAMPLE_PARENT_DIR_PATH}}*.csv
+                  ${{matrix.dir}}*.csv

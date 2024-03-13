@@ -19,7 +19,7 @@ namespace ExtractTextPreservingStyleAndPositionInfo
     {
         // Set Defaults
         static String sInput = Library.ResourceDirectory + "Sample_Input/sample.pdf";
-        static String sOutput = "../ExtractTextPreservingStyleAndPositionInfo-out.json";
+        static String sOutput = "ExtractTextPreservingStyleAndPositionInfo-out.json";
 
         static void Main(string[] args)
         {

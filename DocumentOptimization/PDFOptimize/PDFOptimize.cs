@@ -29,7 +29,7 @@ namespace PDFOptimize
                 Console.WriteLine("Initialized the library.");
 
                 String sInput = Library.ResourceDirectory + "Sample_Input/sample.pdf"; ;
-                String sOutput = "../PDFOptimizer-out.pdf";
+                String sOutput = "PDFOptimizer-out.pdf";
 
                 if (args.Length > 0)
                     sInput = args[0];
