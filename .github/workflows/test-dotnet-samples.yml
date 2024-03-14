@@ -101,38 +101,38 @@ jobs:
               'Text/RegexTextSearch/',
               'Text/TextExtract/'
               ]
+
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+
             - name: Setup .NET
               uses: actions/setup-dotnet@v4
               with:
                 dotnet-version: ${{ env.DOTNET_VERSION }}
+
             - name: Setup Microsoft Core Fonts
               working-directory: ${{ matrix.dir }}
               run: |
                 sample_name=$(basename "$PWD")
-
                 if [ "${{ matrix.os }}" == 'ubuntu-latest' ]; then
                   case "$sample_name" in "AddHeaderFooter" | "AddElements" | "MakeDocWithCalGrayColorSpace" | "MakeDocWithCalRGBColorSpace" | "MakeDocWithDeviceNColorSpace" | "MakeDocWithICCBasedColorSpace" | "MakeDocWithIndexedColorSpace" | "MakeDocWithLabColorSpace" | "MakeDocWithSeparationColorSpace" | "ExtendedGraphicStates" | "AddGlyphs" | "AddUnicodeText")
-                      echo 'ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true' | sudo debconf-set-selections
-                      sudo apt-get install ttf-mscorefonts-installer
-                      ;;
+                    echo 'ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true' | sudo debconf-set-selections
+                    sudo apt-get install ttf-mscorefonts-installer
+                    ;;
                   esac
                 fi
+
             - name: Build samples
               working-directory: ${{ matrix.dir }}
               run: |
                 sample_name=$(basename "$PWD")
-
                 if { [ "$sample_name" != "ConvertToOffice" ] && [ "$sample_name" != "CreateDocFromXPS" ]; } || [ "${{ matrix.os }}" != 'macos-14' ]; then
                   dotnet build -c Release *.csproj
                 else
                   echo "Not available on this os"
                 fi
-            - name: List files
-              run: |
-                ls ${{matrix.dir}}
+
             - name: Run samples
               working-directory: ${{matrix.dir}}
               run: |
@@ -159,13 +159,12 @@ jobs:
                     echo "Not available on this os"
                   fi
                 fi
+
             - name: Set sample_name variable
               id: set-sample-name
               working-directory: ${{matrix.dir}}
-              run: |
-                sample_name=$(basename "$PWD")
-                echo "SAMPLE_NAME=$sample_name" >> "$GITHUB_ENV"
-                echo "Set $sample_name as SAMPLE_NAME environment variable"
+              run: echo "SAMPLE_NAME=$(basename "$PWD")" >> "$GITHUB_ENV"
+
             - name: Save artifacts
               uses: actions/upload-artifact@v4
               with:
@@ -185,3 +184,7 @@ jobs:
                   ${{matrix.dir}}*.json
                   ${{matrix.dir}}*.txt
                   ${{matrix.dir}}*.csv
+
+            - name: List files
+              run: |
+                ls ${{matrix.dir}}
