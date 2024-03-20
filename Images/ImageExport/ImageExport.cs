@@ -117,17 +117,17 @@ namespace ImageExport
                 else if (e is Container)
                 {
                     Console.WriteLine("Recursing through a Container");
-                    Export_Element_Images((e as Container).Content);
+                    Export_Element_Images(((Container)e).Content);
                 }
                 else if (e is Group)
                 {
                     Console.WriteLine("Recursing through a Group");
-                    Export_Element_Images((e as Group).Content);
+                    Export_Element_Images(((Group)e).Content);
                 }
                 else if (e is Form)
                 {
                     Console.WriteLine("Recursing through a Form");
-                    Export_Element_Images((e as Form).Content);
+                    Export_Element_Images(((Form)e).Content);
                 }
 
                 i++;

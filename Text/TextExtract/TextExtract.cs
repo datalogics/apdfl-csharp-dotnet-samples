@@ -88,7 +88,7 @@ namespace TextExtract
         static void ExtractTextUntagged(Document doc, WordFinder wordFinder)
         {
             int nPages = doc.NumPages;
-            IList<Word> pageWords = null;
+            IList<Word> pageWords = new List<Word>();
 
             System.IO.StreamWriter logfile = new System.IO.StreamWriter("TextExtract-untagged-out.txt");
             Console.WriteLine("Writing TextExtract-untagged-out.txt");
@@ -151,7 +151,7 @@ namespace TextExtract
         static void ExtractTextTagged(Document doc, WordFinder wordFinder)
         {
             int nPages = doc.NumPages;
-            IList<Word> pageWords = null;
+            IList<Word> pageWords = new List<Word>();
 
             System.IO.StreamWriter logfile = new System.IO.StreamWriter("TextExtract-tagged-out.txt");
             Console.WriteLine("Writing TextExtract-tagged-out.txt");

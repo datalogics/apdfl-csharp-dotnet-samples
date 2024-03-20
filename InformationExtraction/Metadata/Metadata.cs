@@ -75,8 +75,8 @@ namespace Metadata
             {
                 // Demonstrate getting data from an image
                 Content content = doc.GetPage(0).Content;
-                Container container = (Container) content.GetElement(0);
-                Datalogics.PDFL.Image image = (Datalogics.PDFL.Image) container.Content.GetElement(0);
+                Container container = (Container)content.GetElement(0);
+                Datalogics.PDFL.Image image = (Datalogics.PDFL.Image)container.Content.GetElement(0);
                 String metadata = image.Stream.Dict.XMPMetadata;
                 Console.WriteLine("Ducky CreatorTool: {0}\n", GetCreatorToolAttribute(metadata));
             }
@@ -84,34 +84,52 @@ namespace Metadata
 
         static string GetTitle(string xmlstring)
         {
+            string title = "";
+
             XmlDocument xmldoc = new XmlDocument();
             xmldoc.LoadXml(xmlstring);
-            XmlElement element = (XmlElement) xmldoc.GetElementsByTagName("dc:title")[0];
-            XmlNode titleNode = element.GetElementsByTagName("rdf:li")[0];
-            return GetText(titleNode.ChildNodes);
+            XmlElement? element = (XmlElement?)xmldoc.GetElementsByTagName("dc:title")[0];
+            if (element != null)
+            {
+                XmlNode? titleNode = element.GetElementsByTagName("rdf:li")[0];
+                if (titleNode != null)
+                {
+                    title = GetText(titleNode.ChildNodes);
+                }
+            }
+
+            return title;
         }
 
         // ReSharper disable once UnusedMember.Local
         static string GetCreatorTool(string xmlstring)
         {
+            string creatorTool = "";
             XmlDocument xmldoc = new XmlDocument();
             xmldoc.LoadXml(xmlstring);
-            XmlElement element = (XmlElement) xmldoc.GetElementsByTagName("xap:CreatorTool")[0];
-            return GetText(element.ChildNodes);
+            XmlElement? element = (XmlElement?)xmldoc.GetElementsByTagName("xap:CreatorTool")[0];
+            if (element != null)
+            {
+                creatorTool = GetText(element.ChildNodes);
+            }
+
+            return creatorTool;
         }
 
         static string GetCreatorToolAttribute(string xmlstring)
         {
+            string creatorToolAttribute = "";
+            
             XmlDocument xmldoc = new XmlDocument();
             xmldoc.LoadXml(xmlstring);
             foreach (XmlNode node in xmldoc.GetElementsByTagName("rdf:Description"))
             {
                 XmlElement e = (XmlElement) node;
                 if (e.HasAttribute("xap:CreatorTool"))
-                    return e.GetAttribute("xap:CreatorTool");
+                    creatorToolAttribute = e.GetAttribute("xap:CreatorTool");
             }
 
-            return null;
+            return creatorToolAttribute;
         }
 
         static string GetText(XmlNodeList nodeList)

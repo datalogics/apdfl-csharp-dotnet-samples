@@ -47,19 +47,19 @@ namespace ImageResampling
                 else if (e is Container)
                 {
                     Console.WriteLine("Recursing through a Container");
-                    ResampleImages((e as Container).Content);
+                    ResampleImages(((Container)e).Content);
                 }
                 else if (e is Group)
                 {
                     Console.WriteLine("Recursing through a Group");
-                    ResampleImages((e as Group).Content);
+                    ResampleImages(((Group)e).Content);
                 }
                 else if (e is Form)
                 {
                     Console.WriteLine("Recursing through a Form");
-                    Content formcontent = (e as Form).Content;
+                    Content formcontent = ((Form)e).Content;
                     ResampleImages(formcontent);
-                    (e as Form).Content = formcontent;
+                    ((Form)e).Content = formcontent;
                 }
 
                 i++;

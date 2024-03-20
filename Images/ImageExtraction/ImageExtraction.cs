@@ -47,15 +47,15 @@ namespace ImageExtraction
                 }
                 else if (e is Datalogics.PDFL.Container)
                 {
-                    ExtractImages((e as Datalogics.PDFL.Container).Content);
+                    ExtractImages(((Datalogics.PDFL.Container)e).Content);
                 }
                 else if (e is Datalogics.PDFL.Group)
                 {
-                    ExtractImages((e as Datalogics.PDFL.Group).Content);
+                    ExtractImages(((Datalogics.PDFL.Group)e).Content);
                 }
                 else if (e is Form)
                 {
-                    ExtractImages((e as Form).Content);
+                    ExtractImages(((Datalogics.PDFL.Form)e).Content);
                 }
             }
         }

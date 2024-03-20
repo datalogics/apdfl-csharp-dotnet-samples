@@ -65,7 +65,7 @@ namespace AddVerticalText
                 foreach (String str in strings)
                 {
                     // Find a font that can represent all characters in the string, if there is one.
-                    Font font = GetRepresentableFont(fonts, str);
+                    Font? font = GetRepresentableFont(fonts, str);
                     if (font == null)
                     {
                         Console.WriteLine(
@@ -94,7 +94,7 @@ namespace AddVerticalText
             }
         }
 
-        static Font GetRepresentableFont(List<Font> fonts, String str)
+        static Font? GetRepresentableFont(List<Font> fonts, String str)
         {
             foreach (Font font in fonts)
             {
