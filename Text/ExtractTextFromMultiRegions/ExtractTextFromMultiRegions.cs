@@ -17,7 +17,7 @@ namespace ExtractTextFromMultiRegions
     {
         // Set Defaults
         static String sInput = Library.ResourceDirectory + "Sample_Input/ExtractTextFromMultiRegions";
-        static String sOutput = "../ExtractTextFromMultiRegions-out.csv";
+        static String sOutput = "ExtractTextFromMultiRegions-out.csv";
 
         // Rectangular regions to extract text in points (origin of the page is bottom left)
         // (Left, Right, Bottom, Top)
