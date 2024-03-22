@@ -47,16 +47,16 @@ namespace RegexExtractText
     public class QuadLocation
     {
         [JsonPropertyName("bottom-left")]
-        public BottomLeft bottomLeft { get; set; }
+        public BottomLeft? bottomLeft { get; set; }
 
         [JsonPropertyName("bottom-right")]
-        public BottomRight bottomRight { get; set; }
+        public BottomRight? bottomRight { get; set; }
 
         [JsonPropertyName("top-left")]
-        public TopLeft topLeft { get; set; }
+        public TopLeft? topLeft { get; set; }
 
         [JsonPropertyName("top-right")]
-        public TopRight topRight { get; set; }
+        public TopRight? topRight { get; set; }
     }
 
     // This class represents a match quad's location (the quad coordinates and page number that quad is located on).
@@ -66,23 +66,23 @@ namespace RegexExtractText
         public int pageNumber { get; set; }
 
         [JsonPropertyName("quad-location")]
-        public QuadLocation quadLocation { get; set; }
+        public QuadLocation? quadLocation { get; set; }
     }
 
     // This class represents the information that is associated with a match (match phrase and match quads).
     public class MatchObject
     {
         [JsonPropertyName("match-phrase")]
-        public string matchPhrase { get; set; }
+        public string? matchPhrase { get; set; }
 
         [JsonPropertyName("match-quads")]
-        public List<MatchQuadInformation> matchQuads { get; set; }
+        public List<MatchQuadInformation>? matchQuads { get; set; }
     }
 
     // This class represents the final JSON that will be written to the output JSON file.
     public class DocTextFinderJson
     {
-        public List<MatchObject> documentJson;
+        public List<MatchObject>? documentJson;
     }
 
     class RegexExtractText

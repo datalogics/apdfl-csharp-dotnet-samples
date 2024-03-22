@@ -17,7 +17,7 @@ namespace ExtractAcroFormFieldData
     {
         // Set Defaults
         static String sInput = Library.ResourceDirectory + "Sample_Input/ExtractAcroFormFieldData.pdf";
-        static String sOutput = "../ExtractAcroFormFieldData-out.json";
+        static String sOutput = "ExtractAcroFormFieldData-out.json";
 
         static void Print(AcroFormTextFieldObject t)
         {

@@ -1,0 +1,190 @@
+name: test-samples
+
+on:
+    pull_request:
+    push:
+        branches: [ develop, main ]
+
+env:
+    DOTNET_VERSION: '6.x'
+
+jobs:
+    run-samples:
+        runs-on: ${{ matrix.os }}
+        defaults:
+          run:
+            shell: bash
+        strategy:
+          fail-fast: false
+          matrix:
+            os: [windows-latest, ubuntu-latest, macos-14]
+            dir: [
+              'Annotations/Annotations/',
+              'Annotations/InkAnnotations/',
+              'Annotations/LinkAnnotation/',
+              'Annotations/PolygonAnnotations/',
+              'Annotations/PolyLineAnnotations/',
+              'ContentCreation/AddElements/',
+              'ContentCreation/AddHeaderFooter/',
+              'ContentCreation/Clips/',
+              'ContentCreation/CreateBookmarks/',
+              'ContentCreation/GradientShade/',
+              'ContentCreation/MakeDocWithCalGrayColorSpace/',
+              'ContentCreation/MakeDocWithCalRGBColorSpace/',
+              'ContentCreation/MakeDocWithDeviceNColorSpace/',
+              'ContentCreation/MakeDocWithICCBasedColorSpace/',
+              'ContentCreation/MakeDocWithIndexedColorSpace/',
+              'ContentCreation/MakeDocWithLabColorSpace/',
+              'ContentCreation/MakeDocWithSeparationColorSpace/',
+              'ContentCreation/NameTrees/',
+              'ContentCreation/NumberTrees/',
+              'ContentCreation/RemoteGoToActions/',
+              'ContentCreation/WriteNChannelTiff/',
+              'ContentModification/Action/',
+              'ContentModification/AddCollection/',
+              'ContentModification/ChangeLayerConfiguration/',
+              'ContentModification/ChangeLinkColors/',
+              'ContentModification/CreateLayer/',
+              'ContentModification/ExtendedGraphicStates/',
+              'ContentModification/FlattenTransparency/',
+              'ContentModification/LaunchActions/',
+              'ContentModification/MergePDF/',
+              'ContentModification/PageLabels/',
+              'ContentModification/PDFObject/',
+              'ContentModification/UnderlinesAndHighlights/',
+              'ContentModification/Watermark/',
+              'DocumentConversion/ColorConvertDocument/',
+              'DocumentConversion/ConvertToOffice/',
+              'DocumentConversion/CreateDocFromXPS/',
+              'DocumentConversion/Factur-XConverter/',
+              'DocumentConversion/PDFAConverter/',
+              'DocumentConversion/PDFXConverter/',
+              'DocumentConversion/ZUGFeRDConverter/',
+              'DocumentOptimization/PDFOptimize/',
+              'Images/DocToImages/',
+              'Images/DrawSeparations/',
+              'Images/DrawToBitmap/',
+              'Images/EPSSeparations/',
+              'Images/GetSeparatedImages/',
+              'Images/ImageEmbedICCProfile/',
+              'Images/ImageExport/',
+              'Images/ImageExtraction/',
+              'Images/ImageFromStream/',
+              'Images/ImageImport/',
+              'Images/ImageResampling/',
+              'Images/ImageSoftMask/',
+              'Images/OutputPreview/',
+              'Images/RasterizePage/',
+              'InformationExtraction/ListBookmarks/',
+              'InformationExtraction/ListInfo/',
+              'InformationExtraction/ListLayers/',
+              'InformationExtraction/ListPaths/',
+              'InformationExtraction/Metadata/',
+              'OpticalCharacterRecognition/AddTextToDocument/',
+              'OpticalCharacterRecognition/AddTextToImage/',
+              'Other/MemoryFileSystem/',
+              'Other/StreamIO/',
+              'Security/AddRegexRedaction/',
+              'Security/Redactions/',
+              'Text/AddGlyphs/',
+              'Text/AddUnicodeText/',
+              'Text/AddVerticalText/',
+              'Text/ExtractAcroFormFieldData/',
+              'Text/ExtractCJKTextByPatternMatch/',
+              'Text/ExtractTextByPatternMatch/',
+              'Text/ExtractTextByRegion/',
+              'Text/ExtractTextFromAnnotations/',
+              'Text/ExtractTextFromMultiRegions/',
+              'Text/ExtractTextPreservingStyleAndPositionInfo/',
+              'Text/ListWords/',
+              'Text/RegexExtractText/',
+              'Text/RegexTextSearch/',
+              'Text/TextExtract/'
+              ]
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v4
+              with:
+                dotnet-version: ${{ env.DOTNET_VERSION }}
+
+            - name: Setup Microsoft Core Fonts
+              working-directory: ${{ matrix.dir }}
+              run: |
+                sample_name=$(basename "$PWD")
+                if [ "${{ matrix.os }}" == 'ubuntu-latest' ]; then
+                  case "$sample_name" in "AddHeaderFooter" | "AddElements" | "MakeDocWithCalGrayColorSpace" | "MakeDocWithCalRGBColorSpace" | "MakeDocWithDeviceNColorSpace" | "MakeDocWithICCBasedColorSpace" | "MakeDocWithIndexedColorSpace" | "MakeDocWithLabColorSpace" | "MakeDocWithSeparationColorSpace" | "ExtendedGraphicStates" | "AddGlyphs" | "AddUnicodeText")
+                    echo 'ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true' | sudo debconf-set-selections
+                    sudo apt-get install ttf-mscorefonts-installer
+                    ;;
+                  esac
+                fi
+
+            - name: Build samples
+              working-directory: ${{ matrix.dir }}
+              run: |
+                sample_name=$(basename "$PWD")
+                if { [ "$sample_name" != "ConvertToOffice" ] && [ "$sample_name" != "CreateDocFromXPS" ]; } || [ "${{ matrix.os }}" != 'macos-14' ]; then
+                  dotnet build -c Release *.csproj
+                else
+                  echo "Not available on this os"
+                fi
+
+            - name: Run samples
+              working-directory: ${{matrix.dir}}
+              run: |
+                sample_name=$(basename "$PWD")
+
+                if [ "$sample_name" == "Redactions" ] && [ "${{matrix.os}}" == 'ubuntu-latest' ]; then
+                  echo "Not available on this os"
+                else
+                  if { [ "$sample_name" != "ConvertToOffice" ] && [ "$sample_name" != "CreateDocFromXPS" ]; } || [ "${{matrix.os}}" != 'macos-14' ]; then
+                    if [ "${{matrix.os}}" == 'windows-latest' ]; then
+                      if [ "$sample_name" == "DocToImages" ]; then
+                        bin/Release/net6.0/$sample_name.exe -format=png $HOME/.nuget/packages/adobe.pdf.library.sampleinput/1.0.0/build/Resources/Sample_Input/ducky.pdf
+                      else
+                          bin/Release/net6.0/$sample_name.exe
+                      fi
+                    else
+                      if [ "$sample_name" == "DocToImages" ]; then
+                        dotnet bin/Release/net6.0/$sample_name.dll -format=png  $HOME/.nuget/packages/adobe.pdf.library.sampleinput/1.0.0/build/Resources/Sample_Input/ducky.pdf
+                      else
+                        dotnet bin/Release/net6.0/$sample_name.dll
+                      fi
+                    fi
+                  else
+                    echo "Not available on this os"
+                  fi
+                fi
+
+            - name: Set sample_name variable
+              id: set-sample-name
+              working-directory: ${{matrix.dir}}
+              run: echo "SAMPLE_NAME=$(basename "$PWD")" >> "$GITHUB_ENV"
+
+            - name: Save artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                name: output-${{ runner.os }}-${{ env.SAMPLE_NAME }}
+                path: |
+                  ${{matrix.dir}}*.docx
+                  ${{matrix.dir}}*.xslx
+                  ${{matrix.dir}}*.pptx
+                  ${{matrix.dir}}*.pdf
+                  ${{matrix.dir}}*.tif
+                  ${{matrix.dir}}*.png
+                  ${{matrix.dir}}*.jpg
+                  ${{matrix.dir}}*.eps
+                  ${{matrix.dir}}*.tiff
+                  ${{matrix.dir}}*.bmp
+                  ${{matrix.dir}}*.gif
+                  ${{matrix.dir}}*.json
+                  ${{matrix.dir}}*.txt
+                  ${{matrix.dir}}*.csv
+
+            - name: List files
+              run: |
+                ls ${{matrix.dir}}

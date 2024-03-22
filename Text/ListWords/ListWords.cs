@@ -54,7 +54,7 @@ namespace ListWords
                 wordConfig.NoStyleInfo = false; // text extraction efficiency
 
                 WordFinder wordFinder = new WordFinder(doc, WordFinderVersion.Latest, wordConfig);
-                IList<Word> pageWords = null;
+                IList<Word> pageWords = new List<Word>();
                 for (int i = 0; i < nPages; i++)
                 {
                     pageWords = wordFinder.GetWordList(i);

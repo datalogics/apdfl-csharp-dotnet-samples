@@ -54,22 +54,22 @@ namespace ListPaths
 
                 if (e is Datalogics.PDFL.Path)
                 {
-                    ListPath(e as Datalogics.PDFL.Path, pgno);
+                    ListPath((Datalogics.PDFL.Path)e, pgno);
                 }
                 else if (e is Container)
                 {
                     Console.WriteLine("Recurring through a Container");
-                    ListPathsInContent((e as Container).Content, pgno);
+                    ListPathsInContent(((Datalogics.PDFL.Container)e).Content, pgno);
                 }
                 else if (e is Group)
                 {
                     Console.WriteLine("Recurring through a Group");
-                    ListPathsInContent((e as Group).Content, pgno);
+                    ListPathsInContent(((Datalogics.PDFL.Group)e).Content, pgno);
                 }
                 else if (e is Form)
                 {
                     Console.WriteLine("Recurring through a Form");
-                    ListPathsInContent((e as Form).Content, pgno);
+                    ListPathsInContent(((Datalogics.PDFL.Form)e).Content, pgno);
                 }
             }
         }
@@ -83,18 +83,18 @@ namespace ListPaths
             {
                 if (segment is MoveTo)
                 {
-                    MoveTo moveto = segment as MoveTo;
+                    MoveTo moveto = (MoveTo)segment;
                     Console.WriteLine("  MoveTo x={0}, y={1}", moveto.Point.H, moveto.Point.V);
                 }
                 else if (segment is LineTo)
                 {
-                    LineTo lineto = segment as LineTo;
+                    LineTo lineto = (LineTo)segment;
                     Console.WriteLine("  LineTo x={0}, y={1}",
                         lineto.Point.H, lineto.Point.V);
                 }
                 else if (segment is CurveTo)
                 {
-                    CurveTo curveto = segment as CurveTo;
+                    CurveTo curveto = (CurveTo)segment;
                     Console.WriteLine("  CurveTo x1={0}, y1={1}, x2={2}, y2={3}, x3={4}, y3={5}",
                         curveto.Point1.H, curveto.Point1.V,
                         curveto.Point2.H, curveto.Point2.V,
@@ -102,21 +102,21 @@ namespace ListPaths
                 }
                 else if (segment is CurveToV)
                 {
-                    CurveToV curveto = segment as CurveToV;
+                    CurveToV curveto = (CurveToV)segment;
                     Console.WriteLine("  CurveToV x2={0}, y2={1}, x3={2}, y3={3}",
                         curveto.Point2.H, curveto.Point2.V,
                         curveto.Point3.H, curveto.Point3.V);
                 }
                 else if (segment is CurveToY)
                 {
-                    CurveToY curveto = segment as CurveToY;
+                    CurveToY curveto = (CurveToY)segment;
                     Console.WriteLine("  CurveToV x1={0}, y1={1}, x3={2}, y3={3}",
                         curveto.Point1.H, curveto.Point1.V,
                         curveto.Point3.H, curveto.Point3.V);
                 }
                 else if (segment is RectSegment)
                 {
-                    RectSegment rect = segment as RectSegment;
+                    RectSegment rect = (RectSegment)segment;
                     Console.WriteLine("  Rectangle x={0}, y={1}, width={2}, height={3}",
                         rect.Point.H, rect.Point.V,
                         rect.Width, rect.Height);

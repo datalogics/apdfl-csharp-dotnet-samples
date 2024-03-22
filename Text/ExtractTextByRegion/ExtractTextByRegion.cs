@@ -16,7 +16,7 @@ namespace ExtractTextByRegion
     {
         // Set Defaults
         static String sInput = Library.ResourceDirectory + "Sample_Input/ExtractTextByRegion.pdf";
-        static String sOutput = "../ExtractTextByRegion-out.txt";
+        static String sOutput = "ExtractTextByRegion-out.txt";
 
         // Rectangular region to extract text in points (origin of the page is bottom left)
         // (545,576,694,710) is a rectangle encompassing the invoice entry for this sample.
@@ -51,7 +51,7 @@ namespace ExtractTextByRegion
                                 bool allQuadsWithinRegion = true;
                                 // A Word typically has only 1 quad, but can have more than one
                                 // for hyphenated words, words on a curve, etc.
-                                foreach (Quad quad in textInfo.Quads)
+                                foreach (Quad quad in textInfo.Quads ?? Enumerable.Empty<Quad>())
                                 {
                                     if (!CheckWithinRegion(quad))
                                     {

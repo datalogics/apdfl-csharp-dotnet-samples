@@ -52,7 +52,7 @@ namespace ChangeLinkColors
                     Annotation annot = page.GetAnnotation(i);
                     if (annot is LinkAnnotation)
                     {
-                        linkAnnots.Add(annot as LinkAnnotation);
+                        linkAnnots.Add((LinkAnnotation)annot);
                     }
                 }
 
@@ -92,7 +92,7 @@ namespace ChangeLinkColors
                 else if (element is Text)
                 {
                     Console.WriteLine("Found a Text object.");
-                    CheckCharactersInText(element as Text, linkAnnots);
+                    CheckCharactersInText((Text)element, linkAnnots);
                 }
             }
         }

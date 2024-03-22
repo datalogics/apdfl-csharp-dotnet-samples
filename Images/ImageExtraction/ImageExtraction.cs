@@ -32,14 +32,14 @@ namespace ImageExtraction
                     Datalogics.PDFL.Image img = (Datalogics.PDFL.Image)e;
                     using (SKBitmap sKBitmap = img.SKBitmap)
                     {
-                        using (FileStream f = File.OpenWrite("ImageExtraction-extract-out" + (next) + ".Png"))
+                        using (FileStream f = File.OpenWrite("ImageExtraction-extract-out" + (next) + ".png"))
                             sKBitmap.Encode(SKEncodedImageFormat.Png, 100).SaveTo(f);
                     }
 
                     Datalogics.PDFL.Image newimg = img.ChangeResolution(500);
                     using (SKBitmap sKBitmap = newimg.SKBitmap)
                     {
-                        using (FileStream f = File.OpenWrite("ImageExtraction-extract-Resolution-500-out" + (next) + ".Png"))
+                        using (FileStream f = File.OpenWrite("ImageExtraction-extract-Resolution-500-out" + (next) + ".png"))
                             sKBitmap.Encode(SKEncodedImageFormat.Png, 100).SaveTo(f);
                     }
                     next++;
@@ -47,15 +47,15 @@ namespace ImageExtraction
                 }
                 else if (e is Datalogics.PDFL.Container)
                 {
-                    ExtractImages((e as Datalogics.PDFL.Container).Content);
+                    ExtractImages(((Datalogics.PDFL.Container)e).Content);
                 }
                 else if (e is Datalogics.PDFL.Group)
                 {
-                    ExtractImages((e as Datalogics.PDFL.Group).Content);
+                    ExtractImages(((Datalogics.PDFL.Group)e).Content);
                 }
                 else if (e is Form)
                 {
-                    ExtractImages((e as Form).Content);
+                    ExtractImages(((Datalogics.PDFL.Form)e).Content);
                 }
             }
         }

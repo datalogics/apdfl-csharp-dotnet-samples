@@ -24,7 +24,7 @@ namespace ExtractTextByPatternMatch
 
                 // Set Defaults
                 String sInput = Library.ResourceDirectory + "Sample_Input/ExtractTextByPatternMatch.pdf";
-                String sOutput = "../ExtractTextByPatternMatch-out.txt";
+                String sOutput = "ExtractTextByPatternMatch-out.txt";
                 String sPattern = "((1-)?(\\()?\\d{3}(\\))?(\\s)?(-)?\\d{3}-\\d{4})";  // phone numbers
 
                 using (Document doc = new Document(sInput))

@@ -19,57 +19,57 @@ namespace ExtractTextNameSpace
     // This class represents the text info.
     public class TextObject
     {
-        public string Text { get; set; }
+        public string? Text { get; set; }
     }
 
     public class DLColorSpace
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public int NumComponents { get; set; }
     }
 
     public class DLColor
     {
-        public IList<double> Value { get; set; }
-        public DLColorSpace Space { get; set; }
+        public IList<double>? Value { get; set; }
+        public DLColorSpace? Space { get; set; }
     }
     public class DLStyle
     {
-        public DLColor Color { get; set; }
+        public DLColor? Color { get; set; }
         public double FontSize { get; set; }
-        public string FontName { get; set; }
+        public string? FontName { get; set; }
     }
     public class DLStyleTransition
     {
         public int CharIndex { get; set; }
-        public DLStyle Style { get; set; }
+        public DLStyle? Style { get; set; }
     }
 
     // This class represents the text and details info.
     public class TextAndDetailsObject
     {
-        public string Text { get; set; }
-        public IList<Quad> CharQuads { get; set; }
-        public IList<Quad> Quads { get; set; }
-        public IList<DLStyleTransition> StyleList { get; set; }
+        public string? Text { get; set; }
+        public IList<Quad>? CharQuads { get; set; }
+        public IList<Quad>? Quads { get; set; }
+        public IList<DLStyleTransition>? StyleList { get; set; }
     }
 
     // This class represents the AcroForm text info.
     public class AcroFormTextFieldObject
     {
         [JsonPropertyName("field-name")]
-        public string AcroFormFieldName { get; set; }
+        public string? AcroFormFieldName { get; set; }
         [JsonPropertyName("field-text")]
-        public string AcroFormFieldText { get; set; }
+        public string? AcroFormFieldText { get; set; }
     }
 
     // This class represents the Annotation text info.
     public class AnnotationTextObject
     {
         [JsonPropertyName("annotation-type")]
-        public string AnnotationType { get; set; }
+        public string? AnnotationType { get; set; }
         [JsonPropertyName("annotation-text")]
-        public string AnnotationText { get; set; }
+        public string? AnnotationText { get; set; }
     }
 
     public class ExtractText : IDisposable
@@ -77,7 +77,7 @@ namespace ExtractTextNameSpace
         private Document doc;
 
         private WordFinder wordFinder;
-        private IList<Word> pageWords = null;
+        private IList<Word> pageWords = new List<Word>();
 
         public ExtractText(Document inputDoc)
         {

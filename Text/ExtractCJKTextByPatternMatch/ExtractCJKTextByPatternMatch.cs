@@ -24,7 +24,7 @@ namespace ExtractCJKTextByPatternMatch
 
                 // Set Defaults
                 String sInput = Library.ResourceDirectory + "Sample_Input/ExtractUnicodeText.pdf";
-                String sOutput = "../ExtractCJKTextByPatternMatch-out.txt";
+                String sOutput = "ExtractCJKTextByPatternMatch-out.txt";
                 String sPattern = "『世界人権宣言』";
 
                 using (Document doc = new Document(sInput))

@@ -31,7 +31,7 @@ namespace DocToImages
         List<int> PageList = new List<int>(0);
         int evenoddpages; // 1 = all odd pages, 2 = all even pages.
         string outputfilename = "";
-        string outputdirname = "";
+        string? outputdirname = "";
         SmoothFlags smoothingflags = SmoothFlags.None;
         bool reversegray;
         bool blackisone;
@@ -214,12 +214,12 @@ namespace DocToImages
             return (outputfilename);
         }
 
-        public void setoutputdir(string outputdir)
+        public void setoutputdir(string? outputdir)
         {
             outputdirname = outputdir;
         }
 
-        public string getoutputdir()
+        public string? getoutputdir()
         {
             return (outputdirname);
         }
@@ -1071,7 +1071,7 @@ namespace DocToImages
             // ReSharper disable once UnusedVariable
             using (Library lib = new Library(options.getfontdirs()))
             {
-                Document pdfdocument = null;
+                Document? pdfdocument = null;
                 int numpages = 0;
                 try
                 {
@@ -1089,7 +1089,7 @@ namespace DocToImages
                  * of the output filename and directory name.
                  */
 
-                string outputfilename;
+                string? outputfilename;
                 if (options.getoutputfile() == "")
                 {
                     outputfilename = docpath;
@@ -1169,7 +1169,7 @@ namespace DocToImages
                     i++) // Get the images of the PDF pages to create an image collection.
                 {
                     Page docpage = pdfdocument.GetPage(pagelist[i]);
-                    Rect PageRect = null;
+                    Rect? PageRect = null;
                     if (options.getpageregion().Equals("crop"))
                     {
                         PageRect = docpage.CropBox;
