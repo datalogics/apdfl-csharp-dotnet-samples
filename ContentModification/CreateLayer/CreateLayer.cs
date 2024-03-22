@@ -43,34 +43,38 @@ namespace CreateLayer
                 Console.WriteLine("Opened a document.");
 
                 Page pg = doc.GetPage(0);
-                Image img = (pg.Content.GetElement(0) as Image);
+                Element element = pg.Content.GetElement(0);
+                if (element is Image)
+                {
+                    Image img = (Image)element;
 
-                // Containers, Forms and Annotations can be attached to an
-                // OptionalContentGroup; other content (like Image) can
-                // be made optional by placing it inside a Container
-                Container container = new Container();
-                container.Content = new Content();
-                container.Content.AddElement(img);
+                    // Containers, Forms and Annotations can be attached to an
+                    // OptionalContentGroup; other content (like Image) can
+                    // be made optional by placing it inside a Container
+                    Container container = new Container();
+                    container.Content = new Content();
+                    container.Content.AddElement(img);
 
-                // We replace the Image with the Container
-                // (which now holds the image)
-                pg.Content.RemoveElement(0);
-                pg.UpdateContent();
+                    // We replace the Image with the Container
+                    // (which now holds the image)
+                    pg.Content.RemoveElement(0);
+                    pg.UpdateContent();
 
-                pg.Content.AddElement(container);
-                pg.UpdateContent();
+                    pg.Content.AddElement(container);
+                    pg.UpdateContent();
 
-                // We create a new OptionalContentGroup and place it in the
-                // OptionalContentConfig.Order array
-                OptionalContentGroup ocg = CreateNewOptionalContentGroup(doc, "Rubber Ducky");
+                    // We create a new OptionalContentGroup and place it in the
+                    // OptionalContentConfig.Order array
+                    OptionalContentGroup ocg = CreateNewOptionalContentGroup(doc, "Rubber Ducky");
 
-                // Now we associate the Container with the OptionalContentGroup
-                // via an OptionalContentMembershipDict.  Note that we MUST
-                // update the Page's content afterwards.
-                AssociateOCGWithContainer(doc, ocg, container);
-                pg.UpdateContent();
+                    // Now we associate the Container with the OptionalContentGroup
+                    // via an OptionalContentMembershipDict.  Note that we MUST
+                    // update the Page's content afterwards.
+                    AssociateOCGWithContainer(doc, ocg, container);
+                    pg.UpdateContent();
 
-                doc.Save(SaveFlags.Full, sOutput);
+                    doc.Save(SaveFlags.Full, sOutput);
+                }
             }
         }
 

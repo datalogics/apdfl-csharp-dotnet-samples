@@ -57,7 +57,7 @@ namespace ExtractTextPreservingStyleAndPositionInfo
                     writer.WriteStartObject();
                     writer.WriteString("text", resultText.Text);
                     writer.WriteStartArray("quads");
-                    foreach (Quad quad in resultText.Quads)
+                    foreach (Quad quad in resultText.Quads ?? Enumerable.Empty<Quad>())
                     {
                         writer.WriteStartObject();
                         writer.WriteString("top-left", quad.TopLeft.ToString());
@@ -68,18 +68,39 @@ namespace ExtractTextPreservingStyleAndPositionInfo
                     }
                     writer.WriteEndArray();
                     writer.WriteStartArray("styles");
-                    foreach (DLStyleTransition st in resultText.StyleList)
+                    foreach (DLStyleTransition st in resultText.StyleList ?? Enumerable.Empty<DLStyleTransition>())
                     {
                         writer.WriteStartObject();
                         writer.WriteString("char-index", st.CharIndex.ToString());
-                        writer.WriteString("font-name", st.Style.FontName.ToString());
-
-                        writer.WriteString("font-size", Math.Round(st.Style.FontSize, 2).ToString());
-                        writer.WriteString("color-space", st.Style.Color.Space.Name);
-                        writer.WriteStartArray("color-values");
-                        foreach (double cv in st.Style.Color.Value)
+                        string fontName = "";
+                        if (st.Style != null && st.Style.FontName != null)
                         {
-                            writer.WriteStringValue(Math.Round(cv, 3).ToString());
+                            fontName = st.Style.FontName;
+                        }
+                        writer.WriteString("font-name", fontName);
+                        double fontSize = 0;
+                        if (st.Style != null)
+                        {
+                            fontSize = st.Style.FontSize;
+                        }
+                        writer.WriteString("font-size", Math.Round(fontSize, 2).ToString());
+                        string colorSpaceName = "";
+                        if (st.Style != null && st.Style.Color != null && st.Style.Color.Space != null && st.Style.Color.Space.Name != null)
+                        {
+                            colorSpaceName = st.Style.Color.Space.Name;
+                        }
+                        writer.WriteString("color-space", colorSpaceName);
+                        writer.WriteStartArray("color-values");
+                        if (st.Style != null)
+                        {
+                            DLColor? color = st.Style.Color;
+                            if (color != null)
+                            {
+                                foreach (double cv in color.Value ?? Enumerable.Empty<double>())
+                                {
+                                    writer.WriteStringValue(Math.Round(cv, 3).ToString());
+                                }
+                            }
                         }
                         writer.WriteEndArray();
                         writer.WriteEndObject();

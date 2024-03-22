@@ -51,7 +51,7 @@ namespace ExtractTextByRegion
                                 bool allQuadsWithinRegion = true;
                                 // A Word typically has only 1 quad, but can have more than one
                                 // for hyphenated words, words on a curve, etc.
-                                foreach (Quad quad in textInfo.Quads)
+                                foreach (Quad quad in textInfo.Quads ?? Enumerable.Empty<Quad>())
                                 {
                                     if (!CheckWithinRegion(quad))
                                     {
