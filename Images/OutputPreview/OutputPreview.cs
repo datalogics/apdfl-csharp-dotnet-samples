@@ -6,7 +6,7 @@ using System.Collections.Generic;
  * This sample demonstrates creating an Output Preview Image which is used during Soft Proofing prior to printing to visualize combining different Colorants.
  *
  * 
- * Copyright (c)2023, Datalogics, Inc. All rights reserved.
+ * Copyright (c)2023-2024, Datalogics, Inc. All rights reserved.
  *
  */
 
@@ -75,6 +75,7 @@ namespace OutputPreview
                         }
 
                         PageImageParams pip = new PageImageParams();
+                        pip.PageDrawFlags = DrawFlags.UseAnnotFaces;
                         pip.HorizontalResolution = 300;
                         pip.VerticalResolution = 300;
 
