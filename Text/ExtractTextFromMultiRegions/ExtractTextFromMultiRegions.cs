@@ -17,7 +17,7 @@ namespace ExtractTextFromMultiRegions
     {
         // Set Defaults
         static String sInput = Library.ResourceDirectory + "Sample_Input/ExtractTextFromMultiRegions";
-        static String sOutput = "../ExtractTextFromMultiRegions-out.csv";
+        static String sOutput = "ExtractTextFromMultiRegions-out.csv";
 
         // Rectangular regions to extract text in points (origin of the page is bottom left)
         // (Left, Right, Bottom, Top)
@@ -73,7 +73,7 @@ namespace ExtractTextFromMultiRegions
                                             bool allQuadsWithinRegion = true;
                                             // A Word typically has only 1 quad, but can have more than one
                                             // for hyphenated words, words on a curve, etc.
-                                            foreach (Quad quad in textInfo.Quads)
+                                            foreach (Quad quad in textInfo.Quads ?? Enumerable.Empty<Quad>())
                                             {
                                                 if (!CheckWithinRegion(quad, region))
                                                 {

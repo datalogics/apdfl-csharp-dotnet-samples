@@ -85,7 +85,7 @@ namespace ExtendedGraphicStates
                 m = m.Scale(12.0, 12.0);
 
                 ExtendedGraphicState xgs = new ExtendedGraphicState();
-                TextRun tr = null;
+                TextRun? tr = null;
                 if (i == 0)
                 {
                     xgs.BlendMode = BlendMode.Normal;

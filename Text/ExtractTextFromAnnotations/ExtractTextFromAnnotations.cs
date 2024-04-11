@@ -19,7 +19,7 @@ namespace ExtractTextFromAnnotations
 
         // Set Defaults
         static String sInput = Library.ResourceDirectory + "Sample_Input/sample_annotations.pdf";
-        static String sOutput = "../ExtractTextFromAnnotations-out.json";
+        static String sOutput = "ExtractTextFromAnnotations-out.json";
 
         static void Print(AnnotationTextObject t)
         {

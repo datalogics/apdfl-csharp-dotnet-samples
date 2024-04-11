@@ -32,15 +32,15 @@ namespace AddTextToDocument
                 }
                 else if (e is Container)
                 {
-                    AddTextToImages(doc, (e as Container).Content, engine);
+                    AddTextToImages(doc, ((Container)e).Content, engine);
                 }
                 else if (e is Group)
                 {
-                    AddTextToImages(doc, (e as Group).Content, engine);
+                    AddTextToImages(doc, ((Group)e).Content, engine);
                 }
                 else if (e is Form)
                 {
-                    AddTextToImages(doc, (e as Form).Content, engine);
+                    AddTextToImages(doc, ((Form)e).Content, engine);
                 }
             }
         }
