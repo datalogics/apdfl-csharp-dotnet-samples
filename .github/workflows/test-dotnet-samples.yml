@@ -2,8 +2,13 @@ name: test-samples
 
 on:
     pull_request:
+      branches:
+        - develop
+        - main
     push:
-        branches: [ develop, main ]
+      branches:
+        - develop
+        - main
 
 env:
     DOTNET_VERSION: '6.x'
@@ -42,6 +47,7 @@ jobs:
               'ContentCreation/WriteNChannelTiff/',
               'ContentModification/Action/',
               'ContentModification/AddCollection/',
+              'ContentModification/AddQRCode/',
               'ContentModification/ChangeLayerConfiguration/',
               'ContentModification/ChangeLinkColors/',
               'ContentModification/CreateLayer/',
