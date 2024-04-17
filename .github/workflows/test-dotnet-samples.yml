@@ -144,7 +144,7 @@ jobs:
               run: |
                 sample_name=$(basename "$PWD")
 
-                sleep 2s
+                sleep 3s
 
                 if [ "$sample_name" == "Redactions" ] && [ "${{matrix.os}}" == 'ubuntu-latest' ]; then
                   echo "Not available on this os"
