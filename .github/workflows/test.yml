@@ -13,7 +13,7 @@ on:
 env:
   DOTNET_VERSION: '6.x'
   MATRIX_DIR: |
-    '[ "Annotations/Annotations/",
+    [ "Annotations/Annotations/",
       "Annotations/InkAnnotations/",
       "Annotations/LinkAnnotation/",
       "Annotations/PolygonAnnotations/",
@@ -95,7 +95,7 @@ env:
       "Text/RegexExtractText/",
       "Text/RegexTextSearch/",
       "Text/TextExtract/"
-    ]'
+    ]
 
 jobs:
   run-samples-windows:
