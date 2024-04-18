@@ -98,15 +98,25 @@ env:
     ]
 
 jobs:
+  get-matrix-dir-from-env:
+    name: Get MATRIX_DIR
+    runs-on: windows-latest
+    outputs:
+      MATRIX_DIR: ${{ env.MATRIX_DIR }}
+    steps:
+      - run: |
+        echo "Set MATRIX_DIR environment variable as output"
+
   run-samples-windows:
     runs-on: windows-latest
+    needs: [get-matrix-dir-from-env]
     defaults:
           run:
             shell: bash
     strategy:
       fail-fast: false
       matrix:
-        dir: ${{ fromJSON(vars.MATRIX_DIR) }}
+        dir: ${{ fromJSON(needs.get-matrix-dir-from-env.outputs.MATRIX_DIR) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
