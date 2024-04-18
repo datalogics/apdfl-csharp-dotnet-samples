@@ -106,7 +106,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        dir: ${{ fromJSON(env.MATRIX_DIR) }}
+        dir: ${{ fromJSON(vars.MATRIX_DIR) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -164,7 +164,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        dir:  ${{ fromJSON(env.MATRIX_DIR) }}
+        dir:  ${{ fromJSON(vars.MATRIX_DIR) }}
     needs: [run-samples-windows]
     steps:
       - name: Checkout
@@ -234,7 +234,7 @@ jobs:
     runs-on: macos-14
     strategy:
       matrix:
-        dir:  ${{ fromJSON(env.MATRIX_DIR) }}
+        dir:  ${{ fromJSON(vars.MATRIX_DIR) }}
     needs: [run-samples-ubuntu]
     steps:
       - name: Checkout
