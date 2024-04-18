@@ -143,6 +143,7 @@ jobs:
 
 
       - name: Set sample_name variable
+        working-directory: ${{ matrix.dir }}
         id: set-sample-name
         run: echo "SAMPLE_NAME=$(basename "$PWD")" >> "$GITHUB_ENV"
 
