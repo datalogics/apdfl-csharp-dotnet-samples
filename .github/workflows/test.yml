@@ -107,9 +107,77 @@ jobs:
       - name: Print message
         run: echo "Set MATRIX_DIR environment variable as output"
 
+  run-samples-macos:
+    runs-on: macos-14
+    needs: [get-matrix-dir-from-env]
+    strategy:
+      matrix:
+        dir:  ${{ fromJSON(needs.get-matrix-dir-from-env.outputs.MATRIX_DIR) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Build samples
+        working-directory: ${{ matrix.dir }}
+        run: |
+          sample_name=$(basename "$PWD")
+          if [[ ("$sample_name" != "ConvertToOffice" && "$sample_name" != "CreateDocFromXPS") || "${{ matrix.os }}" != 'macos-14' ]]; then
+            dotnet build -c Release *.csproj
+          else
+            echo "Not available on this os"
+          fi
+
+      - name: Run samples
+        working-directory: ${{ matrix.dir }}
+        run: |
+          sample_name=$(basename "$PWD")
+            if [[ ("$sample_name" != "ConvertToOffice" && "$sample_name" != "CreateDocFromXPS") || "${{ matrix.os }}" != 'macos-14' ]]; then
+                if [[ "$sample_name" == "DocToImages" ]]; then
+                  dotnet bin/Release/net6.0/$sample_name.dll -format=png $HOME/.nuget/packages/adobe.pdf.library.sampleinput/1.0.0/build/Resources/Sample_Input/ducky.pdf
+                else
+                  dotnet bin/Release/net6.0/$sample_name.dll
+                fi
+            else
+              echo "Not available on this os"
+            fi
+
+      - name: Set sample_name variable
+        working-directory: ${{ matrix.dir }}
+        id: set-sample-name
+        run: echo "SAMPLE_NAME=$(basename "$PWD")" >> "$GITHUB_ENV"
+
+      - name: Save artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-${{ runner.os }}-${{ env.SAMPLE_NAME }}
+          path: |
+            ${{ matrix.dir }}/*.docx
+            ${{ matrix.dir }}/*.xslx
+            ${{ matrix.dir }}/*.pptx
+            ${{ matrix.dir }}/*.pdf
+            ${{ matrix.dir }}/*.tif
+            ${{ matrix.dir }}/*.png
+            ${{ matrix.dir }}/*.jpg
+            ${{ matrix.dir }}/*.eps
+            ${{ matrix.dir }}/*.tiff
+            ${{ matrix.dir }}/*.bmp
+            ${{ matrix.dir }}/*.gif
+            ${{ matrix.dir }}/*.json
+            ${{ matrix.dir }}/*.txt
+            ${{ matrix.dir }}/*.csv
+
+      - name: List files
+        run: ls ${{ matrix.dir }}
+
+
   run-samples-windows:
     runs-on: windows-latest
-    needs: [get-matrix-dir-from-env]
+    needs: [get-matrix-dir-from-env, run-samples-macos]
     defaults:
           run:
             shell: bash
@@ -212,72 +280,6 @@ jobs:
               dotnet bin/Release/net6.0/$sample_name.dll -format=png $HOME/.nuget/packages/adobe.pdf.library.sampleinput/1.0.0/build/Resources/Sample_Input/ducky.pdf
             else
               dotnet bin/Release/net6.0/$sample_name.dll
-            fi
-
-      - name: Set sample_name variable
-        id: set-sample-name
-        run: echo "SAMPLE_NAME=$(basename "$PWD")" >> "$GITHUB_ENV"
-
-      - name: Save artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: output-${{ runner.os }}-${{ env.SAMPLE_NAME }}
-          path: |
-            ${{ matrix.dir }}/*.docx
-            ${{ matrix.dir }}/*.xslx
-            ${{ matrix.dir }}/*.pptx
-            ${{ matrix.dir }}/*.pdf
-            ${{ matrix.dir }}/*.tif
-            ${{ matrix.dir }}/*.png
-            ${{ matrix.dir }}/*.jpg
-            ${{ matrix.dir }}/*.eps
-            ${{ matrix.dir }}/*.tiff
-            ${{ matrix.dir }}/*.bmp
-            ${{ matrix.dir }}/*.gif
-            ${{ matrix.dir }}/*.json
-            ${{ matrix.dir }}/*.txt
-            ${{ matrix.dir }}/*.csv
-
-      - name: List files
-        run: ls ${{ matrix.dir }}
-
-  run-samples-macos:
-    runs-on: macos-14
-    strategy:
-      matrix:
-        dir:  ${{ fromJSON(vars.MATRIX_DIR) }}
-    needs: [run-samples-ubuntu]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
-
-      - name: Build samples
-        working-directory: ${{ matrix.dir }}
-        run: |
-          sample_name=$(basename "$PWD")
-          if [[ ("$sample_name" != "ConvertToOffice" && "$sample_name" != "CreateDocFromXPS") || "${{ matrix.os }}" != 'macos-14' ]]; then
-            dotnet build -c Release *.csproj
-          else
-            echo "Not available on this os"
-          fi
-
-      - name: Run samples
-        working-directory: ${{ matrix.dir }}
-        run: |
-          sample_name=$(basename "$PWD")
-            if [[ ("$sample_name" != "ConvertToOffice" && "$sample_name" != "CreateDocFromXPS") || "${{ matrix.os }}" != 'macos-14' ]]; then
-                if [[ "$sample_name" == "DocToImages" ]]; then
-                  dotnet bin/Release/net6.0/$sample_name.dll -format=png $HOME/.nuget/packages/adobe.pdf.library.sampleinput/1.0.0/build/Resources/Sample_Input/ducky.pdf
-                else
-                  dotnet bin/Release/net6.0/$sample_name.dll
-                fi
-            else
-              echo "Not available on this os"
             fi
 
       - name: Set sample_name variable
