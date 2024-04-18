@@ -104,8 +104,8 @@ jobs:
     outputs:
       MATRIX_DIR: ${{ env.MATRIX_DIR }}
     steps:
-      - run: |
-        echo "Set MATRIX_DIR environment variable as output"
+      - name: Print message
+        run: echo "Set MATRIX_DIR environment variable as output"
 
   run-samples-windows:
     runs-on: windows-latest
