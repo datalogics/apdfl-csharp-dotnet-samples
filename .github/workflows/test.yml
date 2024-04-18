@@ -1,4 +1,4 @@
-name: test-samples
+name: test-staggered-workflow
 
 on:
   pull_request:
@@ -13,8 +13,7 @@ on:
 env:
   DOTNET_VERSION: '6.x'
   MATRIX_DIR: |
-    [
-      "Annotations/Annotations/",
+    ( "Annotations/Annotations/",
       "Annotations/InkAnnotations/",
       "Annotations/LinkAnnotation/",
       "Annotations/PolygonAnnotations/",
@@ -96,7 +95,7 @@ env:
       "Text/RegexExtractText/",
       "Text/RegexTextSearch/",
       "Text/TextExtract/"
-    ]
+    )
 
 jobs:
   run-samples-windows:
@@ -107,7 +106,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        dir: ${{ fromJson(env.MATRIX_DIR) }}
+        dir: ${MATRIX_DIR}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -165,7 +164,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        dir: ${{ fromJson(env.MATRIX_DIR) }}
+        dir: ${MATRIX_DIR}
     needs: [run-samples-windows]
     steps:
       - name: Checkout
@@ -235,7 +234,7 @@ jobs:
     runs-on: macos-14
     strategy:
       matrix:
-        dir: ${{ fromJson(env.MATRIX_DIR) }}
+        dir: ${MATRIX_DIR}
     needs: [run-samples-ubuntu]
     steps:
       - name: Checkout
