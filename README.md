@@ -20,6 +20,22 @@ Many of these sample programs automatically generate an output file or set of fi
 ## Building and Running Samples
 *Samples can be built and run easily in an IDE such as Visual Studio 2022, Visual Studio 2022 for Mac, or VS Code.*
 
+## Free trial & license activation
+
+To activate the free trial:
+1. Visit https://www.datalogics.com/pdf-sdk-free-trial to obtain an activation key.
+2. A prompt will appear on your console when executing Datalogics sample code.
+
+Alternatively, to use an activation key in code, the <em>LicenseKey</em> member of the <em>Library</em> class can be set to
+a valid activation key <b>prior</b> to instantiating the library.
+```
+Library.LicenseKey = "xxxx-xxxx-xxxx-xxxx";
+using (Library lib = new Library())
+{
+    //APDFL Code
+}
+```
+
 **Otherwise**, here are instructions for using **dotnet** instead:
 
 Change to the directory of the program you want to work with. Here is an example:
