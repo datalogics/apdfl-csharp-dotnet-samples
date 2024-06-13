@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Adobe.PDF.Library.FormsExtension.LM.NET" Version="1.*" />
+    <PackageReference Include="Adobe.PDF.Library.FormsExtension.LM.NET" Version="18.*" />
   </ItemGroup>
 
 </Project>
