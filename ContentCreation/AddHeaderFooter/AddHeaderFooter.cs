@@ -40,7 +40,7 @@ namespace AddHeaderFooter
                     // Create the new page
                     using (Page newPage = doc.CreatePage(Document.BeforeFirstPage, pageRect))
                     {
-                        Font font = new Font("Times-Roman", FontCreateFlags.Subset);
+                        Font font = new Font("Courier", FontCreateFlags.Subset);
 
                         double textHeight  = (font.Ascent + Math.Abs(font.Descent))/1000;
 
