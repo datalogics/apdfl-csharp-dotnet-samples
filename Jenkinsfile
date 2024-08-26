@@ -152,4 +152,22 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            steps {
+                echo "Clean ${NODE} after execution"
+                script {
+                    if (isUnix()) {
+                        sh """. ${ENV_LOC[NODE]}/bin/activate
+                                invoke clean-samples
+                        """
+                    } else {
+                        bat """CALL ${ENV_LOC[NODE]}\\Scripts\\activate
+                                invoke clean-samples
+                        """
+                    }
+                }
+            }
+        }
+    }
 }
