@@ -148,6 +148,22 @@ pipeline {
                             }
                         }
                     }
+                    stage('Clean Samples After Run') {
+                        steps {
+                            echo "Clean ${NODE}"
+                            script {
+                                if (isUnix()) {
+                                    sh """. ${ENV_LOC[NODE]}/bin/activate
+                                          invoke clean-samples
+                                    """
+                                } else {
+                                    bat """CALL ${ENV_LOC[NODE]}\\Scripts\\activate
+                                          invoke clean-samples
+                                    """
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
