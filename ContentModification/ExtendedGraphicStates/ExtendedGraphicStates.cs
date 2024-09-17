@@ -1,5 +1,5 @@
-using System;
 using Datalogics.PDFL;
+using System;
 
 /*
  * 
@@ -10,7 +10,7 @@ using Datalogics.PDFL;
  * 
  * This sample program shows how to use the Extended Graphic State object to add graphics parameters to an image.
  * 
- * Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
+ * Copyright (c) 2007-2024, Datalogics, Inc. All rights reserved.
  *
  */
 
@@ -29,7 +29,6 @@ namespace ExtendedGraphicStates
             // by setting the BlendMode property to each of the 16 enumerations
             // on a foreground "ducky" over a background rainbow pattern, and 
             // plopping all these images on a single page.
-
             Text t = new Text();
             Font f;
             try
@@ -49,10 +48,12 @@ namespace ExtendedGraphicStates
 
                 throw;
             }
-
             GraphicState gsText = new GraphicState();
             gsText.FillColor = new Color(0, 0, 1.0);
             TextState ts = new TextState();
+
+            double spaceFactor = 18.0;
+            double heightOffset = height - 88.0;
 
             for (int i = 0; i < 16; i++)
             {
@@ -61,15 +62,24 @@ namespace ExtendedGraphicStates
 
                 GraphicState gs = individualForegroundImage.GraphicState;
                 individualForegroundImage.Scale(0.125, 0.125);
-                individualForegroundImage.Translate(800, 200 + height * (7 - i));
                 individualBackgroundImage.Scale(0.125, 0.125);
-                individualBackgroundImage.Translate(800, 200 + height * (7 - i));
 
-                // Halfway through, create 2nd column by shifting over and up
+                spaceFactor = 18.0;
+                if (i == 0)
+                {
+                    spaceFactor = 0;
+                }
+
+                //Halfway through, create 2nd column by shifting over and up
                 if (i > 7)
                 {
-                    individualForegroundImage.Translate(2400, height * 8);
-                    individualBackgroundImage.Translate(2400, height * 8);
+                    individualForegroundImage.Translate(400, heightOffset - (72.0 + spaceFactor) * (i - 8));
+                    individualBackgroundImage.Translate(400, heightOffset - (72.0 + spaceFactor) * (i - 8));
+                }
+                else
+                {
+                    individualForegroundImage.Translate(100, heightOffset - (72.0 + spaceFactor) * i);
+                    individualBackgroundImage.Translate(100, heightOffset - (72.0 + spaceFactor) * i);
                 }
 
                 docpage.Content.AddElement(individualBackgroundImage);
@@ -79,9 +89,14 @@ namespace ExtendedGraphicStates
 
                 Matrix m = new Matrix();
                 if (i > 7)
-                    m = m.Translate(480, 750 - ((i - 8) * 100)); // second column
+                {
+                    m = m.Translate(480, heightOffset - (72.0 + spaceFactor) * (i - 8));// second column
+                }
                 else
-                    m = m.Translate(180, 750 - (i * 100)); // first column
+                {
+                    m = m.Translate(180, heightOffset - (72.0 + spaceFactor) * i);// first column
+                }
+
                 m = m.Scale(12.0, 12.0);
 
                 ExtendedGraphicState xgs = new ExtendedGraphicState();
@@ -166,7 +181,6 @@ namespace ExtendedGraphicStates
                     xgs.BlendMode = BlendMode.Luminosity;
                     tr = new TextRun("Luminosity", f, gsText, ts, m);
                 }
-
                 t.AddRun(tr);
                 docpage.Content.AddElement(t);
                 docpage.UpdateContent();
@@ -181,9 +195,6 @@ namespace ExtendedGraphicStates
         static void Main(string[] args)
         {
             Console.WriteLine("ExtendedGraphicStates Sample:");
-
-
-            // ReSharper disable once UnusedVariable
             using (Library lib = new Library())
             {
                 Console.WriteLine("Initialized the library.");
@@ -201,8 +212,7 @@ namespace ExtendedGraphicStates
                 if (args.Length > 2)
                     sOutput = args[2];
 
-                Console.WriteLine("Input files: " + sInput1 + " and " + sInput2 + ". Saving to output file: " +
-                                  sOutput);
+                Console.WriteLine("Input files: " + sInput1 + " and " + sInput2 + ". Saving to output file: " + sOutput);
 
                 Document doc = new Document();
 
