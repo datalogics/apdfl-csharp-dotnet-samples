@@ -167,6 +167,8 @@ def run_samples(ctx):
         if platform.system() == 'Darwin' and ('ConvertToOffice' in sample or 'CreateDocFromXPS' in sample):
             print(f'{sample} not available on this OS')
             continue
+        elif platform.system() == 'Linux' and 'ConvertToOffice' in sample:
+            continue
         else:
             with ctx.cd(full_path):
                 sample_name = os.path.basename(os.path.dirname(full_path))
