@@ -13,17 +13,17 @@ Most of the code samples in APDFL are designed to demonstrate how an API works b
 
 We assume a basic level of technical understanding of the PDF file format, invidual sample category directory markdown files go into more details.
 
-Many of these sample programs automatically generate an output file or set of files.  These output files, generally PDF or graphics files (JPG or BMP), are stored in the directory where the application has been run. If you run a sample program a second or third time, it will overwrite any output files that were created and stored earlier.  However, if you run a sample program, generate a PDF output file, and then open that PDF file and try to run that sample program again, you will see an error message.  The program will not be able to overwrite an existing output file if that file is currently open in another program.
+Many of these sample programs generate an output file or set of files.  These output files, generally PDF or graphics files (JPG or BMP), are stored in the directory where the application has been run. If you run a sample program a second or third time, it will overwrite any output files that were created and stored earlier.  However, if you run a sample program, generate a PDF output file, and then open that PDF file and try to run that sample program again, you will see an error message.  The program will not be able to overwrite an existing output file if that file is currently open in another program.
 
-*(Note: that the Forms Extension product and samples are available by talking to Datalogics Sales.)*
+*(Note: that the Forms Extension product is available by talking to Datalogics Sales.)*
 
 ## Building and Running Samples
-*Samples can be built and run easily in an IDE such as Visual Studio 2022, Visual Studio 2022 for Mac, or VS Code.*
+*Samples can be built and run easily in an IDE such as Visual Studio 2022 or VS Code.*
 
 ## Free trial & license activation
 
 To activate the free trial:
-1. Visit https://www.datalogics.com/pdf-sdk-free-trial to obtain an activation key.
+1. Visit [Free Trial](https://www.datalogics.com/pdf-sdk-free-trial) to obtain an activation key.
 2. A prompt will appear on your console when executing Datalogics sample code.
 
 Alternatively, to use an activation key in code, the <em>LicenseKey</em> member of the <em>Library</em> class can be set to
