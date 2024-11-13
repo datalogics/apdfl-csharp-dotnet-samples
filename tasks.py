@@ -148,6 +148,7 @@ def build_samples(ctx, pkg_name='Adobe.PDF.Library.NET'):
                     ctx.run(f'dotnet build '
                             '--source https://api.nuget.org/v3/index.json '
                             '--source \\\\ivy\\raid\\products\\released\\APDFL\\nuget\\DotNET\\for_apdfl_18.0.5Plus\\approved\\current '
+
                             '--source \\\\ivy\\raid\\products\\released\\APDFL\\nuget\\SampleInputFile\\for_apdfl_18.0.4Plus\\approved\\current ')
                 else:
                     ctx.run(f'dotnet build '
