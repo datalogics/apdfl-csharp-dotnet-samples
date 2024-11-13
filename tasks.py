@@ -142,17 +142,18 @@ def build_samples(ctx, pkg_name='Adobe.PDF.Library.NET'):
                 if platform.system() == 'Darwin':
                     ctx.run(f'dotnet build '
                             '--source https://api.nuget.org/v3/index.json '
-                            '--source /Volumes/raid/products/released/APDFL/nuget/DotNET/for_apdfl_18.0.4Plus/approved/current '
+                            '--source /Volumes/raid/products/released/APDFL/nuget/DotNET/for_apdfl_18.0.5Plus/approved/current '
                             '--source /Volumes/raid/products/released/APDFL/nuget/SampleInputFile/for_apdfl_18.0.4Plus/approved/current ')
                 elif platform.system() == 'Windows':
                     ctx.run(f'dotnet build '
                             '--source https://api.nuget.org/v3/index.json '
-                            '--source \\\\ivy\\raid\\products\\released\\APDFL\\nuget\\DotNET\\for_apdfl_18.0.4Plus\\approved\\current '
+                            '--source \\\\ivy\\raid\\products\\released\\APDFL\\nuget\\DotNET\\for_apdfl_18.0.5Plus\\approved\\current '
+
                             '--source \\\\ivy\\raid\\products\\released\\APDFL\\nuget\\SampleInputFile\\for_apdfl_18.0.4Plus\\approved\\current ')
                 else:
                     ctx.run(f'dotnet build '
                             '--source https://api.nuget.org/v3/index.json '
-                            '--source /raid/products/released/APDFL/nuget/DotNET/for_apdfl_18.0.4Plus/approved/current '
+                            '--source /raid/products/released/APDFL/nuget/DotNET/for_apdfl_18.0.5Plus/approved/current '
                             '--source /raid/products/released/APDFL/nuget/SampleInputFile/for_apdfl_18.0.4Plus/approved/current ')
 
 
@@ -166,6 +167,8 @@ def run_samples(ctx):
             continue
         if platform.system() == 'Darwin' and ('ConvertToOffice' in sample or 'CreateDocFromXPS' in sample):
             print(f'{sample} not available on this OS')
+            continue
+        elif platform.system() == 'Linux' and 'ConvertToOffice' in sample:
             continue
         else:
             with ctx.cd(full_path):
