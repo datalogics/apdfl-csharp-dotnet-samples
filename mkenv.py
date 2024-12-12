@@ -14,7 +14,7 @@ if sys.version_info[:2] < (3, 7):
 MKENV_IMPL = 'mkenv_impl'
 HERE = os.path.dirname(os.path.abspath(__file__))
 MKENV_SUBDIR = '.mkenv'
-MKENV_REPO = os.environ.get('DL_MKENV_REPO', 'git@octocat.dlogics.com:datalogics/mkenv.git')
+MKENV_REPO = os.environ.get('DL_MKENV_REPO', 'git@github.com:datalogics/mkenv.git')
 MKENV_BRANCH = os.environ.get('DL_MKENV_BRANCH', 'main')
 DL_MKENV_ENVIRONMENT_OVERRIDE = 'DL_MKENV_REPO' in os.environ or 'DL_MKENV_BRANCH' in os.environ
 # The oldest Git v2 we have on our machines is 2.3, and it seems to work for mkenv.
@@ -45,8 +45,10 @@ def get_mkenv_impl_from_git():
         git_version_split = [int(x) for x in git_version.split('.')[:3]]
         if tuple(git_version_split[:len(GIT_REQUIRED)]) < GIT_REQUIRED:
             ver_string = '.'.join(str(x) for x in GIT_REQUIRED)
-            sys.exit(f'*** Git version {ver_string} or newer required, found {git_version}; '
-                     f' older versions are no longer supported')
+            report = (f'*** Git version {ver_string} or newer required, found {git_version}; '
+                      f' older versions are no longer supported')
+            sys.stderr.write(report + '\n')
+            sys.exit(1)
 
         if os.path.isdir(mkenv_dir) and not os.path.islink(mkenv_dir):
             # In case the repo wasn't initialized...initializing it again actually doesn't hurt anything
