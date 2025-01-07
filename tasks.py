@@ -123,9 +123,8 @@ def clean_samples(ctx):
             ctx.run('git checkout .')
 
 @task()
-def build_samples(ctx, pkg_name='Adobe.PDF.Library.NET'):
-    """Builds the .NET6 samples
-    """
+def build_samples(ctx, pkg_name='Adobe.PDF.Library.NET', config='Debug'):
+    """Builds the .NET6 samples"""
     ctx.run('invoke clean-samples')
     for sample in samples_list:
         full_path = os.path.join(os.getcwd(), sample)
@@ -139,22 +138,10 @@ def build_samples(ctx, pkg_name='Adobe.PDF.Library.NET'):
                 last_directory = os.path.basename(os.path.dirname(full_path))
                 full_name = full_path + last_directory + '.csproj'
                 set_nuget_pkg_version(pathlib.Path(full_name), package=pkg_name)
-                if platform.system() == 'Darwin':
-                    ctx.run(f'dotnet build '
-                            '--source https://api.nuget.org/v3/index.json '
-                            '--source /Volumes/raid/products/released/APDFL/nuget/DotNET/for_apdfl_18.0.5Plus/approved/current '
-                            '--source /Volumes/raid/products/released/APDFL/nuget/SampleInputFile/for_apdfl_18.0.4Plus/approved/current ')
-                elif platform.system() == 'Windows':
-                    ctx.run(f'dotnet build '
-                            '--source https://api.nuget.org/v3/index.json '
-                            '--source \\\\ivy\\raid\\products\\released\\APDFL\\nuget\\DotNET\\for_apdfl_18.0.5Plus\\approved\\current '
-
-                            '--source \\\\ivy\\raid\\products\\released\\APDFL\\nuget\\SampleInputFile\\for_apdfl_18.0.4Plus\\approved\\current ')
-                else:
-                    ctx.run(f'dotnet build '
-                            '--source https://api.nuget.org/v3/index.json '
-                            '--source /raid/products/released/APDFL/nuget/DotNET/for_apdfl_18.0.5Plus/approved/current '
-                            '--source /raid/products/released/APDFL/nuget/SampleInputFile/for_apdfl_18.0.4Plus/approved/current ')
+                if config == 'Release':
+                    ctx.run(live_source_build())
+                elif config == 'Debug':
+                    ctx.run(nightly_source_build())
 
 
 @task()
@@ -177,6 +164,41 @@ def run_samples(ctx):
                     continue
                 ctx.run(f'dotnet run --no-build')
 
+
+def live_source_build():
+    """Locations of packages that are live"""
+    if platform.system() == 'Darwin':
+        return (f'dotnet build '
+                '--source https://api.nuget.org/v3/index.json '
+                '--source /Volumes/raid/products/released/APDFL/nuget/DotNET/for_apdfl_18.0.5Plus/approved/current '
+                '--source /Volumes/raid/products/released/APDFL/nuget/SampleInputFile/for_apdfl_18.0.4Plus/approved/current ')
+    elif platform.system() == 'Windows':
+        return (f'dotnet build '
+                '--source https://api.nuget.org/v3/index.json '
+                '--source \\\\ivy\\raid\\products\\released\\APDFL\\nuget\\DotNET\\for_apdfl_18.0.5Plus\\approved\\current '
+
+                '--source \\\\ivy\\raid\\products\\released\\APDFL\\nuget\\SampleInputFile\\for_apdfl_18.0.4Plus\\approved\\current ')
+    else:
+        return (f'dotnet build '
+                '--source https://api.nuget.org/v3/index.json '
+                '--source /raid/products/released/APDFL/nuget/DotNET/for_apdfl_18.0.5Plus/approved/current '
+                '--source /raid/products/released/APDFL/nuget/SampleInputFile/for_apdfl_18.0.4Plus/approved/current ')
+
+
+def nightly_source_build():
+    """Locations of nightly packages. Note: These paths will only work on the nuget-builder build machine"""
+    if platform.system() == 'Darwin':
+        return (f'dotnet build '
+                '--source https://api.nuget.org/v3/index.json '
+                '--source /Volumes/raid/nuget-builder-samples-test ')
+    elif platform.system() == 'Windows':
+        return (f'dotnet build '
+                '--source https://api.nuget.org/v3/index.json '
+                '--source \\\\ivy\\raid\\nuget-builder-samples-test ')
+    else:
+        return (f'dotnet build '
+                '--source https://api.nuget.org/v3/index.json '
+                '--source /raid/nuget-builder-samples-test ')
 
 
 

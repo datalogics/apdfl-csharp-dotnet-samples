@@ -13,9 +13,10 @@ pipeline {
     }
     agent none
     triggers {
-        // From the doc: @midnight actually means some time between 12:00 AM and 2:59 AM.
-        // This gives us automatic spreading out of jobs, so they don't cause load spikes.
-        cron('@midnight')
+        // Run branches between 0800 and 0830, depending on a hash of the job name
+        // This means if there's more than one branch (a feature branch, maybe?), they
+        // won't all start at the same time.
+        cron(env.BRANCH_NAME == "develop" ? 'H(0-30) 6 * * *' : '')
     }
     stages {
         stage('Matrix stage') {
