@@ -124,8 +124,7 @@ def clean_samples(ctx):
 
 @task()
 def build_samples(ctx, pkg_name='Adobe.PDF.Library.NET', config='Debug'):
-    """Builds the .NET6 samples
-    """
+    """Builds the .NET6 samples"""
     ctx.run('invoke clean-samples')
     for sample in samples_list:
         full_path = os.path.join(os.getcwd(), sample)
@@ -141,7 +140,7 @@ def build_samples(ctx, pkg_name='Adobe.PDF.Library.NET', config='Debug'):
                 set_nuget_pkg_version(pathlib.Path(full_name), package=pkg_name)
                 if config == 'Release':
                     ctx.run(live_source_build())
-                elif config == 'Debug:':
+                elif config == 'Debug':
                     ctx.run(nightly_source_build())
 
 
@@ -190,12 +189,15 @@ def nightly_source_build():
     """Locations of nightly packages. Note: These paths will only work on the nuget-builder build machine"""
     if platform.system() == 'Darwin':
         return (f'dotnet build '
+                '--source https://api.nuget.org/v3/index.json '
                 '--source /Volumes/raid/nuget-builder-samples-test ')
     elif platform.system() == 'Windows':
         return (f'dotnet build '
+                '--source https://api.nuget.org/v3/index.json '
                 '--source \\\\ivy\\raid\\nuget-builder-samples-test ')
     else:
         return (f'dotnet build '
+                '--source https://api.nuget.org/v3/index.json '
                 '--source /raid/nuget-builder-samples-test ')
 
 
