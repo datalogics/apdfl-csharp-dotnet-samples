@@ -124,6 +124,10 @@ def clean_samples(ctx):
             ctx.run('git checkout .')
 
 @task()
+def clean_nuget_cache(ctx):
+    ctx.run('dotnet nuget locals --clear all')
+
+@task()
 def build_samples(ctx, pkg_name='Adobe.PDF.Library.NET', config='Debug'):
     """Builds the .NET6 samples"""
     ctx.run('invoke clean-samples')
