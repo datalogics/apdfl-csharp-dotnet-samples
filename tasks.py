@@ -170,20 +170,13 @@ def live_source_build():
     """Locations of packages that are live"""
     if platform.system() == 'Darwin':
         return (f'dotnet build '
-                '--source https://api.nuget.org/v3/index.json '
-                '--source /Volumes/raid/products/released/APDFL/nuget/DotNET/for_apdfl_18.0.5Plus/approved/current '
-                '--source /Volumes/raid/products/released/APDFL/nuget/SampleInputFile/for_apdfl_18.0.4Plus/approved/current ')
+                '--source /Volumes/raid/products/released/APDFL/nuget/DotNET/for_apdfl_18.0.5Plus/approved/current ')
     elif platform.system() == 'Windows':
         return (f'dotnet build '
-                '--source https://api.nuget.org/v3/index.json '
-                '--source \\\\ivy\\raid\\products\\released\\APDFL\\nuget\\DotNET\\for_apdfl_18.0.5Plus\\approved\\current '
-
-                '--source \\\\ivy\\raid\\products\\released\\APDFL\\nuget\\SampleInputFile\\for_apdfl_18.0.4Plus\\approved\\current ')
+                '--source \\\\ivy\\raid\\products\\released\\APDFL\\nuget\\DotNET\\for_apdfl_18.0.5Plus\\approved\\current ')
     else:
         return (f'dotnet build '
-                '--source https://api.nuget.org/v3/index.json '
-                '--source /raid/products/released/APDFL/nuget/DotNET/for_apdfl_18.0.5Plus/approved/current '
-                '--source /raid/products/released/APDFL/nuget/SampleInputFile/for_apdfl_18.0.4Plus/approved/current ')
+                '--source /raid/products/released/APDFL/nuget/DotNET/for_apdfl_18.0.5Plus/approved/current ')
 
 
 def nightly_source_build():
