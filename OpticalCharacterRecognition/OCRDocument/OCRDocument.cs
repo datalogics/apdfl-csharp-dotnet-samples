@@ -61,7 +61,7 @@ namespace OCRDocument
                         {
                             using (Page page = doc.GetPage(numPage))
                             {
-                                page.RecognizePageContents(doc, ocrEngine);
+                                page.RecognizePageContents(page, ocrEngine);
                             }
                         }
 
