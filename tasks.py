@@ -71,6 +71,7 @@ samples_list = [
               'InformationExtraction/Metadata/',
               'OpticalCharacterRecognition/AddTextToDocument/',
               'OpticalCharacterRecognition/AddTextToImage/',
+              'OpticalCharacterRecognition/OCRDocument/',
               'Other/MemoryFileSystem/',
               'Other/StreamIO/',
               'Security/AddRegexRedaction/',
@@ -121,6 +122,10 @@ def clean_samples(ctx):
         with ctx.cd(full_path):
             ctx.run('git clean -fdx')
             ctx.run('git checkout .')
+
+@task()
+def clean_nuget_cache(ctx):
+    ctx.run('dotnet nuget locals --clear all')
 
 @task()
 def build_samples(ctx, pkg_name='Adobe.PDF.Library.NET', config='Debug'):

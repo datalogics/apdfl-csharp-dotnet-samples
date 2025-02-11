@@ -5,6 +5,7 @@ pipeline {
         choice(name: 'PLATFORM_FILTER', choices: ['all', 'windows-dotnet-samples', 'linux-dotnet-samples', 'mac-arm-dotnet-samples', 'mac-intel-dotnet-samples','linux-arm-dotnet-samples'], description: 'Run on specific platform')
         booleanParam defaultValue: false, description: 'Completely clean the workspace before building, including the Conan cache', name: 'CLEAN_WORKSPACE'
         booleanParam defaultValue: false, description: 'Run clean-samples', name: 'DISTCLEAN'
+        booleanParam defaultValue: true, description: 'Run clean-nuget-cache', name: 'NUGETCLEAN'
     }
     options{
         buildDiscarder logRotator(artifactDaysToKeepStr: '4', artifactNumToKeepStr: '10', daysToKeepStr: '7', numToKeepStr: '10')
@@ -112,6 +113,27 @@ pipeline {
                                 } else {
                                     bat """CALL ${ENV_LOC[NODE]}\\Scripts\\activate
                                           invoke clean-samples
+                                    """
+                                }
+                            }
+                        }
+                    }
+                    stage('Clean Nuget Cache') {
+                        when {
+                            expression {
+                                params.NUGETCLEAN
+                            }
+                        }
+                        steps {
+                            echo "Clean ${NODE}"
+                            script {
+                                if (isUnix()) {
+                                    sh """. ${ENV_LOC[NODE]}/bin/activate
+                                          invoke clean-nuget-cache
+                                    """
+                                } else {
+                                    bat """CALL ${ENV_LOC[NODE]}\\Scripts\\activate
+                                          invoke clean-nuget-cache
                                     """
                                 }
                             }
