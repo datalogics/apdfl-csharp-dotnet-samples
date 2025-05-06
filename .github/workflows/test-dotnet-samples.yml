@@ -90,6 +90,7 @@ jobs:
               'OpticalCharacterRecognition/AddTextToImage/',
               'Other/MemoryFileSystem/',
               'Other/StreamIO/',
+              'Security/AddDigitalSignature/',
               'Security/AddRegexRedaction/',
               'Security/Redactions/',
               'Text/AddGlyphs/',
