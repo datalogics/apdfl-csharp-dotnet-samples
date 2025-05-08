@@ -24,6 +24,9 @@ namespace AddDigitalSignature
                 String sLogo = Library.ResourceDirectory + "Sample_Input/ducky_alpha.tif";
                 String sOutput = "DigSig-out.pdf";
 
+                String sDERCert = Library.ResourceDirectory + "Sample_Input/Credentials/DER/RSA_certificate.der";
+                String sDERKey = Library.ResourceDirectory + "Sample_Input/Credentials/DER/RSA_privKey.der";
+
                 if (args.Length > 0)
                     sInput = args[0];
 
@@ -47,12 +50,12 @@ namespace AddDigitalSignature
                         // Set credential related attributes
                         sigDoc.DigestCategory = DigestCategory.Sha256;
                         sigDoc.CredentialDataFormat = CredentialDataFmt.NonPFX;
-                        sigDoc.SetNonPfxSignerCert("Credentials/DER/RSA_certificate.der", 0, CredentialStorageFmt.OnDisk);
-                        sigDoc.SetNonPfxPrivateKey("Credentials/DER/RSA_privKey.der", 0, CredentialStorageFmt.OnDisk);
+                        sigDoc.SetNonPfxSignerCert(sDERCert, 0, CredentialStorageFmt.OnDisk);
+                        sigDoc.SetNonPfxPrivateKey(sDERKey, 0, CredentialStorageFmt.OnDisk);
 
                         // Setup the signer information
                         // (Logo image is optional)
-                        sigDoc.SetSignerInfo(sOutput, 0.5, "John Doe", "Chicago, IL", "Approval", "Datalogics, Inc.",
+                        sigDoc.SetSignerInfo(sLogo, 0.5F, "John Doe", "Chicago, IL", "Approval", "Datalogics, Inc.",
                             DisplayTraits.KDisplayAll);
 
                         // Set the size and location of the signature box (optional)
