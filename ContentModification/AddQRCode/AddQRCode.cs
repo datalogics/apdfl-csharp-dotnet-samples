@@ -5,7 +5,7 @@ using Datalogics.PDFL;
  *
  * This sample shows how to add a QR barcode to a PDF page
  *
- * Copyright (c) 2024, Datalogics, Inc. All rights reserved.
+ * Copyright (c) 2024-2025, Datalogics, Inc. All rights reserved.
  *
  */
 namespace AddCollection

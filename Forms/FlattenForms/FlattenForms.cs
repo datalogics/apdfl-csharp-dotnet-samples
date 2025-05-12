@@ -9,7 +9,7 @@ using Datalogics.PDFL;
  *
  *  - Flatten XFA (Dynamic or Static) to regular page content which converts and expands XFA fields to regular PDF content and removes the XFA fields.
  *  - Flatten AcroForms to regular page content which converts AcroForm fields to regular page content and removes the AcroForm fields.
- * Copyright (c) 2024, Datalogics, Inc. All rights reserved.
+ * Copyright (c) 2024-2025, Datalogics, Inc. All rights reserved.
  *
  */
 namespace FlattenForms

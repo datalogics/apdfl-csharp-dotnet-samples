@@ -7,7 +7,7 @@ using Datalogics.PDFL;
  *
  * The ConvertXFAToAcroForms sample demonstrates how to convert XFA into AcroForms.
  * Converts XFA (Dynamic or Static) fields to AcroForms fields and removes XFA fields.
- * Copyright (c) 2024, Datalogics, Inc. All rights reserved.
+ * Copyright (c) 2024-2025, Datalogics, Inc. All rights reserved.
  *
  */
 namespace ConvertXFAToAcroForms
