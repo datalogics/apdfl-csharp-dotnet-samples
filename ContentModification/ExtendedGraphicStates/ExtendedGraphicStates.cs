@@ -10,7 +10,7 @@ using System;
  * 
  * This sample program shows how to use the Extended Graphic State object to add graphics parameters to an image.
  * 
- * Copyright (c) 2007-2024, Datalogics, Inc. All rights reserved.
+ * Copyright (c) 2007-2025, Datalogics, Inc. All rights reserved.
  *
  */
 
