@@ -9,7 +9,7 @@ using Datalogics.PDFL;
  *  - Import data into a XFA (Dynamic or Static) document, the types supported include XDP, XML, or XFD
  *  - Import data into an AcroForms document, the types supported include XFDF, FDF, or XML
  *
- * Copyright (c) 2024, Datalogics, Inc. All rights reserved.
+ * Copyright (c) 2024-2025, Datalogics, Inc. All rights reserved.
  */
 namespace ImportFormsData
 {
