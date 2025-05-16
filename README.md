@@ -1,6 +1,6 @@
 ![Datalogics Adobe PDF Library](https://raw.github.com/datalogics/dl-icons/develop/DLBanner_Nuget.png)
 
-[Documentation](https://dev.datalogics.com/adobe-pdf-library/dot-net/getting-started) &nbsp;|[API Reference](https://docs.datalogics.com/apdfl18/DotNet/index.html) &nbsp;|&nbsp; [Support](https://www.datalogics.com/tech-support-pdfs/) &nbsp; | &nbsp; [Release Notes](https://docs.datalogics.com/apdfl18/Release_Notes.html) &nbsp; | &nbsp;[Homepage](https://www.datalogics.com)
+[Documentation](https://dev.datalogics.com/adobe-pdf-library/dot-net/getting-started) &nbsp;| [API Reference](https://docs.datalogics.com/apdfl18/DotNet/index.html) &nbsp;|&nbsp; [Support](https://www.datalogics.com/tech-support-pdfs/) &nbsp; | &nbsp; [Release Notes](https://docs.datalogics.com/apdfl18/Release_Notes.html) &nbsp; | &nbsp;[Homepage](https://www.datalogics.com)
 
 [![Download a Free Trial on NuGet](https://img.shields.io/nuget/dt/Adobe.PDF.Library.LM.NET?color=blue&label=APDFL%20.NET%20Free%20Trial&logo=NuGet&style=plastic)](https://www.nuget.org/packages/Adobe.PDF.Library.LM.NET)
 
@@ -52,7 +52,7 @@ If you want to build for **Release**, use this command syntax instead:
 
 Change to the directory your sample built its executable to:
 
-```cd ./bin/Debug/net6.0/```
+```cd ./bin/Debug/net8.0/```
 
 Run the application by specifying the .dll file *(Note: the .dll file extension is the .NET executable for all platforms)*:
 
