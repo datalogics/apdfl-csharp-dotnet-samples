@@ -11,7 +11,7 @@ Built upon Adobe source code used for Acrobat, Datalogics Adobe PDF Library SDK 
 ## Preliminaries
 Most of the code samples in APDFL are designed to demonstrate how an API works by completing a simple programming task.
 
-We assume a basic level of technical understanding of the PDF file format, invidual sample category directory markdown files go into more details.
+We assume a basic level of technical understanding of the PDF file format, individual sample category directory markdown files go into more details.
 
 Many of these sample programs generate an output file or set of files.  These output files, generally PDF or graphics files (JPG or BMP), are stored in the directory where the application has been run. If you run a sample program a second or third time, it will overwrite any output files that were created and stored earlier.  However, if you run a sample program, generate a PDF output file, and then open that PDF file and try to run that sample program again, you will see an error message.  The program will not be able to overwrite an existing output file if that file is currently open in another program.
 
@@ -42,20 +42,12 @@ Change to the directory of the program you want to work with. Here is an example
 
 ```cd ./Images/RasterizePage```
 
-Build a sample project file using the **Debug** configuration using the **dotnet** program:
+Build the sample:
 
-```dotnet build -c Debug ./RasterizePage.csproj```
+```dotnet build```
 
-If you want to build for **Release**, use this command syntax instead:
+Run the application:
 
-```dotnet build -c Release ./RasterizePage.csproj```
-
-Change to the directory your sample built its executable to:
-
-```cd ./bin/Debug/net8.0/```
-
-Run the application by specifying the .dll file *(Note: the .dll file extension is the .NET executable for all platforms)*:
-
-```dotnet ./RasterizePage.dll```
+```dotnet run```
 
 **Note**: Samples are setup to write their output files to their program's executable directory along with any other dependencies, such as SkiaSharp for Graphics.
