@@ -3,18 +3,18 @@ using System;
 
 /*
  *
- * This sample program demonstrates the use of AddDigitalSignature.
+ * This sample program demonstrates the use of AddDigitalSignature for CMS signature type.
  *
  * Copyright (c) 2025, Datalogics, Inc. All rights reserved.
  *
  */
-namespace AddDigitalSignature
+namespace AddDigitalSignatureCMS
 {
-    class AddDigitalSignature
+    class AddDigitalSignatureCMS
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("AddDigitalSignature Sample:");
+            Console.WriteLine("AddDigitalSignatureCMS Sample:");
 
             using (new Library())
             {
@@ -22,7 +22,7 @@ namespace AddDigitalSignature
 
                 String sInput = Library.ResourceDirectory + "Sample_Input/SixPages.pdf";
                 String sLogo = Library.ResourceDirectory + "Sample_Input/ducky_alpha.tif";
-                String sOutput = "DigSig-out.pdf";
+                String sOutput = "DigSigCMS-out.pdf";
 
                 String sDERCert = Library.ResourceDirectory + "Sample_Input/Credentials/DER/RSA_certificate.der";
                 String sDERKey = Library.ResourceDirectory + "Sample_Input/Credentials/DER/RSA_privKey.der";
@@ -52,6 +52,10 @@ namespace AddDigitalSignature
                         sigDoc.CredentialDataFormat = CredentialDataFmt.NonPFX;
                         sigDoc.SetNonPfxSignerCert(sDERCert, 0, CredentialStorageFmt.OnDisk);
                         sigDoc.SetNonPfxPrivateKey(sDERKey, 0, CredentialStorageFmt.OnDisk);
+
+                        // Set the signature type to be used.
+                        // The available types are defined in the SignatureType enum. Default CMS.
+                        sigDoc.DocSignType = SignatureType.CMS;
 
                         // Setup the signer information
                         // (Logo image is optional)
