@@ -5,6 +5,7 @@ import platform
 import os
 import pathlib
 import xml.etree.ElementTree as ET
+import shutil
 
 samples_list = [
               'Annotations/Annotations/',
@@ -133,6 +134,14 @@ def clean_nuget_cache(ctx):
 def build_samples(ctx, pkg_name='Adobe.PDF.Library.NET', config='Debug'):
     """Builds the .NET samples"""
     ctx.run('invoke clean-samples')
+
+    sourceFeed = 'https://api.nuget.org/v3/index.json'
+
+    if config == 'Release':
+        get_public_packages()
+    elif config == 'Debug':
+        get_nightly_packages()
+
     for sample in samples_list:
         full_path = os.path.join(os.getcwd(), sample)
         if 'DrawSeparations' in sample or 'DocToImages' in sample:
@@ -145,10 +154,10 @@ def build_samples(ctx, pkg_name='Adobe.PDF.Library.NET', config='Debug'):
                 last_directory = os.path.basename(os.path.dirname(full_path))
                 full_name = full_path + last_directory + '.csproj'
                 set_nuget_pkg_version(pathlib.Path(full_name), package=pkg_name)
-                if config == 'Release':
-                    ctx.run(live_source_build())
-                elif config == 'Debug':
-                    ctx.run(nightly_source_build())
+
+                packagesPath = os.getcwd()
+
+                ctx.run(f'dotnet build --source {sourceFeed} --source {packagesPath}')
 
 
 @task()
@@ -172,41 +181,41 @@ def run_samples(ctx):
                 ctx.run(f'dotnet run --no-build')
 
 
-def live_source_build():
+def copy_packages_locally(libraryPackages):
+    for package in libraryPackages:
+        shutil.copy(package, os.getcwd())
+
+
+def get_public_packages():
     """Locations of packages that are live"""
     if platform.system() == 'Darwin':
-        return (f'dotnet build '
-                '--source https://api.nuget.org/v3/index.json '
-                '--source /Volumes/raid/products/released/APDFL/nuget/DotNET/for_apdfl_18.0.5Plus/approved/current '
-                '--source /Volumes/raid/products/released/APDFL/nuget/SampleInputFile/for_apdfl_18.0.4Plus/approved/current ')
+        libraryPackagePath = '/Volumes/raid/products/released/APDFL/nuget/DotNET/for_apdfl_18.0.5Plus/approved/current'
+        sampleInputPackagePath = '/Volumes/raid/products/released/APDFL/nuget/SampleInputFile/for_apdfl_18.0.4Plus/approved/current'
     elif platform.system() == 'Windows':
-        return (f'dotnet build '
-                '--source https://api.nuget.org/v3/index.json '
-                '--source \\\\ivy\\raid\\products\\released\\APDFL\\nuget\\DotNET\\for_apdfl_18.0.5Plus\\approved\\current '
-
-                '--source \\\\ivy\\raid\\products\\released\\APDFL\\nuget\\SampleInputFile\\for_apdfl_18.0.4Plus\\approved\\current ')
+        libraryPackagePath = '\\\\ivy\\raid\\products\\released\\APDFL\\nuget\\DotNET\\for_apdfl_18.0.5Plus\\approved\\current'
+        sampleInputPackagePath = '\\\\ivy\\raid\\products\\released\\APDFL\\nuget\\SampleInputFile\\for_apdfl_18.0.4Plus\\approved\\current'
     else:
-        return (f'dotnet build '
-                '--source https://api.nuget.org/v3/index.json '
-                '--source /raid/products/released/APDFL/nuget/DotNET/for_apdfl_18.0.5Plus/approved/current '
-                '--source /raid/products/released/APDFL/nuget/SampleInputFile/for_apdfl_18.0.4Plus/approved/current ')
+        libraryPackagePath = '/raid/products/released/APDFL/nuget/DotNET/for_apdfl_18.0.5Plus/approved/current'
+        sampleInputPackagePath = '/raid/products/released/APDFL/nuget/SampleInputFile/for_apdfl_18.0.4Plus/approved/current'
+
+    libraryPackages = [os.path.join(libraryPackagePath, item) for item in os.listdir(libraryPackagePath)]
+    sampleInputPackages = [os.path.join(sampleInputPackagePath, item) for item in os.listdir(sampleInputPackagePath)]
+
+    copy_packages_locally(libraryPackages + sampleInputPackages)
 
 
-def nightly_source_build():
+def get_nightly_packages():
     """Locations of nightly packages. Note: These paths will only work on the nuget-builder build machine"""
     if platform.system() == 'Darwin':
-        return (f'dotnet build '
-                '--source https://api.nuget.org/v3/index.json '
-                '--source /Volumes/raid/nuget-builder-samples-test ')
+        libraryPackagePath = '/Volumes/raid/nuget-builder-samples-test'
     elif platform.system() == 'Windows':
-        return (f'dotnet build '
-                '--source https://api.nuget.org/v3/index.json '
-                '--source \\\\ivy\\raid\\nuget-builder-samples-test ')
+        libraryPackagePath = '\\\\ivy\\raid\\nuget-builder-samples-test'
     else:
-        return (f'dotnet build '
-                '--source https://api.nuget.org/v3/index.json '
-                '--source /raid/nuget-builder-samples-test ')
+        libraryPackagePath = '/raid/nuget-builder-samples-test'
+ 
+    libraryPackages = [os.path.join(libraryPackagePath, item) for item in os.listdir(libraryPackagePath)]
 
+    copy_packages_locally(libraryPackages)
 
 
 tasks = []
