@@ -35,11 +35,6 @@ pipeline {
                         values 'windows-dotnet-samples', 'linux-dotnet-samples', 'mac-arm-dotnet-samples', 'mac-intel-dotnet-samples','linux-arm-dotnet-samples'
                     }
                 }
-                environment {
-                    CONAN_USER_HOME = "${WORKSPACE}"
-                    CONAN_NON_INTERACTIVE = '1'
-                    CONAN_PRINT_RUN_COMMANDS = '1'
-                }
                 stages {
                     stage('Axis'){
                         steps {
@@ -65,10 +60,7 @@ pipeline {
                                           git clean -fdx
                                     """
                                 } else {
-                                    // On Windows, 'git clean' can't handle long paths in .conan,
-                                    // so remove that first.
                                     bat """
-                                          if exist ${WORKSPACE}\\.conan\\ rmdir/s/q ${WORKSPACE}\\.conan
                                           git rm -q -r .
                                           git reset --hard HEAD
                                           git clean -fdx
@@ -141,7 +133,7 @@ pipeline {
                     }
                     stage('Build Samples') {
                         steps {
-                            echo "Bootstrap ${NODE}"
+                            echo "Build the samples ${NODE}"
                             script {
                                 if (isUnix()) {
                                     sh """. ${ENV_LOC[NODE]}/bin/activate
@@ -157,7 +149,7 @@ pipeline {
                     }
                     stage('Run Samples') {
                         steps {
-                            echo "Show Conan dependencies ${NODE}"
+                            echo "Run the samples ${NODE}"
                             script {
                                 if (isUnix()) {
                                     sh """. ${ENV_LOC[NODE]}/bin/activate
