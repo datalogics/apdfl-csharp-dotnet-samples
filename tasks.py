@@ -1,4 +1,3 @@
-from dl_conan_build_tools.tasks import conan
 from invoke import Collection, task
 from invoke.tasks import Task
 import platform
@@ -221,12 +220,6 @@ def get_nightly_packages():
 tasks = []
 tasks.extend([v for v in locals().values() if isinstance(v, Task)])
 
-conan_tasks = Collection()
-conan_tasks.add_task(conan.install_config)
-conan_tasks.add_task(conan.login)
-conan_tasks.add_task(conan.upload_dependencies)
-
 ns = Collection(*tasks)
-ns.add_collection(conan_tasks, 'conan')
 
 ns.configure({'run': {'echo': 'true'}})
