@@ -74,6 +74,7 @@ samples_list = [
               'OpticalCharacterRecognition/OCRDocument/',
               'Other/MemoryFileSystem/',
               'Other/StreamIO/',
+              'Security/AddBasicPAdESElectronicSignature/',
               'Security/AddDigitalSignatureCMS/',
               'Security/AddDigitalSignatureRFC3161/',
               'Security/AddRegexRedaction/',
