@@ -1,3 +1,6 @@
+## ***AddBasicPAdESElectronicSignature***
+Demonstrates adding a PAdES B-T baseline electronic signature to a PDF document.
+
 ## ***AddDigitalSignatureCMS***
 Demonstrates adding a digital signature with a logo to a PDF document.
 
