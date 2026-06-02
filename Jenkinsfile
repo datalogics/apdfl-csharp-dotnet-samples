@@ -2,7 +2,7 @@
 def ENV_LOC=[:]
 pipeline {
     parameters {
-        choice(name: 'PLATFORM_FILTER', choices: ['all', 'windows-dotnet-samples', 'linux-dotnet-samples', 'mac-arm-dotnet-samples', 'mac-intel-dotnet-samples','linux-arm-dotnet-samples'], description: 'Run on specific platform')
+        choice(name: 'PLATFORM_FILTER', choices: ['all', 'windows-dotnet-samples', 'rocky9-dotnet-samples', 'mac-arm-dotnet-samples', 'mac-intel-dotnet-samples', 'rocky9-arm-dotnet-samples'], description: 'Run on specific platform')
         booleanParam defaultValue: false, description: 'Completely clean the workspace before building, including the Conan cache', name: 'CLEAN_WORKSPACE'
         booleanParam defaultValue: false, description: 'Run clean-samples', name: 'DISTCLEAN'
         booleanParam defaultValue: true, description: 'Run clean-nuget-cache', name: 'NUGETCLEAN'
@@ -32,7 +32,7 @@ pipeline {
                 axes {
                     axis {
                         name 'NODE'
-                        values 'windows-dotnet-samples', 'linux-dotnet-samples', 'mac-arm-dotnet-samples', 'mac-intel-dotnet-samples','linux-arm-dotnet-samples'
+                        values 'windows-dotnet-samples', 'rocky9-dotnet-samples', 'mac-arm-dotnet-samples', 'mac-intel-dotnet-samples','rocky9-arm-dotnet-samples'
                     }
                 }
                 stages {
