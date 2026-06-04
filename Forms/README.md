@@ -21,7 +21,7 @@ using (Library lib = new Library())
 ```
 This package supports **x64** Windows and Linux as deployment targets and is a full-featured version of the product that will expire after some time. Contact **evalsupport@datalogics.com** to extend the evaluation.
 
-[Samples](https://github.com/datalogics/apdfl-csharp-dotnet-samples/tree/develop-18/Forms)&nbsp;|&nbsp;[Documentation](https://docs.datalogics.com/apdfl18/DotNet/index.html)&nbsp;|&nbsp;[Release Notes](https://docs.datalogics.com/apdfl18/Release_Notes.html)&nbsp;|&nbsp;[Support](https://www.datalogics.com/tech-support-pdfs)&nbsp;|&nbsp;[Homepage](https://www.datalogics.com/)
+[Samples](https://github.com/datalogics/apdfl-csharp-dotnet-samples/tree/develop-18/Forms)&nbsp;|&nbsp;[Documentation](https://docs.datalogics.com/apdfl18/DotNet/)&nbsp;|&nbsp;[Release Notes](https://dev.datalogics.com/adobe-pdf-library/release-notes)&nbsp;|&nbsp;[Support](https://www.datalogics.com/tech-support-pdfs)&nbsp;|&nbsp;[Homepage](https://www.datalogics.com/)
 
 Forms Extension SDK is an Adobe PDF Library addition that helps users who work with PDF forms to efficiently manage their forms processes.  Import and export form data, lock completed forms to prevent editing and provide consistent viewing experiences across all devices. 
 
