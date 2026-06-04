@@ -5,9 +5,6 @@ using Datalogics.PDFL;
  * 
  * This sample demonstrates converting the input PDF with the input Invoice XML to a Factur-X compliant PDF.
  *
- * For more detail see the description of the Factur-XConverter sample program on our Developer’s site, 
- * http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/net-core-sample-programs/converting-and-merging-pdf-content/#facturxconverter
- * 
  * Copyright (c) 2022-2023, Datalogics, Inc. All rights reserved.
  *
  */
