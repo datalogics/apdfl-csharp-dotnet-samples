@@ -208,11 +208,11 @@ def get_public_packages():
 def get_nightly_packages():
     """Locations of nightly packages. Note: These paths will only work on the nuget-builder build machine"""
     if platform.system() == 'Darwin':
-        libraryPackagePath = '/Volumes/raid/nuget-builder-samples-test'
+        libraryPackagePath = '/Volumes/raid/nuget-builder-samples-test-18'
     elif platform.system() == 'Windows':
-        libraryPackagePath = '\\\\ivy\\raid\\nuget-builder-samples-test'
+        libraryPackagePath = '\\\\ivy\\raid\\nuget-builder-samples-test-18'
     else:
-        libraryPackagePath = '/raid/nuget-builder-samples-test'
+        libraryPackagePath = '/raid/nuget-builder-samples-test-18'
  
     libraryPackages = [os.path.join(libraryPackagePath, item) for item in os.listdir(libraryPackagePath)]
 
