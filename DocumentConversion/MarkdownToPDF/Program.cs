@@ -24,10 +24,10 @@ internal static class Program
                 return 0;
             }
 
-            if (args.Length == 0 || args.Any(IsHelpArgument))
+            if (args.Any(IsHelpArgument))
             {
                 PrintUsage();
-                return args.Length == 0 ? 2 : 0;
+                return 0;
             }
 
             ConversionOptions options = ConversionOptions.Parse(args);
@@ -237,10 +237,12 @@ internal static class Program
     private static void PrintUsage()
     {
         Console.WriteLine("Usage:");
+        Console.WriteLine("  MarkdownToPdf.exe [options]");
         Console.WriteLine("  MarkdownToPdf.exe input.md output.pdf [options]");
         Console.WriteLine("  MarkdownToPdf.exe input-folder output-folder [options]");
         Console.WriteLine();
         Console.WriteLine("Input/output:");
+        Console.WriteLine("  no input/output arguments       Convert sample.md to output.pdf.");
         Console.WriteLine("  input.md output.pdf             Convert one Markdown file to one PDF.");
         Console.WriteLine("  input-folder output-folder      Convert every .md file in a folder.");
         Console.WriteLine("  --recursive                     In folder mode, include subfolders and preserve relative paths.");
@@ -464,15 +466,17 @@ internal sealed class ConversionOptions
             }
         }
 
-        if (positional.Count != 2)
+        bool useDefaultPaths = positional.Count == 0;
+
+        if (positional.Count != 0 && positional.Count != 2)
         {
             throw new CommandLineException("Expected exactly two positional arguments: input.md output.pdf");
         }
 
         return new ConversionOptions
         {
-            InputPath = positional[0],
-            OutputPath = positional[1],
+            InputPath = useDefaultPaths ? "sample.md" : positional[0],
+            OutputPath = useDefaultPaths ? "output.pdf" : positional[1],
             Title = title,
             Language = string.IsNullOrWhiteSpace(language) ? "en-US" : language,
             PageSize = pageSize,
@@ -483,7 +487,7 @@ internal sealed class ConversionOptions
             CodeFontFamily = codeFontFamily,
             CjkFontFamily = cjkFontFamily,
             FallbackFontNames = BuildFallbackFontList(cjkFontFamily, fallbackFontNames),
-            Overwrite = overwrite,
+            Overwrite = useDefaultPaths || overwrite,
             Verbose = verbose,
             Recursive = recursive,
             IncludeUnrenderedHtml = includeUnrenderedHtml
@@ -4099,6 +4103,15 @@ Controls a fictional lobby display.
             Require(parsedOptions.FallbackFontNames.Contains("DejaVu Sans", StringComparer.OrdinalIgnoreCase), "fallback font list parsed");
             Require(Math.Abs(parsedOptions.MarginPoints - 54.0) < 0.001, "margin option parsed");
             Require(parsedOptions.IncludeUnrenderedHtml, "include raw html option parsed");
+
+            ConversionOptions defaultOptions = ConversionOptions.Parse(Array.Empty<string>());
+            Require(string.Equals(defaultOptions.InputPath, "sample.md", StringComparison.Ordinal), "default input path parsed");
+            Require(string.Equals(defaultOptions.OutputPath, "output.pdf", StringComparison.Ordinal), "default output path parsed");
+            Require(defaultOptions.Overwrite, "default sample output can be replaced");
+
+            ConversionOptions defaultVerboseOptions = ConversionOptions.Parse(new[] { "--verbose" });
+            Require(string.Equals(defaultVerboseOptions.InputPath, "sample.md", StringComparison.Ordinal), "default input path parsed with option");
+            Require(defaultVerboseOptions.Verbose, "default options can include switches");
 
             PdfTheme landscapeTheme = PdfTheme.Create(parsedOptions.PageSize, parsedOptions.Orientation, parsedOptions.MarginPoints);
             Require(landscapeTheme.PageWidth > landscapeTheme.PageHeight, "landscape orientation resolved");

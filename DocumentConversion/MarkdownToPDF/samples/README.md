@@ -34,9 +34,12 @@ dotnet run -- samples sample-pdfs --overwrite --recursive --verbose --font-famil
 ## Supported command-line forms
 
 ```text
+MarkdownToPdf.exe [options]
 MarkdownToPdf.exe input.md output.pdf [options]
 MarkdownToPdf.exe input-folder output-folder [options]
 ```
+
+When no input or output arguments are supplied, the sample converts `sample.md` to `output.pdf` and replaces `output.pdf` if it already exists.
 
 When the input is a folder, the output must be a folder. The tool scans for `.md` files. With `--recursive`, subfolders are included and the relative folder structure is preserved in the output folder.
 
@@ -45,6 +48,7 @@ When the input is a folder, the output must be a folder. The tool scans for `.md
 Input/output:
 
 ```text
+no input/output arguments        Convert sample.md to output.pdf.
 --recursive                     In folder mode, include subfolders and preserve relative paths.
 --overwrite                     Replace existing output PDF files.
 --verbose                       Print conversion settings and summary information.

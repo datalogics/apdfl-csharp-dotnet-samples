@@ -19,9 +19,11 @@ $env:APDFL_LICENSE_KEY = "your-license-key"
 ```powershell
 dotnet restore
 dotnet build
-dotnet run -- sample.md output.pdf --overwrite --title "MarkdownToPdf APDFL Sample" --verbose
+dotnet run
 start output.pdf
 ```
+
+Running with no input or output arguments converts `sample.md` to `output.pdf` and replaces `output.pdf` if it already exists.
 
 Run the built-in parser/configuration tests:
 
@@ -82,6 +84,7 @@ dotnet publish -c Release -r win-x64 --self-contained false
 ## Command line
 
 ```text
+MarkdownToPdf.exe [options]
 MarkdownToPdf.exe input.md output.pdf [options]
 MarkdownToPdf.exe input-folder output-folder [options]
 ```
@@ -89,6 +92,7 @@ MarkdownToPdf.exe input-folder output-folder [options]
 Input/output options:
 
 ```text
+no input/output arguments        Convert sample.md to output.pdf.
 --recursive                     In folder mode, include subfolders and preserve relative paths.
 --overwrite                     Replace existing output PDF files.
 --verbose                       Print conversion settings and summary information.
