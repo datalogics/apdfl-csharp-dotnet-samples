@@ -69,7 +69,8 @@ internal sealed class PdfInvoiceRenderer
             DrawLogo(logoPath, _style.Margin, _style.PageHeight - _style.Margin - _style.LogoMaxHeight, headerTag);
         }
 
-        DrawText("INVOICE", _style.PageWidth - _style.Margin - 140, _style.PageHeight - _style.Margin - 10, _style.HeadingFontSize, _boldFont, _primary, headerTag);
+        PdfTaggedElement titleTag = Tags.CreateElement("H1", headerTag);
+        DrawText("INVOICE", _style.PageWidth - _style.Margin - 140, _style.PageHeight - _style.Margin - 10, _style.HeadingFontSize, _boldFont, _primary, titleTag);
         DrawText($"Invoice {invoice.InvoiceNumber}", _style.PageWidth - _style.Margin - 140, _style.PageHeight - _style.Margin - 34, 11, _bodyFont, _text, headerTag);
         DrawText($"Issued {invoice.IssueDate}", _style.PageWidth - _style.Margin - 140, _style.PageHeight - _style.Margin - 50, 9, _bodyFont, _muted, headerTag);
         DrawText($"Due {invoice.DueDate}", _style.PageWidth - _style.Margin - 140, _style.PageHeight - _style.Margin - 64, 9, _bodyFont, _muted, headerTag);
@@ -223,11 +224,13 @@ internal sealed class PdfInvoiceRenderer
     {
         EnsureRoom(96);
         PdfTaggedElement notesTag = CreateTag("Sect", "Payment notes");
-        DrawText("Payment Terms", _style.Margin, Layout.Y, 11, _boldFont, _primary, notesTag);
+        PdfTaggedElement paymentHeadingTag = Tags.CreateElement("H2", notesTag);
+        DrawText("Payment Terms", _style.Margin, Layout.Y, 11, _boldFont, _primary, paymentHeadingTag);
         Layout.Y -= 16;
         DrawParagraph(invoice.PaymentTerms, _style.Margin, Layout.Y, _style.PageWidth - (_style.Margin * 2), notesTag);
         Layout.Y -= 10;
-        DrawText("Notes", _style.Margin, Layout.Y, 11, _boldFont, _primary, notesTag);
+        PdfTaggedElement notesHeadingTag = Tags.CreateElement("H2", notesTag);
+        DrawText("Notes", _style.Margin, Layout.Y, 11, _boldFont, _primary, notesHeadingTag);
         Layout.Y -= 16;
         DrawParagraph(invoice.Notes, _style.Margin, Layout.Y, _style.PageWidth - (_style.Margin * 2), notesTag);
     }
