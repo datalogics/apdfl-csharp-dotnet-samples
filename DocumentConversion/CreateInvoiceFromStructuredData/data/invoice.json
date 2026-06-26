@@ -1,0 +1,34 @@
+{
+  "invoiceNumber": "INV-2026-0417",
+  "issueDate": "2026-04-17",
+  "dueDate": "2026-05-17",
+  "currency": "USD",
+  "taxRate": 0.0825,
+  "logoPath": "../images/northstar-logo.png",
+  "paymentTerms": "Payment is due within 30 days. Please include the invoice number with electronic payment or mailed remittance.",
+  "notes": "Thank you for choosing Northstar Sample Supply. This invoice uses fictional data and is intended only to demonstrate PDF generation from structured input files.",
+  "seller": {
+    "name": "Northstar Sample Supply",
+    "accountNumber": "NSS-10042",
+    "addressLine1": "410 Fictional Market Street",
+    "addressLine2": "Suite 1200",
+    "city": "Port Azure",
+    "region": "WA",
+    "postalCode": "98104",
+    "country": "USA",
+    "email": "billing@example.com",
+    "phone": "+1 206 555 0198"
+  },
+  "customer": {
+    "name": "Harbor & Pine Community Works",
+    "accountNumber": "HPCW-7781",
+    "addressLine1": "88 Cedar Walk",
+    "addressLine2": "Accounts Payable",
+    "city": "Lakefield",
+    "region": "OR",
+    "postalCode": "97035",
+    "country": "USA",
+    "email": "ap@example.org",
+    "phone": "+1 503 555 0144"
+  }
+}
