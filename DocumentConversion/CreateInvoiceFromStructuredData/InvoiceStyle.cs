@@ -10,7 +10,7 @@ internal sealed class InvoiceStyle
 
     public double SmallFontSize { get; init; } = 8.0;
 
-    public double HeadingFontSize { get; init; } = 24.0;
+    public double HeadingFontSize { get; init; } = 20.0;
 
     public double TableHeaderFontSize { get; init; } = 8.5;
 
@@ -20,9 +20,9 @@ internal sealed class InvoiceStyle
 
     public double Margin { get; init; } = 54.0;
 
-    public double LogoMaxWidth { get; init; } = 96.0;
+    public double LogoMaxWidth { get; init; } = 172.0;
 
-    public double LogoMaxHeight { get; init; } = 48.0;
+    public double LogoMaxHeight { get; init; } = 54.0;
 
     public string PrimaryColor { get; init; } = "#24536A";
 

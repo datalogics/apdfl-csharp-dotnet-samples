@@ -4,7 +4,7 @@ internal sealed class CompanyInfo
 {
     public string Name { get; init; } = string.Empty;
 
-    public string AccountNumber { get; init; } = string.Empty;
+    public string TaxId { get; init; } = string.Empty;
 
     public string AddressLine1 { get; init; } = string.Empty;
 

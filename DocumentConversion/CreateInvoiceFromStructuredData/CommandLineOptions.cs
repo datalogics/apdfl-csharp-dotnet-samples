@@ -2,7 +2,7 @@ namespace CreateInvoiceFromStructuredData;
 
 internal sealed class CommandLineOptions
 {
-    public string InvoiceJsonPath { get; init; } = Path.Combine("data", "invoice.json");
+    public string InvoiceJsonPath { get; init; } = Path.Combine("data", "metadata.json");
 
     public string LineItemsCsvPath { get; init; } = Path.Combine("data", "line-items.csv");
 
@@ -19,7 +19,7 @@ internal sealed class CommandLineOptions
 
     public static CommandLineOptions Parse(string[] args)
     {
-        string invoiceJsonPath = Path.Combine("data", "invoice.json");
+        string invoiceJsonPath = Path.Combine("data", "metadata.json");
         string lineItemsCsvPath = Path.Combine("data", "line-items.csv");
         string styleJsonPath = Path.Combine("data", "style.json");
         string outputPdfPath = "CreateInvoiceFromStructuredData-out.pdf";
@@ -31,6 +31,7 @@ internal sealed class CommandLineOptions
             switch (arg.ToLowerInvariant())
             {
                 case "--invoice":
+                case "--metadata":
                     invoiceJsonPath = RequireValue(args, ref i, arg);
                     break;
 
@@ -66,14 +67,15 @@ internal sealed class CommandLineOptions
         Console.WriteLine("  CreateInvoiceFromStructuredData.exe [options]");
         Console.WriteLine();
         Console.WriteLine("With no options, the sample reads:");
-        Console.WriteLine("  data/invoice.json");
+        Console.WriteLine("  data/metadata.json");
         Console.WriteLine("  data/line-items.csv");
         Console.WriteLine("  data/style.json");
         Console.WriteLine("and writes:");
         Console.WriteLine("  CreateInvoiceFromStructuredData-out.pdf");
         Console.WriteLine();
         Console.WriteLine("Options:");
-        Console.WriteLine("  --invoice <path>       Invoice JSON file with seller, customer, and invoice metadata.");
+        Console.WriteLine("  --metadata <path>      JSON file with seller, customer, and invoice metadata.");
+        Console.WriteLine("  --invoice <path>       Alias for --metadata.");
         Console.WriteLine("  --line-items <path>    CSV file containing invoice line items.");
         Console.WriteLine("  --style <path>         JSON style configuration for fonts, colors, and sizing.");
         Console.WriteLine("  --output <path>        Output PDF path.");

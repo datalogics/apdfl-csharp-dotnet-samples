@@ -15,7 +15,7 @@ internal static class InvoiceDataLoader
     {
         if (!File.Exists(path))
         {
-            throw new FileNotFoundException("Invoice JSON file was not found.", path);
+            throw new FileNotFoundException("Metadata JSON file was not found.", path);
         }
 
         string json = File.ReadAllText(path);
@@ -23,12 +23,17 @@ internal static class InvoiceDataLoader
 
         if (invoice is null)
         {
-            throw new InvalidDataException("Invoice JSON did not contain a valid invoice object.");
+            throw new InvalidDataException("Metadata JSON did not contain a valid invoice object.");
         }
 
         Require(invoice.InvoiceNumber, "invoiceNumber");
         Require(invoice.Seller.Name, "seller.name");
         Require(invoice.Customer.Name, "customer.name");
+
+        if (invoice.ApplyRestrictionPassword)
+        {
+            Require(invoice.RestrictionPassword, "restrictionPassword");
+        }
 
         return invoice;
     }
@@ -37,7 +42,7 @@ internal static class InvoiceDataLoader
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new InvalidDataException($"Invoice JSON requires a non-empty {fieldName} value.");
+            throw new InvalidDataException($"Metadata JSON requires a non-empty {fieldName} value.");
         }
     }
 }

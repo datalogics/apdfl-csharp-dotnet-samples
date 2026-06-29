@@ -18,6 +18,10 @@ internal sealed class InvoiceInput
 
     public string Notes { get; init; } = string.Empty;
 
+    public bool ApplyRestrictionPassword { get; init; } = true;
+
+    public string RestrictionPassword { get; init; } = "NSS-Restrict-2026-ReviewOnly!";
+
     public CompanyInfo Seller { get; init; } = new();
 
     public CompanyInfo Customer { get; init; } = new();

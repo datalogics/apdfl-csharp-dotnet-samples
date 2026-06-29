@@ -15,6 +15,7 @@ internal sealed class PdfInvoiceRenderer
     private readonly Font _boldFont;
 
     private Document? _document;
+    private InvoiceInput? _invoice;
     private PdfTaggingContext? _tags;
     private PdfLayoutContext? _layout;
     private PdfTaggedElement? _documentTag;
@@ -40,6 +41,7 @@ internal sealed class PdfInvoiceRenderer
         };
 
         _document = document;
+        _invoice = invoiceDocument.Invoice;
         _tags = new PdfTaggingContext(document, "en-US");
         _documentTag = _tags.DocumentElement;
 
@@ -55,6 +57,7 @@ internal sealed class PdfInvoiceRenderer
         _layout.CurrentPage.UpdateContent();
         _tags.Finish();
         document.EmbedFonts(EmbedFlags.None);
+        ApplyRestrictionPassword(invoiceDocument.Invoice);
         document.Save(SaveFlags.Full, outputPath);
     }
 
@@ -70,12 +73,14 @@ internal sealed class PdfInvoiceRenderer
         }
 
         PdfTaggedElement titleTag = Tags.CreateElement("H1", headerTag);
-        DrawText("INVOICE", _style.PageWidth - _style.Margin - 140, _style.PageHeight - _style.Margin - 10, _style.HeadingFontSize, _boldFont, _primary, titleTag);
-        DrawText($"Invoice {invoice.InvoiceNumber}", _style.PageWidth - _style.Margin - 140, _style.PageHeight - _style.Margin - 34, 11, _bodyFont, _text, headerTag);
-        DrawText($"Issued {invoice.IssueDate}", _style.PageWidth - _style.Margin - 140, _style.PageHeight - _style.Margin - 50, 9, _bodyFont, _muted, headerTag);
-        DrawText($"Due {invoice.DueDate}", _style.PageWidth - _style.Margin - 140, _style.PageHeight - _style.Margin - 64, 9, _bodyFont, _muted, headerTag);
+        double titleRightX = _style.PageWidth - _style.Margin;
+        DrawRightAlignedText("INVOICE", titleRightX, _style.PageHeight - _style.Margin - 10, _style.HeadingFontSize, _boldFont, _primary, titleTag);
+        DrawRightAlignedText($"Invoice {invoice.InvoiceNumber}", titleRightX, _style.PageHeight - _style.Margin - 34, 11, _bodyFont, _text, headerTag);
+        DrawRightAlignedText($"Issued {invoice.IssueDate}", titleRightX, _style.PageHeight - _style.Margin - 50, 9, _bodyFont, _muted, headerTag);
+        DrawRightAlignedText($"Due {invoice.DueDate}", titleRightX, _style.PageHeight - _style.Margin - 64, 9, _bodyFont, _muted, headerTag);
 
         DrawRule(_style.Margin, _style.PageHeight - _style.Margin - 82, _style.PageWidth - _style.Margin, _style.PageHeight - _style.Margin - 82);
+        DrawFooter(1);
         Layout.Y = _style.PageHeight - _style.Margin - 112;
     }
 
@@ -83,50 +88,54 @@ internal sealed class PdfInvoiceRenderer
     {
         PdfTaggedElement sectionTag = CreateTag("Sect", "Seller and customer information");
 
-        double columnWidth = (_style.PageWidth - (_style.Margin * 2) - 24) / 2;
-        double startY = Layout.Y;
+        const double cardGutter = 18;
+        const double partyBlockHeight = 170;
+        double columnWidth = (_style.PageWidth - (_style.Margin * 2) - cardGutter) / 2;
+        double startY = Layout.Y + 6;
 
-        DrawPartyBlock("From", invoice.Seller, _style.Margin, startY, columnWidth, sectionTag);
-        DrawPartyBlock("Bill To", invoice.Customer, _style.Margin + columnWidth + 24, startY, columnWidth, sectionTag);
+        DrawPartyBlock("From", invoice.Seller, _style.Margin, startY, columnWidth, partyBlockHeight, sectionTag);
+        DrawPartyBlock("Bill To", invoice.Customer, _style.Margin + columnWidth + cardGutter, startY, columnWidth, partyBlockHeight, sectionTag);
 
-        Layout.Y = startY - 118;
+        Layout.Y = startY - partyBlockHeight - 24;
     }
 
-    private void DrawPartyBlock(string label, CompanyInfo company, double x, double y, double width, PdfTaggedElement parentTag)
+    private void DrawPartyBlock(string label, CompanyInfo company, double x, double topY, double width, double height, PdfTaggedElement parentTag)
     {
         PdfTaggedElement blockTag = Tags.CreateElement("P", parentTag);
-        DrawText(label, x, y, 9, _boldFont, _primary, blockTag);
-        DrawText(company.Name, x, y - 18, 12, _boldFont, _text, blockTag);
-        DrawText($"Account {company.AccountNumber}", x, y - 34, 9, _bodyFont, _muted, blockTag);
+        const double textInset = 14;
 
-        double currentY = y - 50;
+        DrawBox(x, topY, width, height, _accent, _border);
+        DrawText(label, x + textInset, topY - 18, 9, _boldFont, _primary, blockTag);
+        DrawText(company.Name, x + textInset, topY - 42, 12, _boldFont, _text, blockTag);
+        if (!string.IsNullOrWhiteSpace(company.TaxId))
+        {
+            DrawText(company.TaxId, x + textInset, topY - 62, 9, _bodyFont, _muted, blockTag);
+        }
+
+        double currentY = topY - 86;
         foreach (string line in company.AddressLines().Where(line => !string.IsNullOrWhiteSpace(line)))
         {
-            DrawText(line, x, currentY, 9, _bodyFont, _text, blockTag);
+            DrawText(line, x + textInset, currentY, 9, _bodyFont, _text, blockTag);
             currentY -= 13;
         }
 
-        DrawText(company.Email, x, currentY - 2, 9, _bodyFont, _text, blockTag);
-        DrawText(company.Phone, x, currentY - 15, 9, _bodyFont, _text, blockTag);
-
-        DrawBox(x - 8, y + 10, width + 16, 108, _accent, _border);
+        DrawText(company.Email, x + textInset, currentY - 4, 9, _bodyFont, _text, blockTag);
+        DrawText(company.Phone, x + textInset, currentY - 21, 9, _bodyFont, _text, blockTag);
     }
 
     private void RenderLineItems(InvoiceDocument invoiceDocument)
     {
         EnsureRoom(120);
         PdfTaggedElement tableTag = Tags.CreateElement("Table", DocumentTag);
-        double[] widths = { 72, 238, 54, 72, 72 };
-        string[] headers = { "Item", "Description", "Qty", "Unit", "Amount" };
+        double[] widths = { 72, 234, 54, 72, 72 };
+        string[] headers = { "Item", "Description", "Qty", "Unit Price", "Amount" };
 
         DrawTableHeader(tableTag, headers, widths);
 
         foreach (InvoiceLineItem item in invoiceDocument.LineItems)
         {
             double rowHeight = Math.Max(26, EstimateWrappedLineCount(item.Description, widths[1] - 12, _style.BodyFontSize) * 12 + 12);
-            EnsureRoom(rowHeight + 44);
-
-            if (Layout.Y > _style.PageHeight - _style.Margin - 120)
+            if (EnsureRoom(rowHeight + 44))
             {
                 DrawTableHeader(tableTag, headers, widths);
             }
@@ -195,29 +204,36 @@ internal sealed class PdfInvoiceRenderer
 
     private void RenderTotals(InvoiceDocument invoiceDocument)
     {
-        EnsureRoom(110);
+        EnsureRoom(132);
         PdfTaggedElement totalsTag = CreateTag("Sect", "Invoice totals");
-        double labelX = _style.PageWidth - _style.Margin - 160;
-        double valueX = _style.PageWidth - _style.Margin - 72;
-        double y = Layout.Y - 8;
+        const double totalsWidth = 214;
+        const double totalsHeight = 92;
+        const double inset = 14;
+        double boxX = _style.PageWidth - _style.Margin - totalsWidth;
+        double boxTopY = Layout.Y - 6;
+        double labelX = boxX + inset;
+        double valueRightX = boxX + totalsWidth - inset;
+        double y = boxTopY - 24;
 
-        DrawTotalLine("Subtotal", FormatCurrency(invoiceDocument.Subtotal, invoiceDocument.Invoice.Currency), labelX, valueX, y, totalsTag, bold: false);
-        y -= 18;
-        DrawTotalLine($"Tax ({invoiceDocument.Invoice.TaxRate:P0})", FormatCurrency(invoiceDocument.Tax, invoiceDocument.Invoice.Currency), labelX, valueX, y, totalsTag, bold: false);
-        y -= 22;
-        DrawRule(labelX, y + 9, _style.PageWidth - _style.Margin, y + 9);
-        DrawTotalLine("Total", FormatCurrency(invoiceDocument.Total, invoiceDocument.Invoice.Currency), labelX, valueX, y, totalsTag, bold: true);
+        DrawBox(boxX, boxTopY, totalsWidth, totalsHeight, _accent, _border);
+        DrawTotalLine("Subtotal", FormatCurrency(invoiceDocument.Subtotal, invoiceDocument.Invoice.Currency), labelX, valueRightX, y, totalsTag, bold: false);
+        y -= 20;
+        DrawTotalLine($"Tax ({FormatPercent(invoiceDocument.Invoice.TaxRate)})", FormatCurrency(invoiceDocument.Tax, invoiceDocument.Invoice.Currency), labelX, valueRightX, y, totalsTag, bold: false);
+        y -= 16;
+        DrawRule(boxX + inset, y, boxX + totalsWidth - inset, y);
+        y -= 20;
+        DrawTotalLine("Total", FormatCurrency(invoiceDocument.Total, invoiceDocument.Invoice.Currency), labelX, valueRightX, y, totalsTag, bold: true);
 
-        Layout.Y = y - 36;
+        Layout.Y = boxTopY - totalsHeight - 28;
     }
 
-    private void DrawTotalLine(string label, string value, double labelX, double valueX, double y, PdfTaggedElement parentTag, bool bold)
+    private void DrawTotalLine(string label, string value, double labelX, double valueRightX, double y, PdfTaggedElement parentTag, bool bold)
     {
         PdfTaggedElement lineTag = Tags.CreateElement("P", parentTag);
         Font font = bold ? _boldFont : _bodyFont;
         double size = bold ? 12 : 9.5;
         DrawText(label, labelX, y, size, font, _text, lineTag);
-        DrawText(value, valueX, y, size, font, _text, lineTag);
+        DrawRightAlignedText(value, valueRightX, y, size, font, _text, lineTag);
     }
 
     private void RenderNotes(InvoiceInput invoice)
@@ -248,19 +264,20 @@ internal sealed class PdfInvoiceRenderer
         Layout.Y = currentY;
     }
 
-    private void EnsureRoom(double neededHeight)
+    private bool EnsureRoom(double neededHeight)
     {
         if (Layout.Y - neededHeight >= _style.Margin)
         {
-            return;
+            return false;
         }
 
         Layout.AddPage(_style.PageHeight - _style.Margin);
         PdfTaggedElement pageHeaderTag = CreateTag("Sect", "Continuation page header");
         DrawText("Invoice continued", _style.Margin, Layout.Y, 11, _boldFont, _primary, pageHeaderTag);
-        DrawText($"Page {Layout.PageCount}", _style.PageWidth - _style.Margin - 44, Layout.Y, 9, _bodyFont, _muted, pageHeaderTag);
         DrawRule(_style.Margin, Layout.Y - 12, _style.PageWidth - _style.Margin, Layout.Y - 12);
+        DrawFooter(Layout.PageCount);
         Layout.Y -= 36;
+        return true;
     }
 
     private void DrawLogo(string imagePath, double x, double y, PdfTaggedElement parentTag)
@@ -293,6 +310,60 @@ internal sealed class PdfInvoiceRenderer
         Text textElement = new();
         textElement.AddRun(run);
         Tags.AddTaggedElement(Layout, textElement, tag);
+    }
+
+    private void DrawRightAlignedText(string value, double rightX, double y, double size, Font font, PdfColor color, PdfTaggedElement tag)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return;
+        }
+
+        double x = rightX - font.MeasureTextWidth(value, size);
+        DrawText(value, x, y, size, font, color, tag);
+    }
+
+    private void DrawFooter(int pageNumber)
+    {
+        if (_invoice is null)
+        {
+            return;
+        }
+
+        double lineY = _style.Margin - 14;
+        double baselineY = _style.Margin - 31;
+
+        DrawRule(_style.Margin, lineY, _style.PageWidth - _style.Margin, lineY);
+
+        string leftText = _invoice.Seller.Name;
+        string middleText = $"{_invoice.Seller.Email} | {_invoice.Seller.Phone}";
+        string rightText = $"Page {pageNumber}";
+
+        DrawArtifactText(leftText, _style.Margin, baselineY, 7.2, _bodyFont, _muted);
+        double middleWidth = _bodyFont.MeasureTextWidth(middleText, 7.2);
+        DrawArtifactText(middleText, (_style.PageWidth - middleWidth) / 2, baselineY, 7.2, _bodyFont, _muted);
+        double rightWidth = _bodyFont.MeasureTextWidth(rightText, 7.2);
+        DrawArtifactText(rightText, _style.PageWidth - _style.Margin - rightWidth, baselineY, 7.2, _bodyFont, _muted);
+    }
+
+    private void DrawArtifactText(string value, double x, double y, double size, Font font, PdfColor color)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return;
+        }
+
+        GraphicState graphicState = new()
+        {
+            FillColor = color.ToPdfColor()
+        };
+
+        TextState textState = new();
+        Matrix matrix = new(size, 0, 0, size, x, y);
+        TextRun run = new(value, font, graphicState, textState, matrix);
+        Text textElement = new();
+        textElement.AddRun(run);
+        Tags.AddArtifactElement(Layout, textElement);
     }
 
     private void DrawBox(double x, double topY, double width, double height, PdfColor fillColor, PdfColor strokeColor)
@@ -383,6 +454,34 @@ internal sealed class PdfInvoiceRenderer
     {
         string symbol = string.Equals(currency, "USD", StringComparison.OrdinalIgnoreCase) ? "$" : $"{currency} ";
         return symbol + value.ToString("#,##0.00", CultureInfo.InvariantCulture);
+    }
+
+    private static string FormatPercent(decimal value)
+    {
+        return (value * 100m).ToString("0.##", CultureInfo.InvariantCulture) + "%";
+    }
+
+    private void ApplyRestrictionPassword(InvoiceInput invoice)
+    {
+        if (!invoice.ApplyRestrictionPassword)
+        {
+            return;
+        }
+
+        PermissionFlags allowedUserActions =
+            PermissionFlags.Open |
+            PermissionFlags.Print |
+            PermissionFlags.HighPrint |
+            PermissionFlags.Copy |
+            PermissionFlags.Accessible |
+            PermissionFlags.SaveAs;
+
+        Document.Secure(
+            allowedUserActions,
+            invoice.RestrictionPassword,
+            null,
+            EncryptionType.AES256_AcroX,
+            encryptMetadata: true);
     }
 
     private static Font CreateFont(string name)
