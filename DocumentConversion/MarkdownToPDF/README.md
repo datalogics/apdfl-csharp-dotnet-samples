@@ -1,6 +1,55 @@
 # MarkdownToPdf Tagged APDFL Sample
 
-This is a C#/.NET 8 console sample that converts a practical Markdown subset into a newly created, tagged PDF using Datalogics Adobe PDF Library SDK/APDFL. It does not use HTML-to-PDF conversion, a browser engine, or a third-party Markdown/PDF renderer. The sample creates pages, measures text, wraps lines, paginates content, adds tagged marked-content containers, builds a structure tree, creates link annotations, and saves the PDF with APDFL.
+This sample shows how to turn Markdown into a new, tagged PDF by using Datalogics Adobe PDF Library SDK/APDFL directly. It does not convert Markdown to HTML, it does not drive a browser, and it does not rely on a separate Markdown or PDF rendering library. The goal is to show that PDFL can be used on its own to generate structured PDF output from plain text content.
+
+## What this sample does
+
+At a practical level, this is a C#/.NET 8 console program that reads Markdown, interprets a useful subset of Markdown formatting, lays out the content on PDF pages, tags the output for accessibility, creates links, and saves the final PDF.
+
+It is designed as a public sample, not a full Markdown product. That means it is intentionally focused on showing the PDF generation mechanics clearly:
+
+- create a PDF from scratch
+- measure and wrap text
+- paginate content across pages
+- draw tables, lists, code blocks, and blockquotes
+- build a tagged PDF structure tree
+- add clickable link annotations
+- embed fonts for reliable output
+
+## Why this sample exists
+
+This sample helps answer a common question: can PDFL be used for PDF generation, not just PDF manipulation or conversion? The answer is yes. If a customer can produce their content in Markdown, they can use the same PDFL toolkit to generate a polished PDF directly from that source content.
+
+That also makes this sample a good starting point for adjacent document-generation workflows, especially where the source content is already structured or can be transformed into a Markdown-like intermediate format.
+
+## How the sample works
+
+The program reads a Markdown file, parses supported Markdown constructs into an internal document model, then renders that model into PDF content with APDFL. As it renders, it also creates the tagged PDF structure so the output is not just visually correct, but structurally meaningful.
+
+In other words, the sample is doing the document-generation work itself:
+
+- parsing block and inline Markdown
+- deciding where lines and page breaks belong
+- choosing fonts and fallback fonts
+- drawing text and simple shapes
+- creating tags and annotations
+
+That is the point of the sample. It demonstrates the PDF generation capabilities of PDFL without introducing extra rendering dependencies.
+
+## AI-assisted development note
+
+This sample was developed iteratively with AI assistance, but not from a single magic prompt. The useful pattern was to combine clear requirements, small reviewable changes, and repeated visual/testing feedback.
+
+If someone wants to extend the sample, a better starting point than "generate a whole app" is a focused prompt such as:
+
+```text
+Extend this APDFL Markdown-to-PDF sample without adding new dependencies.
+Keep PDFL as the only library for parsing, layout, rendering, tagging, and
+link creation. Add support for [feature], update the self-tests, and explain
+any tradeoffs or limitations in the README.
+```
+
+That framing keeps the constraints clear and makes it easier to evolve the sample in a way that still matches its purpose.
 
 ## Prerequisites
 
@@ -163,7 +212,9 @@ See `samples/README.md` for the full supported Markdown list, unsupported items,
 
 Images remain intentionally excluded in this version. Markdown images and simple HTML `<img>` tags render as omitted placeholders instead of loading or embedding image files.
 
-## Main code areas
+## How to extend or modify it
+
+For most follow-on work, the easiest path is to keep the current separation of responsibilities:
 
 - `MarkdownParser`: block parsing, reference definitions, tables, lists, and fenced code blocks
 - `InlineParser`: inline styles, links, autolinks, image exclusion behavior, and CommonMark-style delimiter checks for emphasis
@@ -171,3 +222,9 @@ Images remain intentionally excluded in this version. Markdown images and simple
 - `PdfTaggingContext`: marked content, MCIDs, parent tree, structure tree, artifacts, and link annotation object references
 - `PdfTheme`: page size, orientation-resolved dimensions, margins, font sizes, spacing, code backgrounds, and table settings
 - `PdfFontSet`: font-family mapping plus CJK and general Unicode fallback font resolution
+
+If you are modifying the sample, it is worth testing both parser behavior and output behavior. The built-in `--self-test` mode is there to make small changes easier to validate before doing a full PDF review.
+
+## Limitations
+
+This sample is intentionally not a full CommonMark or GitHub-Flavored Markdown implementation. It is a focused demonstration of PDF generation with PDFL. That means some omissions are by design, not by accident. The biggest current exclusions are images, full HTML rendering, advanced nested structures, repeating table headers across page breaks, syntax highlighting, and right-to-left shaping.
