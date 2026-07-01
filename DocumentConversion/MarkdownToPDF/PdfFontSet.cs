@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Datalogics.PDFL;
 
-namespace MarkdownToPdf;
+namespace MarkdownToPDF;
 
 internal sealed class PdfFontSet : IDisposable
 {
@@ -311,4 +311,3 @@ internal sealed class PdfFontSet : IDisposable
         }
     }
 }
-

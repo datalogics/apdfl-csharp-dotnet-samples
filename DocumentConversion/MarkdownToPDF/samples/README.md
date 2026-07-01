@@ -1,4 +1,4 @@
-# MarkdownToPdf Sample Documents and Feature Guide
+# MarkdownToPDF Sample Documents and Feature Guide
 
 This folder contains Markdown files that exercise the public APDFL Markdown-to-tagged-PDF sample.
 
@@ -34,9 +34,9 @@ dotnet run -- samples sample-pdfs --overwrite --recursive --verbose --font-famil
 ## Supported command-line forms
 
 ```text
-MarkdownToPdf.exe [options]
-MarkdownToPdf.exe input.md output.pdf [options]
-MarkdownToPdf.exe input-folder output-folder [options]
+MarkdownToPDF.exe [options]
+MarkdownToPDF.exe input.md output.pdf [options]
+MarkdownToPDF.exe input-folder output-folder [options]
 ```
 
 When no input or output arguments are supplied, the sample converts `sample.md` to `output.pdf` and replaces `output.pdf` if it already exists.

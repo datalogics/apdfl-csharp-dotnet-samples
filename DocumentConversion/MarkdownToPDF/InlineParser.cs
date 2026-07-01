@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Datalogics.PDFL;
 
-namespace MarkdownToPdf;
+namespace MarkdownToPDF;
 
 internal static class InlineParser
 {
@@ -577,4 +577,3 @@ internal static class InlineParser
         bool Code = false,
         bool Strike = false);
 }
-

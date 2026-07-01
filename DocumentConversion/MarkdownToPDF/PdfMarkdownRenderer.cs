@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Datalogics.PDFL;
 
-namespace MarkdownToPdf;
+namespace MarkdownToPDF;
 
 internal sealed class PdfMarkdownRenderer : IDisposable
 {
@@ -1186,4 +1186,3 @@ internal sealed class PdfLayoutContext
         return page;
     }
 }
-

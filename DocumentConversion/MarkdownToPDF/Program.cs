@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Datalogics.PDFL;
 
-namespace MarkdownToPdf;
+namespace MarkdownToPDF;
 
 internal static class Program
 {
@@ -200,7 +200,7 @@ internal static class Program
         using Document pdfDocument = new Document
         {
             Title = options.Title ?? System.IO.Path.GetFileNameWithoutExtension(fullInputPath),
-            Producer = "MarkdownToPdf tagged sample using Datalogics APDFL"
+            Producer = "MarkdownToPDF tagged sample using Datalogics APDFL"
         };
 
         using PdfMarkdownRenderer renderer = new(pdfDocument, theme, options);
@@ -253,9 +253,9 @@ internal static class Program
     private static void PrintUsage()
     {
         Console.WriteLine("Usage:");
-        Console.WriteLine("  MarkdownToPdf.exe [options]");
-        Console.WriteLine("  MarkdownToPdf.exe input.md output.pdf [options]");
-        Console.WriteLine("  MarkdownToPdf.exe input-folder output-folder [options]");
+        Console.WriteLine("  MarkdownToPDF.exe [options]");
+        Console.WriteLine("  MarkdownToPDF.exe input.md output.pdf [options]");
+        Console.WriteLine("  MarkdownToPDF.exe input-folder output-folder [options]");
         Console.WriteLine();
         Console.WriteLine("Input/output:");
         Console.WriteLine("  no input/output arguments       Convert sample.md to output.pdf.");
@@ -292,10 +292,10 @@ internal static class Program
         Console.WriteLine("  --help, -h, /?                  Show this help.");
         Console.WriteLine();
         Console.WriteLine("Examples:");
-        Console.WriteLine("  MarkdownToPdf.exe sample.md output.pdf --overwrite");
-        Console.WriteLine("  MarkdownToPdf.exe samples sample-pdfs --recursive --overwrite --page-size A4 --orientation landscape --font-family Helvetica");
-        Console.WriteLine("  MarkdownToPdf.exe multilingual.md multilingual.pdf --font-family Arial --cjk-font-family \"Microsoft YaHei\"");
-        Console.WriteLine("  MarkdownToPdf.exe config.md config.pdf --include-unrendered-html --overwrite");
+        Console.WriteLine("  MarkdownToPDF.exe sample.md output.pdf --overwrite");
+        Console.WriteLine("  MarkdownToPDF.exe samples sample-pdfs --recursive --overwrite --page-size A4 --orientation landscape --font-family Helvetica");
+        Console.WriteLine("  MarkdownToPDF.exe multilingual.md multilingual.pdf --font-family Arial --cjk-font-family \"Microsoft YaHei\"");
+        Console.WriteLine("  MarkdownToPDF.exe config.md config.pdf --include-unrendered-html --overwrite");
         Console.WriteLine();
         Console.WriteLine("License:");
         Console.WriteLine("  Set APDFL_LICENSE_KEY to provide a Datalogics APDFL activation key before Library initialization.");

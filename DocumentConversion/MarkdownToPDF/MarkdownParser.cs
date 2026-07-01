@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Datalogics.PDFL;
 
-namespace MarkdownToPdf;
+namespace MarkdownToPDF;
 
 
 internal static class MarkdownHtmlNormalizer
@@ -831,4 +831,3 @@ internal sealed class MarkdownParser
         int IndentSpaces,
         string Text);
 }
-

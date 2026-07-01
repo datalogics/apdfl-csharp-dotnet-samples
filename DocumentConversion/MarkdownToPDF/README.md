@@ -1,4 +1,4 @@
-# MarkdownToPdf Tagged APDFL Sample
+# MarkdownToPDF Tagged APDFL Sample
 
 This is a C#/.NET 8 console sample that converts a practical Markdown subset into a newly created, tagged PDF using Datalogics Adobe PDF Library SDK/APDFL. It does not use HTML-to-PDF conversion, a browser engine, or a third-party Markdown/PDF renderer. The sample creates pages, measures text, wraps lines, paginates content, adds tagged marked-content containers, builds a structure tree, creates link annotations, and saves the PDF with APDFL.
 
@@ -84,9 +84,9 @@ dotnet publish -c Release -r win-x64 --self-contained false
 ## Command line
 
 ```text
-MarkdownToPdf.exe [options]
-MarkdownToPdf.exe input.md output.pdf [options]
-MarkdownToPdf.exe input-folder output-folder [options]
+MarkdownToPDF.exe [options]
+MarkdownToPDF.exe input.md output.pdf [options]
+MarkdownToPDF.exe input-folder output-folder [options]
 ```
 
 Input/output options:
