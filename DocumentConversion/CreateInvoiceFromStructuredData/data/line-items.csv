@@ -1,0 +1,21 @@
+itemCode,description,quantity,unitPrice
+PLAN-100,"Seasonal site planning workshop for community maintenance team",1,850.00
+FIELD-210,"Field guide drafting for entrance signage, path notes, and accessibility reminders",4,175.00
+MAP-115,"Illustrated reference map preparation using supplied fictional location data",2,240.00
+OPS-305,"Operations checklist review and formatting for monthly volunteer handoff",3,135.00
+TRAIN-250,"Remote training session for invoice recipient staff",2,225.00
+DOC-410,"Structured source content review and cleanup",5,96.00
+PDF-120,"Tagged PDF generation setup and verification",2,310.00
+TABLE-215,"Long table layout review for multipage invoice output",6,88.00
+QA-330,"Accessibility-oriented review of headings, tables, and reading order",3,155.00
+SUP-101,"Sample support block for customer billing questions",1,75.00
+DATA-222,"CSV line item normalization and validation",4,82.50
+STYLE-140,"Style configuration tuning for colors, fonts, and spacing",3,115.00
+IMG-118,"Local logo placement and scaling check",1,145.00
+COPY-201,"Boilerplate payment and note copy preparation",2,90.00
+ARCH-302,"Document structure planning for tagged invoice output",2,275.00
+PAG-450,"Pagination stress review with repeated line item sections",5,122.00
+TOTAL-190,"Subtotal, tax, and grand total calculation review",1,160.00
+EXPORT-275,"Final PDF save and font embedding verification",2,205.00
+HAND-410,"Reviewer handoff notes and sample usage instructions",1,130.00
+MISC-999,"Fictional miscellaneous line item included to extend the sample invoice across pages",7,64.00

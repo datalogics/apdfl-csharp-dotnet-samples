@@ -1,0 +1,18 @@
+{
+  "bodyFont": "Helvetica",
+  "boldFont": "Helvetica-Bold",
+  "bodyFontSize": 9.5,
+  "smallFontSize": 8,
+  "headingFontSize": 20,
+  "tableHeaderFontSize": 8.5,
+  "pageWidth": 612,
+  "pageHeight": 792,
+  "margin": 54,
+  "logoMaxWidth": 172,
+  "logoMaxHeight": 54,
+  "primaryColor": "#24536A",
+  "accentColor": "#E8F1F4",
+  "textColor": "#222222",
+  "mutedTextColor": "#666666",
+  "borderColor": "#B8C7CE"
+}

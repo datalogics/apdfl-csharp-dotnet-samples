@@ -782,6 +782,7 @@ FodyWeavers.xsd
 *.gif
 *.bmp
 *.json
+!DocumentConversion/CreateInvoiceFromStructuredData/data/metadata.json
 *.txt
 *.xlsx
 *.docx
