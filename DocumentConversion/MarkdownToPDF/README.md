@@ -1,4 +1,4 @@
-# MarkdownToPdf Tagged APDFL Sample
+# MarkdownToPDF Tagged APDFL Sample
 
 This sample shows how to turn Markdown into a new, tagged PDF by using Datalogics Adobe PDF Library SDK/APDFL directly. It does not convert Markdown to HTML, it does not drive a browser, and it does not rely on a separate Markdown or PDF rendering library. The goal is to show that PDFL can be used on its own to generate structured PDF output from plain text content.
 
@@ -133,9 +133,9 @@ dotnet publish -c Release -r win-x64 --self-contained false
 ## Command line
 
 ```text
-MarkdownToPdf.exe [options]
-MarkdownToPdf.exe input.md output.pdf [options]
-MarkdownToPdf.exe input-folder output-folder [options]
+MarkdownToPDF.exe [options]
+MarkdownToPDF.exe input.md output.pdf [options]
+MarkdownToPDF.exe input-folder output-folder [options]
 ```
 
 Input/output options:
