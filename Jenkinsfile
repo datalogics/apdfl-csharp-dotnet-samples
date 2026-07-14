@@ -14,10 +14,7 @@ pipeline {
     }
     agent none
     triggers {
-        // Run branches between 0800 and 0830, depending on a hash of the job name
-        // This means if there's more than one branch (a feature branch, maybe?), they
-        // won't all start at the same time.
-        cron(env.BRANCH_NAME == "develop-21" ? 'H(0-30) 8 * * *' : '')
+        cron(env.BRANCH_NAME == "develop-21" ? '30 7 * * *' : '')
     }
     stages {
         stage('Matrix stage') {
