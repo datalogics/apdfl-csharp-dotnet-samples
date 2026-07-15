@@ -1,9 +1,27 @@
 @Library('jenkins-shared-libraries') _
 def ENV_LOC=[:]
+
+// Per-job NuGet cache root, so concurrent jobs on a node don't contend for
+// the shared per-user cache. On Unix the workspace is already per-job, so
+// the cache lives inside it; on Windows it is rooted at the drive root
+// (like setConanHome) to keep restored package paths under the long-path
+// limit.
+def setNugetRoot() {
+    if (isUnix()) {
+        return "${WORKSPACE}/.nuget"
+    }
+    def jobDirectory = "DL\\" + env.JOB_NAME.tokenize('/')[-2] + "_" + env.JOB_BASE_NAME
+    return getWindowsRootDrive() + jobDirectory + "\\.nuget"
+}
+
+def nugetCachePath(String subdir) {
+    return setNugetRoot() + (isUnix() ? '/' : '\\') + subdir
+}
+
 pipeline {
     parameters {
         choice(name: 'PLATFORM_FILTER', choices: ['all', 'windows-dotnet-samples', 'rocky9-dotnet-samples', 'mac-arm-dotnet-samples', 'mac-intel-dotnet-samples', 'rocky9-arm-dotnet-samples'], description: 'Run on specific platform')
-        booleanParam defaultValue: false, description: 'Completely clean the workspace before building, including the Conan cache', name: 'CLEAN_WORKSPACE'
+        booleanParam defaultValue: false, description: 'Completely clean the workspace before building, including the NuGet cache', name: 'CLEAN_WORKSPACE'
         booleanParam defaultValue: false, description: 'Run clean-samples', name: 'DISTCLEAN'
         booleanParam defaultValue: true, description: 'Run clean-nuget-cache', name: 'NUGETCLEAN'
     }
@@ -32,6 +50,14 @@ pipeline {
                         values 'windows-dotnet-samples', 'rocky9-dotnet-samples', 'mac-arm-dotnet-samples', 'mac-intel-dotnet-samples','rocky9-arm-dotnet-samples'
                     }
                 }
+                environment {
+                    // NuGet honors these for restore, build, and
+                    // 'dotnet nuget locals --clear all' alike.
+                    NUGET_ROOT = setNugetRoot()
+                    NUGET_PACKAGES = nugetCachePath('packages')
+                    NUGET_HTTP_CACHE_PATH = nugetCachePath('http-cache')
+                    NUGET_PLUGINS_CACHE_PATH = nugetCachePath('plugins-cache')
+                }
                 stages {
                     stage('Axis'){
                         steps {
@@ -57,7 +83,10 @@ pipeline {
                                           git clean -fdx
                                     """
                                 } else {
+                                    // On Windows the NuGet cache root lives outside
+                                    // the workspace, so git clean can't remove it.
                                     bat """
+                                          if exist "%NUGET_ROOT%" rmdir /s /q "%NUGET_ROOT%"
                                           git rm -q -r .
                                           git reset --hard HEAD
                                           git clean -fdx
