@@ -46,6 +46,7 @@ samples_list = [
               'DocumentConversion/ConvertToOffice/',
               'DocumentConversion/CreateDocFromXPS/',
               'DocumentConversion/Factur-XConverter/',
+              'DocumentConversion/MarkdownToPDF/',
               'DocumentConversion/PDFAConverter/',
               'DocumentConversion/PDFXConverter/',
               'DocumentConversion/ZUGFeRDConverter/',
