@@ -45,6 +45,7 @@ samples_list = [
               'DocumentConversion/ColorConvertDocument/',
               'DocumentConversion/ConvertToOffice/',
               'DocumentConversion/CreateDocFromXPS/',
+              'DocumentConversion/CreateInvoiceFromStructuredData/',
               'DocumentConversion/Factur-XConverter/',
               'DocumentConversion/MarkdownToPDF/',
               'DocumentConversion/PDFAConverter/',
