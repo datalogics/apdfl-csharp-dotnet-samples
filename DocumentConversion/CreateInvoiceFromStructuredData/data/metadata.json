@@ -1,0 +1,36 @@
+{
+  "invoiceNumber": "INV-2026-0417",
+  "issueDate": "2026-04-17",
+  "dueDate": "2026-05-17",
+  "currency": "USD",
+  "taxRate": 0.0825,
+  "logoPath": "../images/northstar-logo.png",
+  "applyRestrictionPassword": true,
+  "restrictionPassword": "NSS-Restrict-2026-ReviewOnly!",
+  "paymentTerms": "Payment is due within 30 days. ACH payments may be submitted through https://payments.northstar-sample.example/invoices using routing number 021000021 and account number 10000417. Mailed remittance may be sent to Northstar Sample Supply, PO Box 41017, Port Azure, WA 98104. Please include invoice INV-2026-0417 with all payments.",
+  "notes": "Thank you for choosing Northstar Sample Supply. This invoice uses fictional data and is intended only to demonstrate PDF generation from structured input files.",
+  "seller": {
+    "name": "Northstar Sample Supply",
+    "taxId": "EIN 84-5162047",
+    "addressLine1": "410 Fictional Market Street",
+    "addressLine2": "Suite 1200",
+    "city": "Port Azure",
+    "region": "WA",
+    "postalCode": "98104",
+    "country": "USA",
+    "email": "billing@example.com",
+    "phone": "+1 206 555 0198"
+  },
+  "customer": {
+    "name": "Harbor & Pine Community Works",
+    "taxId": "TIN 92-4418733",
+    "addressLine1": "88 Cedar Walk",
+    "addressLine2": "Accounts Payable",
+    "city": "Lakefield",
+    "region": "OR",
+    "postalCode": "97035",
+    "country": "USA",
+    "email": "ap@example.org",
+    "phone": "+1 503 555 0144"
+  }
+}
