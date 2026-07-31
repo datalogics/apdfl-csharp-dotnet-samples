@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>MarkdownToPDF</AssemblyName>
+    <RootNamespace>MarkdownToPDF</RootNamespace>
+    <Platforms>x64</Platforms>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Adobe.PDF.Library.LM.NET" Version="21.*" />
+  </ItemGroup>
+
+</Project>
