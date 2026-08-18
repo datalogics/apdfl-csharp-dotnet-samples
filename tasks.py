@@ -150,7 +150,11 @@ def build_samples(ctx, pkg_name='Adobe.PDF.Library.NET', config='Debug'):
         full_path = os.path.join(os.getcwd(), sample)
         if 'DrawSeparations' in sample or 'DocToImages' in sample:
             continue
-        if platform.system() == 'Darwin' and ('ConvertToOffice' in sample or 'CreateDocFromXPS' in sample or 'CreateDocFromWebPage' in sample):
+        if platform.system() == 'Darwin' and ('ConvertToOffice' in sample or 'CreateDocFromXPS' in sample):
+            print(f'{sample} not available on this OS')
+            continue
+        # WebToPDF ships a macOS runtime package for arm64 only
+        elif platform.system() == 'Darwin' and platform.machine() != 'arm64' and 'CreateDocFromWebPage' in sample:
             print(f'{sample} not available on this OS')
             continue
         else:
@@ -172,7 +176,11 @@ def run_samples(ctx):
         full_path = os.path.join(os.getcwd(), sample)
         if 'DrawSeparations' in sample or 'DocToImages' in sample:
             continue
-        if platform.system() == 'Darwin' and ('ConvertToOffice' in sample or 'CreateDocFromXPS' in sample or 'CreateDocFromWebPage' in sample):
+        if platform.system() == 'Darwin' and ('ConvertToOffice' in sample or 'CreateDocFromXPS' in sample):
+            print(f'{sample} not available on this OS')
+            continue
+        # WebToPDF ships a macOS runtime package for arm64 only
+        elif platform.system() == 'Darwin' and platform.machine() != 'arm64' and 'CreateDocFromWebPage' in sample:
             print(f'{sample} not available on this OS')
             continue
         elif platform.system() == 'Linux' and 'ConvertToOffice' in sample:
