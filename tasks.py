@@ -44,6 +44,7 @@ samples_list = [
               'ContentModification/Watermark/',
               'DocumentConversion/ColorConvertDocument/',
               'DocumentConversion/ConvertToOffice/',
+              'DocumentConversion/CreateDocFromWebPage/',
               'DocumentConversion/CreateDocFromXPS/',
               'DocumentConversion/CreateInvoiceFromStructuredData/',
               'DocumentConversion/Factur-XConverter/',
@@ -149,7 +150,7 @@ def build_samples(ctx, pkg_name='Adobe.PDF.Library.NET', config='Debug'):
         full_path = os.path.join(os.getcwd(), sample)
         if 'DrawSeparations' in sample or 'DocToImages' in sample:
             continue
-        if platform.system() == 'Darwin' and ('ConvertToOffice' in sample or 'CreateDocFromXPS' in sample):
+        if platform.system() == 'Darwin' and ('ConvertToOffice' in sample or 'CreateDocFromXPS' in sample or 'CreateDocFromWebPage' in sample):
             print(f'{sample} not available on this OS')
             continue
         else:
@@ -171,7 +172,7 @@ def run_samples(ctx):
         full_path = os.path.join(os.getcwd(), sample)
         if 'DrawSeparations' in sample or 'DocToImages' in sample:
             continue
-        if platform.system() == 'Darwin' and ('ConvertToOffice' in sample or 'CreateDocFromXPS' in sample):
+        if platform.system() == 'Darwin' and ('ConvertToOffice' in sample or 'CreateDocFromXPS' in sample or 'CreateDocFromWebPage' in sample):
             print(f'{sample} not available on this OS')
             continue
         elif platform.system() == 'Linux' and 'ConvertToOffice' in sample:
