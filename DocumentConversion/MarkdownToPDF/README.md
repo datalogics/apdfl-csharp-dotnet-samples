@@ -165,7 +165,7 @@ Page setup:
 Fonts:
 
 ```text
---font-family <value>           Body font family. Defaults to Times.
+--font-family <value>           Body font family. Defaults to Myriad Pro.
 --heading-font-family <value>   Heading font family. Defaults to the body font family.
 --code-font-family <value>      Monospace/code font family. Defaults to Courier.
 --cjk-font-family <value>       Preferred CJK font family/name for Chinese/Japanese/Korean text.
@@ -196,7 +196,7 @@ Orientation is applied by creating pages with the resolved media box dimensions,
 
 ## Fonts and multilingual text
 
-The sample recognizes common family aliases such as `Times`, `Helvetica`, `Courier`, `Arial`, `Calibri`, `Cambria`, `Consolas`, `Georgia`, `Times New Roman`, `Verdana`, `Microsoft YaHei`, `SimSun`, `Malgun Gothic`, and `Noto Sans CJK SC`. The core PDF families `Times`, `Helvetica`, and `Courier` are the most portable. Other families require those fonts to be available to APDFL on the machine running the sample.
+The sample recognizes common family aliases such as `Myriad Pro`, `Times`, `Helvetica`, `Courier`, `Arial`, `Calibri`, `Cambria`, `Consolas`, `Georgia`, `Times New Roman`, `Verdana`, `Microsoft YaHei`, `SimSun`, `Malgun Gothic`, and `Noto Sans CJK SC`. The default `Myriad Pro` family and the `Courier` family ship with the APDFL Resources package, so they work on every platform. `Times` and `Helvetica` are resolved through fonts installed on the machine (on Linux this means the Microsoft core fonts), and other families likewise require those fonts to be available to APDFL on the machine running the sample.
 
 For multilingual text, the renderer uses script-aware wrapping and fallback fonts. Chinese/Japanese/Korean text uses CJK-aware tokenization and CJK fallback fonts. Cyrillic and Greek text use general Unicode fallback fonts when the selected body font is one of the PDF base families that may not contain those glyphs. You can control this explicitly:
 

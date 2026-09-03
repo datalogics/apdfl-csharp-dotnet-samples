@@ -72,7 +72,7 @@ Page setup:
 Fonts:
 
 ```text
---font-family <value>           Body font family. Defaults to Times.
+--font-family <value>           Body font family. Defaults to Myriad Pro.
 --heading-font-family <value>   Heading font family. Defaults to the body font family.
 --code-font-family <value>      Monospace/code font family. Defaults to Courier.
 --cjk-font-family <value>       Preferred CJK font family/name for Chinese/Japanese/Korean text.
