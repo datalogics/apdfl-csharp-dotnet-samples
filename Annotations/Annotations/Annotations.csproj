@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Adobe.PDF.Library.NET" Version="21.*" />
-  <PackageReference Include="Adobe.PDF.Library.SampleInput" Version="1.*" /></ItemGroup>
+    <PackageReference Include="Adobe.PDF.Library.LM.NET" Version="21.*" />
+  </ItemGroup>
 
 </Project>
