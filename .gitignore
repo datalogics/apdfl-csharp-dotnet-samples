@@ -790,3 +790,6 @@ FodyWeavers.xsd
 *.docx
 *.pptx
 *.csv
+
+# Local NuGet feed populated by build-samples for the nightly packages
+/packages_nightly/

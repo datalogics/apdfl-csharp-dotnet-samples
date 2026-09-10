@@ -24,6 +24,7 @@ pipeline {
         booleanParam defaultValue: false, description: 'Completely clean the workspace before building, including the NuGet cache', name: 'CLEAN_WORKSPACE'
         booleanParam defaultValue: false, description: 'Run clean-samples', name: 'DISTCLEAN'
         booleanParam defaultValue: true, description: 'Run clean-nuget-cache', name: 'NUGETCLEAN'
+        string(name: 'PUBLIC_MIN_VERSION', defaultValue: '', description: 'Require nuget.org to serve Adobe.PDF.Library.LM.NET at this version or newer during the Public build. Leave empty to use the floor recorded in tasks.py.')
     }
     options{
         buildDiscarder logRotator(artifactDaysToKeepStr: '4', artifactNumToKeepStr: '10', daysToKeepStr: '7', numToKeepStr: '10')
@@ -222,39 +223,30 @@ pipeline {
                         }
                     }
 
+                    // Build only. The public packages are the license-managed build,
+                    // which asks for an activation key on stdin when it has none, so
+                    // the samples cannot run unattended here. Restoring and building
+                    // against nuget.org is what catches the failure this pass exists
+                    // for: a release approved but never actually published, published
+                    // unlisted, or missing one of its dependency packages.
                     stage('Build Samples using Public packages') {
                         steps {
                             echo "Build the samples ${NODE}"
                             script {
+                                def expectArg = params.PUBLIC_MIN_VERSION.trim() ? " --expect-version ${params.PUBLIC_MIN_VERSION.trim()}" : ''
                                 if (isUnix()) {
                                     sh """. ${ENV_LOC[NODE]}/bin/activate
-                                          invoke build-samples --pkg-source Public
+                                          invoke build-samples --pkg-source Public${expectArg}
                                     """
                                 } else {
                                     bat """CALL ${ENV_LOC[NODE]}\\Scripts\\activate
-                                          invoke build-samples --pkg-source Public
+                                          invoke build-samples --pkg-source Public${expectArg}
                                     """
                                 }
                             }
                         }
                     }
-                    stage('Run Samples using Public packages') {
-                        steps {
-                            echo "Run the samples ${NODE}"
-                            script {
-                                if (isUnix()) {
-                                    sh """. ${ENV_LOC[NODE]}/bin/activate
-                                          invoke run-samples
-                                    """
-                                } else {
-                                    bat """CALL ${ENV_LOC[NODE]}\\Scripts\\activate
-                                          invoke run-samples
-                                    """
-                                }
-                            }
-                        }
-                    }
-                    stage('Clean Samples After Public Run') {
+                    stage('Clean Samples After Public Build') {
                         steps {
                             echo "Clean ${NODE}"
                             script {

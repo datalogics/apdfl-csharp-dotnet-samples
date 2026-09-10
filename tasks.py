@@ -4,6 +4,7 @@ import platform
 import os
 import pathlib
 import xml.etree.ElementTree as ET
+import json
 import shutil
 
 samples_list = [
@@ -118,6 +119,84 @@ nugetOrgFeed = 'https://api.nuget.org/v3/index.json'
 # leftover .nupkg from an earlier run would outrank the one under test.
 nightlyFeedDir = 'packages_nightly'
 
+# Checked by the Public pass. Every sample resolves this id -- most reference it
+# directly, and the Forms Extension samples get it as a pinned dependency of
+# Adobe.PDF.Library.FormsExtension.LM.NET -- so the version it restores to is
+# the version of APDFL that nuget.org is actually serving.
+publicPackageId = 'Adobe.PDF.Library.LM.NET'
+
+# The version the Public pass requires nuget.org to be serving. Raise it when a
+# release is approved: until it is raised the pass confirms that the previous
+# release is still installable, and once it is raised the pass stays red until
+# the new packages are genuinely live. It is a floor rather than an equality
+# check so that a later patch release does not turn the nightly run red on its
+# own. Override for a one-off check with `--expect-version`.
+publicVersionFloor = '21.1.0'
+
+
+def parse_version(text):
+    """A NuGet version as a comparable tuple, ignoring any prerelease tag.
+
+    Only the numeric release part is compared, which is all these packages
+    publish, so '21.2.0-beta1' sorts equal to '21.2.0' rather than below it.
+    """
+    release = text.split('-', 1)[0].split('+', 1)[0]
+    return tuple(int(part) for part in release.split('.') if part.isdigit())
+
+
+def resolved_version(samplePath, packageId):
+    """The version of packageId that this sample's restore settled on.
+
+    Read out of obj/project.assets.json, whose `libraries` keys are
+    "<id>/<version>" and cover transitively pulled packages as well as
+    directly referenced ones. None when the package is not in the graph.
+    """
+    assets = os.path.join(samplePath, 'obj', 'project.assets.json')
+    if not os.path.exists(assets):
+        return None
+
+    with open(assets, encoding='utf-8') as stream:
+        libraries = json.load(stream).get('libraries', {})
+
+    for entry in libraries:
+        name, _, version = entry.partition('/')
+        if name == packageId:
+            return version
+    return None
+
+
+def check_public_version(resolved, expected):
+    """Fail unless every sample restored publicPackageId at `expected` or newer.
+
+    This is the check a silently missed publication fails. A build against
+    nuget.org floats to whatever the newest published version happens to be
+    (the samples reference Version="21.*"), so without it the pass goes green
+    against the release *before* the one being validated -- which is the case
+    it exists to catch.
+    """
+    # An empty result is the vacuous pass this check exists to prevent, so it
+    # is an error rather than a silent success.
+    if not resolved:
+        raise Exit('no samples were built, so the public packages were never '
+                   'exercised -- check the platform skips above.')
+
+    missing = sorted(sample for sample, version in resolved.items() if version is None)
+    if missing:
+        raise Exit(f'{publicPackageId} is not in the restore graph of '
+                   f'{len(missing)} of {len(resolved)} samples, so there is no '
+                   f'version to check. First few: {", ".join(missing[:3])}')
+
+    versions = sorted(set(resolved.values()), key=parse_version)
+    print(f'... nuget.org served {publicPackageId} {", ".join(versions)}')
+
+    floor = parse_version(expected)
+    stale = [version for version in versions if parse_version(version) < floor]
+    if stale:
+        raise Exit(f'nuget.org is serving {publicPackageId} {", ".join(stale)}, '
+                   f'but {expected} or newer was expected. Either the release '
+                   f'was never pushed or it went up unlisted -- check the '
+                   f'upload rather than trusting this run.')
+
 
 # Given an absolute sample path, add the SampleInput package the samples read
 # their input files from, and optionally repoint the Adobe.PDF.Library reference
@@ -172,8 +251,11 @@ def clean_nuget_packages(ctx):
 # the way it always has, on the nightly packages. Invoke never treats an
 # argument that has a default as positional, so the value has to come in as a
 # flag: `invoke build-samples --pkg-source Public`.
-@task(help={'pkg_source': f'Packages to build against: {" or ".join(package_sources)}'})
-def build_samples(ctx, pkg_source='Nightly'):
+@task(help={'pkg_source': f'Packages to build against: {" or ".join(package_sources)}',
+            'expect_version': f'Public pass only: require nuget.org to serve '
+                              f'{publicPackageId} at this version or newer '
+                              f'(default {publicVersionFloor})'})
+def build_samples(ctx, pkg_source='Nightly', expect_version=None):
     """Builds the .NET samples against the Nightly or Public packages"""
     # Checked before anything else: an unrecognized value used to fall through
     # both branches and build against whatever packages were left in the tree,
@@ -207,6 +289,9 @@ def build_samples(ctx, pkg_source='Nightly'):
 
     sourceArgs = ' '.join(f'--source {source}' for source in sources)
 
+    # Public pass only; sample -> the version of publicPackageId it restored.
+    resolved = {}
+
     for sample in samples_list:
         full_path = os.path.join(os.getcwd(), sample)
         if 'DrawSeparations' in sample or 'DocToImages' in sample:
@@ -225,6 +310,12 @@ def build_samples(ctx, pkg_source='Nightly'):
                 set_nuget_pkg_version(pathlib.Path(full_name), package=rewritePackage)
 
                 ctx.run(f'dotnet build {sourceArgs}')
+
+                if pkg_source == 'Public':
+                    resolved[sample] = resolved_version(full_path, publicPackageId)
+
+    if pkg_source == 'Public':
+        check_public_version(resolved, expect_version or publicVersionFloor)
 
 
 @task()
