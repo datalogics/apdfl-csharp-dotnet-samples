@@ -1,5 +1,6 @@
 from invoke import Collection, Exit, task
 from invoke.tasks import Task
+import io
 import platform
 import os
 import pathlib
@@ -230,7 +231,16 @@ def build_samples(ctx, pkg_source='Nightly'):
 @task()
 def run_samples(ctx):
     """Runs the .NET samples
+
+    The public packages are the license-managed ones, so a sample built against
+    them prompts on stdin for an evaluation key before it will do any work. In
+    CI stdin is not a terminal, the prompt reads EOF and the sample fails, so
+    the key comes in from the APDFL_KEY environment variable that the
+    Jenkinsfile fills from the apdfl-rlm-key credential. Left empty when the
+    variable is unset, which is what the nightly (non-license-managed) pass
+    wants: nothing prompts, and the unread input is discarded.
     """
+    apdfl_key = os.environ.get('APDFL_KEY', '')
     for sample in samples_list:
         full_path = os.path.join(os.getcwd(), sample)
         if 'DrawSeparations' in sample or 'DocToImages' in sample:
@@ -249,7 +259,9 @@ def run_samples(ctx):
                 sample_name = os.path.basename(os.path.dirname(full_path))
                 if 'DrawSeparations' in sample_name:
                     continue
-                ctx.run(f'dotnet run --no-build')
+                # Key goes in on stdin only, never on the echoed command line.
+                ctx.run('dotnet run --no-build',
+                        in_stream=io.StringIO(apdfl_key + '\n'))
 
 
 def make_package_dir(name):
