@@ -1,9 +1,9 @@
 from invoke import Collection, Exit, task
 from invoke.tasks import Task
-import io
 import platform
 import os
 import pathlib
+import subprocess
 import xml.etree.ElementTree as ET
 import shutil
 
@@ -239,6 +239,8 @@ def run_samples(ctx):
     Jenkinsfile fills from the apdfl-rlm-key credential. Left empty when the
     variable is unset, which is what the nightly (non-license-managed) pass
     wants: nothing prompts, and the unread input is discarded.
+
+    See _run_sample for why this does not go through ctx.run.
     """
     apdfl_key = os.environ.get('APDFL_KEY', '')
     for sample in samples_list:
@@ -255,13 +257,39 @@ def run_samples(ctx):
         elif platform.system() == 'Linux' and 'ConvertToOffice' in sample:
             continue
         else:
-            with ctx.cd(full_path):
-                sample_name = os.path.basename(os.path.dirname(full_path))
-                if 'DrawSeparations' in sample_name:
-                    continue
-                # Key goes in on stdin only, never on the echoed command line.
-                ctx.run('dotnet run --no-build',
-                        in_stream=io.StringIO(apdfl_key + '\n'))
+            sample_name = os.path.basename(os.path.dirname(full_path))
+            if 'DrawSeparations' in sample_name:
+                continue
+            _run_sample(full_path, sample_name, apdfl_key)
+
+
+def _run_sample(full_path, sample_name, apdfl_key):
+    """Runs one built sample, handing it the activation key on stdin.
+
+    Deliberately not ctx.run. invoke pumps a non-tty in_stream one byte per
+    10ms poll (see bytes_to_read in invoke/terminals.py), and it is hard to
+    reason about when the key actually lands. subprocess writes it in one go
+    and closes stdin behind it, so the second fgets() in the library's retry
+    loop sees EOF instead of blocking on an idle pipe until the pipeline's
+    four-hour timeout.
+
+    stdout and stderr stay inherited so sample output keeps streaming into the
+    build log, and stdbuf unbuffers it where we have it. That matters on a
+    failure: the licensing code flushes its prompt but not the diagnostics
+    after it, and an unhandled exception ends in abort(), which does not flush
+    stdio. Without this the RLM error explaining the failure is written into a
+    buffer and thrown away, which is why these runs have been so opaque.
+    """
+    command = ['dotnet', 'run', '--no-build']
+    if platform.system() == 'Linux' and shutil.which('stdbuf'):
+        command = ['stdbuf', '-o0', '-e0'] + command
+    print(f'{sample_name}: {" ".join(command)}', flush=True)
+    # Key goes in on stdin only, never on the echoed command line.
+    result = subprocess.run(command, cwd=full_path, shell=False,
+                            input=(apdfl_key + '\n').encode())
+    if result.returncode != 0:
+        raise Exit(f'{sample_name} exited {result.returncode}',
+                   code=result.returncode)
 
 
 def make_package_dir(name):
