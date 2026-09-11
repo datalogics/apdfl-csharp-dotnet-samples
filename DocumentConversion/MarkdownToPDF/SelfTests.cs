@@ -148,6 +148,8 @@ Controls a fictional lobby display.
             Require(string.Equals(defaultOptions.InputPath, "sample.md", StringComparison.Ordinal), "default input path parsed");
             Require(string.Equals(defaultOptions.OutputPath, "output.pdf", StringComparison.Ordinal), "default output path parsed");
             Require(defaultOptions.Overwrite, "default sample output can be replaced");
+            Require(string.Equals(defaultOptions.FontFamily, "MyriadPro", StringComparison.Ordinal), "default body font is the bundled Myriad Pro family");
+            Require(string.Equals(defaultOptions.HeadingFontFamily, "MyriadPro", StringComparison.Ordinal), "default heading font follows the body font");
 
             ConversionOptions defaultVerboseOptions = ConversionOptions.Parse(new[] { "--verbose" });
             Require(string.Equals(defaultVerboseOptions.InputPath, "sample.md", StringComparison.Ordinal), "default input path parsed with option");
@@ -172,6 +174,9 @@ Controls a fictional lobby display.
             Require(string.Equals(fontAliasOptions.FontFamily, "Times", StringComparison.Ordinal), "base serif alias parsed");
             Require(string.Equals(fontAliasOptions.CodeFontFamily, "Courier", StringComparison.Ordinal), "base mono alias parsed");
             Require(fontAliasOptions.Recursive, "recursive option parsed");
+
+            ConversionOptions bundledFontOptions = ConversionOptions.Parse(new[] { "input.md", "output.pdf", "--font-family", "Myriad Pro" });
+            Require(string.Equals(bundledFontOptions.FontFamily, "MyriadPro", StringComparison.Ordinal), "Myriad Pro alias parsed");
 
             Console.WriteLine("Self-tests passed.");
             return 0;

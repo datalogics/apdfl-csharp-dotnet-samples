@@ -275,7 +275,7 @@ internal static class Program
         Console.WriteLine("  --margin <points>               Margin on all sides in PDF points. Defaults to 72.");
         Console.WriteLine();
         Console.WriteLine("Fonts:");
-        Console.WriteLine("  --font-family <value>           Body font family. Defaults to Times.");
+        Console.WriteLine("  --font-family <value>           Body font family. Defaults to Myriad Pro.");
         Console.WriteLine("  --heading-font-family <value>   Heading font family. Defaults to the body font family.");
         Console.WriteLine("  --code-font-family <value>      Monospace/code font family. Defaults to Courier.");
         Console.WriteLine("  --cjk-font-family <value>       Preferred CJK font family/name for Chinese/Japanese/Korean text.");
@@ -325,6 +325,6 @@ internal static class Program
 
         Console.WriteLine();
         Console.WriteLine("Pass any of these with --font-family / --heading-font-family / --code-font-family.");
-        Console.WriteLine("Times, Helvetica, and Courier remain the most portable choices across machines.");
+        Console.WriteLine("Myriad Pro and Courier ship with APDFL and work on every platform; Times and Helvetica depend on fonts installed on the machine.");
     }
 }

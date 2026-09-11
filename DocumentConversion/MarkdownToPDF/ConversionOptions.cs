@@ -23,9 +23,9 @@ internal sealed class ConversionOptions
 
     public double MarginPoints { get; init; } = 72.0;
 
-    public string FontFamily { get; init; } = "Times";
+    public string FontFamily { get; init; } = "MyriadPro";
 
-    public string HeadingFontFamily { get; init; } = "Times";
+    public string HeadingFontFamily { get; init; } = "MyriadPro";
 
     public string CodeFontFamily { get; init; } = "Courier";
 
@@ -72,7 +72,7 @@ internal sealed class ConversionOptions
         string pageSize = "Letter";
         string orientation = "Auto";
         double margin = 72.0;
-        string fontFamily = "Times";
+        string fontFamily = "MyriadPro";
         string? headingFontFamily = null;
         string codeFontFamily = "Courier";
         string? cjkFontFamily = null;

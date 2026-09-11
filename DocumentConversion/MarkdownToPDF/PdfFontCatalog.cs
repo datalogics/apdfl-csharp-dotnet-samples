@@ -25,6 +25,7 @@ internal static class PdfFontCatalog
 {
     public static IReadOnlyList<string> CoreFamilyNames { get; } = new[]
     {
+        "MyriadPro",
         "Times",
         "Helvetica",
         "Courier"
@@ -109,6 +110,8 @@ internal static class PdfFontCatalog
     {
         Dictionary<string, PdfFontFamilyDefinition> families = new(StringComparer.OrdinalIgnoreCase);
 
+        // Myriad Pro ships in the APDFL Resources package, so it is available on every platform.
+        AddFamily(families, "MyriadPro", "MyriadPro-Regular", "MyriadPro-Bold", "MyriadPro-It", "MyriadPro-BoldIt", "myriad");
         AddFamily(families, "Times", "Times-Roman", "Times-Bold", "Times-Italic", "Times-BoldItalic", "timesroman", "serif");
         AddFamily(families, "Helvetica", "Helvetica", "Helvetica-Bold", "Helvetica-Oblique", "Helvetica-BoldOblique", "sans", "sansserif");
         AddFamily(families, "Courier", "Courier", "Courier-Bold", "Courier-Oblique", "Courier-BoldOblique", "mono", "monospace");

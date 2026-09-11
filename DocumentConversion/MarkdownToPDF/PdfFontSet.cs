@@ -245,7 +245,7 @@ internal sealed class PdfFontSet : IDisposable
             {
                 throw new CommandLineException(
                     $"The font \"{name}\" could not be created by APDFL. " +
-                    "Use Times, Helvetica, or Courier for the most portable sample behavior, " +
+                    "Use MyriadPro or Courier, which ship with APDFL, for the most portable sample behavior, " +
                     "or install/configure the requested font so APDFL can find it.",
                     new AggregateException(embeddedException, subsetException));
             }
