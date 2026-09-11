@@ -51,6 +51,7 @@ pipeline {
                     }
                 }
                 environment {
+                    APDFL_KEY = credentials('apdfl-rlm-key')
                     // NuGet honors these for restore, build, and
                     // 'dotnet nuget locals --clear all' alike.
                     NUGET_ROOT = setNugetRoot()
