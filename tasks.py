@@ -45,6 +45,7 @@ samples_list = [
               'ContentModification/Watermark/',
               'DocumentConversion/ColorConvertDocument/',
               'DocumentConversion/ConvertToOffice/',
+              'DocumentConversion/ConvertWordToPDF/',
               'DocumentConversion/CreateDocFromWebPage/',
               'DocumentConversion/CreateDocFromXPS/',
               'DocumentConversion/CreateInvoiceFromStructuredData/',
@@ -219,6 +220,10 @@ def build_samples(ctx, pkg_source='Nightly'):
         elif platform.system() == 'Darwin' and platform.machine() != 'arm64' and 'CreateDocFromWebPage' in sample:
             print(f'{sample} not available on this OS')
             continue
+        # OfficeToPDF ships for win-x64, linux-x64, linux-arm64 and osx-arm64
+        elif 'ConvertWordToPDF' in sample and _office_to_pdf_unavailable():
+            print(f'{sample} not available on this OS')
+            continue
         else:
             with ctx.cd(full_path):
                 last_directory = os.path.basename(os.path.dirname(full_path))
@@ -254,6 +259,10 @@ def run_samples(ctx):
         elif platform.system() == 'Darwin' and platform.machine() != 'arm64' and 'CreateDocFromWebPage' in sample:
             print(f'{sample} not available on this OS')
             continue
+        # OfficeToPDF ships for win-x64, linux-x64, linux-arm64 and osx-arm64
+        elif 'ConvertWordToPDF' in sample and _office_to_pdf_unavailable():
+            print(f'{sample} not available on this OS')
+            continue
         elif platform.system() == 'Linux' and 'ConvertToOffice' in sample:
             continue
         else:
@@ -261,6 +270,16 @@ def run_samples(ctx):
             if 'DrawSeparations' in sample_name:
                 continue
             _run_sample(full_path, sample_name, apdfl_key)
+
+
+def _office_to_pdf_unavailable():
+    """Whether this host has no OfficeToPDF plug-in: macOS x64 and Windows ARM64."""
+    machine = platform.machine().lower()
+    if platform.system() == 'Darwin':
+        return machine != 'arm64'
+    if platform.system() == 'Windows':
+        return machine in ('arm64', 'aarch64')
+    return False
 
 
 def _run_sample(full_path, sample_name, apdfl_key):
