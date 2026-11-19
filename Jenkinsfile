@@ -270,15 +270,15 @@ pipeline {
                             }
                         }
                     }
-                    stage('Clean Samples After Public Run') {
-                        when {
-                            expression {
-                                env.NODE != 'mac-intel-dotnet-samples'
-                            }
-                        }
-                        steps {
-                            echo "Clean ${NODE}"
-                            script {
+                }
+                post {
+                    // Runs whether or not an earlier stage failed. Each sample's
+                    // bin holds its own copy of the APDFL runtime, so leaving them
+                    // behind after a failed build or run fills the node's disk
+                    // until the next job happens to clean them.
+                    cleanup {
+                        script {
+                            if (ENV_LOC[NODE]) {
                                 if (isUnix()) {
                                     sh """. ${ENV_LOC[NODE]}/bin/activate
                                           invoke clean-samples
@@ -288,6 +288,8 @@ pipeline {
                                           invoke clean-samples
                                     """
                                 }
+                            } else {
+                                echo "No Python environment on ${NODE}, so nothing was built; skipping clean-samples"
                             }
                         }
                     }
