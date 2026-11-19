@@ -128,7 +128,14 @@ nightlyFeedDir = 'packages_nightly'
 # so `dotnet run --no-build` has to pass the same property to find it. Set on
 # the command line rather than in the project files, so a customer building a
 # sample sees the default behavior.
-currentRuntimeArg = '-p:UseCurrentRuntimeIdentifier=true'
+#
+# Not on macOS: the package's Adobe.PDF.Library.NET.macframeworks.targets
+# unzips the Mac frameworks into a hard-coded
+# bin/$(Configuration)/$(TargetFramework)/runtimes/osx-arm64/native, the
+# no-RID layout. With a RID that directory is never created and the unzip
+# fails the build. Revisit once a package that unzips into the output
+# directory is published.
+currentRuntimeArgs = [] if platform.system() == 'Darwin' else ['-p:UseCurrentRuntimeIdentifier=true']
 
 
 # Given an absolute sample path, add the SampleInput package the samples read
@@ -240,7 +247,7 @@ def build_samples(ctx, pkg_source='Nightly'):
                 full_name = full_path + last_directory + '.csproj'
                 set_nuget_pkg_version(pathlib.Path(full_name), package=rewritePackage)
 
-                ctx.run(f'dotnet build {sourceArgs} {currentRuntimeArg}')
+                ctx.run(' '.join(['dotnet', 'build', sourceArgs] + currentRuntimeArgs))
 
 
 @task()
@@ -309,7 +316,7 @@ def _run_sample(full_path, sample_name, apdfl_key):
     stdio. Without this the RLM error explaining the failure is written into a
     buffer and thrown away, which is why these runs have been so opaque.
     """
-    command = ['dotnet', 'run', '--no-build', currentRuntimeArg]
+    command = ['dotnet', 'run', '--no-build'] + currentRuntimeArgs
     if platform.system() == 'Linux' and shutil.which('stdbuf'):
         command = ['stdbuf', '-o0', '-e0'] + command
     print(f'{sample_name}: {" ".join(command)}', flush=True)
